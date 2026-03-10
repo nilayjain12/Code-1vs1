@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;600;700;900&family=Rock+Salt&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;600;700;900&family=Patrick+Hand&family=Permanent+Marker&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -26,6 +26,19 @@
         <label class="label" for="nameInput">Your Gamer Tag</label>
         <input id="nameInput" type="text" maxlength="20" placeholder="NeonNinja" />
 
+
+        <label class="label" for="languageSelect">Favorite Coding Language</label>
+        <select id="languageSelect">
+          <option>JavaScript</option>
+          <option>Python</option>
+          <option>C++</option>
+          <option>Java</option>
+          <option>C#</option>
+          <option>Go</option>
+          <option>Rust</option>
+          <option>TypeScript</option>
+        </select>
+
         <button id="spinBtn" class="spin">Spin Up an Opponent!</button>
         <p id="queueStatus" class="status"></p>
         <p id="streakHome" class="streak">Current streak: 0</p>
@@ -41,6 +54,7 @@
           <h2 id="questionTitle"></h2>
           <span id="difficulty" class="pill"></span>
           <span id="opponent" class="pill opponent"></span>
+          <span id="languageBadge" class="pill language"></span>
           <span id="timer" class="timer"></span>
         </div>
         <p id="questionPrompt" class="prompt"></p>

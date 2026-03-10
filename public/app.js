@@ -5,9 +5,11 @@ const spinBtn = document.getElementById('spinBtn');
 const queueStatus = document.getElementById('queueStatus');
 const streakHome = document.getElementById('streakHome');
 const mockList = document.getElementById('mockList');
+const languageSelect = document.getElementById('languageSelect');
 const questionTitle = document.getElementById('questionTitle');
 const difficulty = document.getElementById('difficulty');
 const opponent = document.getElementById('opponent');
+const languageBadge = document.getElementById('languageBadge');
 const questionPrompt = document.getElementById('questionPrompt');
 const editor = document.getElementById('editor');
 const timer = document.getElementById('timer');
@@ -26,6 +28,7 @@ let countdownInterval = null;
 let pollInterval = null;
 let loadedRoomQuestion = null;
 nameInput.value = localStorage.getItem('code1v1-name') || '';
+languageSelect.value = localStorage.getItem('code1v1-language') || 'JavaScript';
 
 const api = async (path, options = {}) => {
   const response = await fetch(path, {
@@ -65,7 +68,9 @@ function startTimer(endsAt) {
 
 async function registerSession() {
   const name = nameInput.value.trim() || 'Coder';
+  const language = languageSelect.value || 'JavaScript';
   localStorage.setItem('code1v1-name', name);
+  localStorage.setItem('code1v1-language', language);
   const data = await api('/api/register', { method: 'POST', body: { playerId, name } });
   sessionId = data.sessionId;
   streakHome.textContent = `Current streak: ${data.streak || 0}`;
@@ -88,6 +93,7 @@ async function refreshState() {
     streakHome.textContent = `Current streak: ${state.streak}`;
     queueStatus.textContent = '';
     opponent.textContent = `vs ${state.opponentName}`;
+    languageBadge.textContent = `Language: ${localStorage.getItem('code1v1-language') || 'JavaScript'}`;
 
     if (loadedRoomQuestion !== state.question.title) {
       loadedRoomQuestion = state.question.title;
@@ -164,3 +170,8 @@ window.addEventListener('beforeunload', () => {
   await refreshState();
   pollInterval = setInterval(refreshState, 1200);
 })();
+
+
+languageSelect.addEventListener('change', () => {
+  localStorage.setItem('code1v1-language', languageSelect.value);
+});

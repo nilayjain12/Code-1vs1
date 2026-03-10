@@ -1,0 +1,204 @@
+:root {
+  --bg: #f7f8ff;
+  --panel: #ffffff;
+  --ink: #21263a;
+  --accent: #6f5cff;
+  --accent-2: #00d6b8;
+  --accent-3: #ff4fd8;
+  --border: #d7dcf0;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 10% 20%, #e9ecff, transparent 40%),
+    radial-gradient(circle at 80% 10%, #d8fff3, transparent 35%),
+    radial-gradient(circle at 70% 80%, #ffe6fb, transparent 35%),
+    var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.container {
+  width: min(940px, 100%);
+  position: relative;
+}
+
+.deco {
+  position: absolute;
+  font-family: 'Rock Salt', cursive;
+  font-size: 2rem;
+  color: var(--accent-3);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.deco-a {
+  top: -25px;
+  right: 20px;
+}
+
+.deco-b {
+  left: -15px;
+  top: 80px;
+  color: var(--accent);
+}
+
+.card {
+  background: color-mix(in srgb, var(--panel) 92%, #f7fbff);
+  border: 2px solid var(--border);
+  border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(60, 73, 133, 0.12);
+  padding: 24px;
+  backdrop-filter: blur(2px);
+}
+
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: 0.3px;
+}
+
+.scribble {
+  font-family: 'Rock Salt', cursive;
+  color: #5f56b8;
+  margin: 0 0 10px;
+}
+
+.scribble.small {
+  font-size: 0.78rem;
+}
+
+.sub {
+  color: #4f5882;
+  margin-bottom: 24px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+input,
+textarea,
+button {
+  width: 100%;
+  border-radius: 14px;
+  border: 2px solid var(--border);
+  font-size: 1rem;
+}
+
+input,
+textarea {
+  padding: 12px;
+  margin-bottom: 14px;
+}
+
+textarea {
+  min-height: 260px;
+  resize: vertical;
+  background: #f7f8ff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+button {
+  padding: 13px;
+  cursor: pointer;
+  font-weight: 700;
+  background: var(--accent);
+  color: white;
+  border: 0;
+  transition: transform 0.1s ease, filter 0.15s ease;
+}
+
+button:hover {
+  filter: brightness(1.07);
+  transform: translateY(-1px);
+}
+
+.spin {
+  background: linear-gradient(120deg, var(--accent), var(--accent-2), var(--accent-3));
+}
+
+.ghost {
+  background: transparent;
+  border: 2px solid var(--border);
+  color: var(--ink);
+}
+
+.status,
+.streak {
+  margin: 10px 0 0;
+  color: #4f5882;
+}
+
+.mock-box {
+  margin-top: 18px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #f8f9ff;
+  border: 1px dashed #c8d0f7;
+}
+
+#mockList {
+  margin: 0;
+  padding-left: 18px;
+  color: #4f5882;
+}
+
+.arena-top {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.pill,
+.timer {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  background: #eff1ff;
+}
+
+.opponent {
+  background: #ffe8f9;
+}
+
+.timer {
+  margin-left: auto;
+  background: #fff5d6;
+}
+
+.prompt {
+  margin: 15px 0;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+@media (max-width: 640px) {
+  .actions {
+    flex-direction: column;
+  }
+}

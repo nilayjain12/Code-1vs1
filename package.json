@@ -1,0 +1,10 @@
+{
+  "name": "code-1vs1",
+  "version": "1.0.0",
+  "description": "Minimal 1v1 coding arena",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  }
+}

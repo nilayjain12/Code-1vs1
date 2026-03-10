@@ -4,11 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Code 1vs1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Rock+Salt&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="container">
+      <div class="deco deco-a">⚡</div>
+      <div class="deco deco-b">✦</div>
+
       <section id="home" class="card view active">
+        <p class="scribble">welcome to the arena</p>
         <h1>Code 1vs1</h1>
         <p class="sub">Fast funky coding duels.</p>
 
@@ -18,12 +25,18 @@
         <button id="spinBtn" class="spin">Spin Up an Opponent!</button>
         <p id="queueStatus" class="status"></p>
         <p id="streakHome" class="streak">Current streak: 0</p>
+
+        <div class="mock-box">
+          <p class="scribble small">mock coders online now</p>
+          <ul id="mockList"></ul>
+        </div>
       </section>
 
       <section id="arena" class="card view">
         <div class="arena-top">
           <h2 id="questionTitle"></h2>
           <span id="difficulty" class="pill"></span>
+          <span id="opponent" class="pill opponent"></span>
           <span id="timer" class="timer"></span>
         </div>
         <p id="questionPrompt" class="prompt"></p>

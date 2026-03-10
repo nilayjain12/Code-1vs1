@@ -4,8 +4,10 @@ const nameInput = document.getElementById('nameInput');
 const spinBtn = document.getElementById('spinBtn');
 const queueStatus = document.getElementById('queueStatus');
 const streakHome = document.getElementById('streakHome');
+const mockList = document.getElementById('mockList');
 const questionTitle = document.getElementById('questionTitle');
 const difficulty = document.getElementById('difficulty');
+const opponent = document.getElementById('opponent');
 const questionPrompt = document.getElementById('questionPrompt');
 const editor = document.getElementById('editor');
 const timer = document.getElementById('timer');
@@ -34,6 +36,15 @@ const api = async (path, options = {}) => {
   return response.json();
 };
 
+const setMockList = (names = []) => {
+  mockList.innerHTML = '';
+  names.forEach((name) => {
+    const li = document.createElement('li');
+    li.textContent = name;
+    mockList.appendChild(li);
+  });
+};
+
 function switchTo(view) {
   homeView.classList.remove('active');
   arenaView.classList.remove('active');
@@ -58,6 +69,7 @@ async function registerSession() {
   const data = await api('/api/register', { method: 'POST', body: { playerId, name } });
   sessionId = data.sessionId;
   streakHome.textContent = `Current streak: ${data.streak || 0}`;
+  setMockList(data.mockOpponents || []);
 }
 
 async function refreshState() {
@@ -66,7 +78,7 @@ async function refreshState() {
 
   if (state.phase === 'queue') {
     switchTo(homeView);
-    queueStatus.textContent = 'Finding an online opponent...';
+    queueStatus.textContent = 'Finding an online opponent... If no one joins, we auto-match you with a mock coder.';
     streakHome.textContent = `Current streak: ${state.streak}`;
     return;
   }
@@ -75,6 +87,7 @@ async function refreshState() {
     switchTo(arenaView);
     streakHome.textContent = `Current streak: ${state.streak}`;
     queueStatus.textContent = '';
+    opponent.textContent = `vs ${state.opponentName}`;
 
     if (loadedRoomQuestion !== state.question.title) {
       loadedRoomQuestion = state.question.title;
@@ -95,10 +108,10 @@ async function refreshState() {
     switchTo(arenaView);
     const text =
       state.result === 'win'
-        ? `🏆 You won (${state.reason}). Streak: ${state.streak}`
+        ? `🏆 You won against ${state.opponentName} (${state.reason}). Streak: ${state.streak}`
         : state.result === 'lose'
-          ? `💥 You lost (${state.reason}). Streak reset to ${state.streak}.`
-          : `🤝 Draw (${state.reason}). Streak: ${state.streak}`;
+          ? `💥 ${state.opponentName} won (${state.reason}). Streak reset to ${state.streak}.`
+          : `🤝 Draw with ${state.opponentName} (${state.reason}). Streak: ${state.streak}`;
     submissionStatus.textContent = text;
     streakHome.textContent = `Current streak: ${state.streak}`;
     setTimeout(() => {

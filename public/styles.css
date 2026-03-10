@@ -4,6 +4,7 @@
   --ink: #21263a;
   --accent: #6f5cff;
   --accent-2: #00d6b8;
+  --accent-3: #ff4fd8;
   --border: #d7dcf0;
 }
 
@@ -14,7 +15,11 @@
 
 body {
   margin: 0;
-  background: radial-gradient(circle at 10% 20%, #e9ecff, var(--bg));
+  background:
+    radial-gradient(circle at 10% 20%, #e9ecff, transparent 40%),
+    radial-gradient(circle at 80% 10%, #d8fff3, transparent 35%),
+    radial-gradient(circle at 70% 80%, #ffe6fb, transparent 35%),
+    var(--bg);
   color: var(--ink);
   min-height: 100vh;
   display: grid;
@@ -23,15 +28,37 @@ body {
 }
 
 .container {
-  width: min(900px, 100%);
+  width: min(940px, 100%);
+  position: relative;
+}
+
+.deco {
+  position: absolute;
+  font-family: 'Rock Salt', cursive;
+  font-size: 2rem;
+  color: var(--accent-3);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.deco-a {
+  top: -25px;
+  right: 20px;
+}
+
+.deco-b {
+  left: -15px;
+  top: 80px;
+  color: var(--accent);
 }
 
 .card {
-  background: var(--panel);
+  background: color-mix(in srgb, var(--panel) 92%, #f7fbff);
   border: 2px solid var(--border);
-  border-radius: 20px;
+  border-radius: 24px;
   box-shadow: 0 16px 40px rgba(60, 73, 133, 0.12);
   padding: 24px;
+  backdrop-filter: blur(2px);
 }
 
 .view {
@@ -44,7 +71,19 @@ body {
 
 h1 {
   margin-top: 0;
-  font-size: clamp(2rem, 4vw, 2.8rem);
+  margin-bottom: 10px;
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: 0.3px;
+}
+
+.scribble {
+  font-family: 'Rock Salt', cursive;
+  color: #5f56b8;
+  margin: 0 0 10px;
+}
+
+.scribble.small {
+  font-size: 0.78rem;
 }
 
 .sub {
@@ -87,14 +126,16 @@ button {
   background: var(--accent);
   color: white;
   border: 0;
+  transition: transform 0.1s ease, filter 0.15s ease;
 }
 
 button:hover {
-  filter: brightness(1.05);
+  filter: brightness(1.07);
+  transform: translateY(-1px);
 }
 
 .spin {
-  background: linear-gradient(120deg, var(--accent), var(--accent-2));
+  background: linear-gradient(120deg, var(--accent), var(--accent-2), var(--accent-3));
 }
 
 .ghost {
@@ -106,6 +147,20 @@ button:hover {
 .status,
 .streak {
   margin: 10px 0 0;
+  color: #4f5882;
+}
+
+.mock-box {
+  margin-top: 18px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #f8f9ff;
+  border: 1px dashed #c8d0f7;
+}
+
+#mockList {
+  margin: 0;
+  padding-left: 18px;
   color: #4f5882;
 }
 
@@ -122,6 +177,10 @@ button:hover {
   border-radius: 999px;
   font-size: 0.85rem;
   background: #eff1ff;
+}
+
+.opponent {
+  background: #ffe8f9;
 }
 
 .timer {

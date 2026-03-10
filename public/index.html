@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code 1vs1</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section id="home" class="card view active">
+        <h1>Code 1vs1</h1>
+        <p class="sub">Fast funky coding duels.</p>
+
+        <label class="label" for="nameInput">Your Coder Name</label>
+        <input id="nameInput" type="text" maxlength="20" placeholder="NeonNinja" />
+
+        <button id="spinBtn" class="spin">Spin Up an Opponent!</button>
+        <p id="queueStatus" class="status"></p>
+        <p id="streakHome" class="streak">Current streak: 0</p>
+      </section>
+
+      <section id="arena" class="card view">
+        <div class="arena-top">
+          <h2 id="questionTitle"></h2>
+          <span id="difficulty" class="pill"></span>
+          <span id="timer" class="timer"></span>
+        </div>
+        <p id="questionPrompt" class="prompt"></p>
+        <textarea id="editor" spellcheck="false"></textarea>
+        <div class="actions">
+          <button id="submitBtn">Submit Code</button>
+          <button id="homeBtn" class="ghost">Back Home</button>
+        </div>
+        <p id="submissionStatus" class="status"></p>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

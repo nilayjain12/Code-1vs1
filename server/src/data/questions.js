@@ -4,7 +4,7 @@ const questions = [
     title: 'Add Two Numbers',
     category: 'math',
     difficulty: 'Easy',
-    timeLimitSeconds: 120,
+    timeLimitSeconds: 1800,
     description: 'Write a function that takes two integers and returns their sum.',
     prompt: 'Implement function solve(a, b) that returns the sum of two integers.',
     languages: {
@@ -31,7 +31,7 @@ const questions = [
     title: 'Find Maximum',
     category: 'array',
     difficulty: 'Easy',
-    timeLimitSeconds: 120,
+    timeLimitSeconds: 1800,
     description: 'Write a function that takes an array of numbers and returns the largest number.',
     prompt: 'Implement function solve(arr) that returns the maximum element in the array.',
     languages: {
@@ -52,7 +52,7 @@ const questions = [
     title: 'Reverse String',
     category: 'string',
     difficulty: 'Easy',
-    timeLimitSeconds: 120,
+    timeLimitSeconds: 1800,
     description: 'Write a function that reverses a given string.',
     prompt: 'Implement function solve(str) that returns the reversed string.',
     languages: {
@@ -73,7 +73,7 @@ const questions = [
     title: 'Count Even Numbers',
     category: 'array',
     difficulty: 'Easy',
-    timeLimitSeconds: 120,
+    timeLimitSeconds: 1800,
     description: 'Write a function that counts how many even numbers are in an array.',
     prompt: 'Implement function solve(arr) that returns the count of even numbers in the array.',
     languages: {
@@ -94,7 +94,7 @@ const questions = [
     title: 'Factorial',
     category: 'math',
     difficulty: 'Easy',
-    timeLimitSeconds: 120,
+    timeLimitSeconds: 1800,
     description: 'Write a function that computes the factorial of a non-negative integer n.',
     prompt: 'Implement function solve(n) that returns n! (n factorial).',
     languages: {
@@ -115,7 +115,7 @@ const questions = [
     title: 'Count Vowels',
     category: 'string',
     difficulty: 'Easy',
-    timeLimitSeconds: 120,
+    timeLimitSeconds: 1800,
     description: 'Write a function that counts the number of vowels (a, e, i, o, u) in a string (case-insensitive).',
     prompt: 'Implement function solve(str) that returns the number of vowels.',
     languages: {
@@ -136,7 +136,7 @@ const questions = [
     title: 'Fibonacci Number',
     category: 'math',
     difficulty: 'Easy',
-    timeLimitSeconds: 120,
+    timeLimitSeconds: 1800,
     description: 'Write a function that returns the nth Fibonacci number (0-indexed). F(0)=0, F(1)=1.',
     prompt: 'Implement function solve(n) that returns the nth Fibonacci number.',
     languages: {
@@ -157,7 +157,7 @@ const questions = [
     title: 'Is Palindrome',
     category: 'string',
     difficulty: 'Easy',
-    timeLimitSeconds: 120,
+    timeLimitSeconds: 1800,
     description: 'Check if a given string is a palindrome (case-insensitive, ignore non-alphanumeric).',
     prompt: 'Implement function solve(str) that returns true if the string is a palindrome, false otherwise.',
     languages: {
@@ -178,7 +178,7 @@ const questions = [
     title: 'Power of Two',
     category: 'math',
     difficulty: 'Easy',
-    timeLimitSeconds: 120,
+    timeLimitSeconds: 1800,
     description: 'Check if a given positive integer is a power of two.',
     prompt: 'Implement function solve(n) returning true if n is a power of 2, false otherwise.',
     languages: {
@@ -199,7 +199,7 @@ const questions = [
     title: 'Flatten Array',
     category: 'array',
     difficulty: 'Easy',
-    timeLimitSeconds: 150,
+    timeLimitSeconds: 1800,
     description: 'Flatten a nested array by one level. Example: [[1,2],[3,[4]]] → [1,2,3,[4]].',
     prompt: 'Implement function solve(arr) that flattens the array by one level.',
     languages: {
@@ -220,7 +220,7 @@ const questions = [
     title: 'Two Sum',
     category: 'array',
     difficulty: 'Medium',
-    timeLimitSeconds: 180,
+    timeLimitSeconds: 1800,
     description: 'Given an array of integers and a target, return the indices of the two numbers that add up to the target.',
     prompt: 'Implement function solve(nums, target) returning [i, j] of two values summing to target.',
     languages: {
@@ -240,7 +240,7 @@ const questions = [
     title: 'Valid Anagram',
     category: 'string',
     difficulty: 'Medium',
-    timeLimitSeconds: 180,
+    timeLimitSeconds: 1800,
     description: 'Determine if two strings are anagrams of each other (same letters, same frequency, case-insensitive).',
     prompt: 'Implement function solve(s, t) returning true if s and t are anagrams.',
     languages: {
@@ -261,7 +261,7 @@ const questions = [
     title: 'Rotate Array',
     category: 'array',
     difficulty: 'Medium',
-    timeLimitSeconds: 180,
+    timeLimitSeconds: 1800,
     description: 'Rotate an array to the right by k steps. Example: [1,2,3,4,5] rotated by 2 → [4,5,1,2,3].',
     prompt: 'Implement function solve(arr, k) returning the rotated array.',
     languages: {
@@ -281,7 +281,7 @@ const questions = [
     title: 'Find Missing Number',
     category: 'array',
     difficulty: 'Medium',
-    timeLimitSeconds: 180,
+    timeLimitSeconds: 1800,
     description: 'Given an array containing n distinct numbers in [0, n], find the missing number.',
     prompt: 'Implement function solve(nums) returning the missing number from 0..n.',
     languages: {
@@ -301,7 +301,7 @@ const questions = [
     title: 'Remove Duplicates',
     category: 'array',
     difficulty: 'Medium',
-    timeLimitSeconds: 180,
+    timeLimitSeconds: 1800,
     description: 'Remove duplicate values from an array and return the unique values in their original order.',
     prompt: 'Implement function solve(arr) returning a new array with duplicates removed.',
     languages: {
@@ -321,7 +321,7 @@ const questions = [
     title: 'Valid Brackets',
     category: 'string',
     difficulty: 'Medium',
-    timeLimitSeconds: 180,
+    timeLimitSeconds: 1800,
     description: 'Determine if an input string with brackets (), {}, [] is valid (properly opened and closed).',
     prompt: 'Implement function solve(s) returning true if brackets are valid.',
     languages: {
@@ -343,7 +343,7 @@ const questions = [
     title: 'Merge Sorted Arrays',
     category: 'array',
     difficulty: 'Medium',
-    timeLimitSeconds: 180,
+    timeLimitSeconds: 1800,
     description: 'Merge two sorted arrays into one sorted array.',
     prompt: 'Implement function solve(a, b) returning a merged sorted array.',
     languages: {
@@ -363,7 +363,7 @@ const questions = [
     title: 'Array Chunking',
     category: 'array',
     difficulty: 'Medium',
-    timeLimitSeconds: 180,
+    timeLimitSeconds: 1800,
     description: 'Split an array into groups of a given size. Last chunk may be smaller.',
     prompt: 'Implement function solve(arr, size) returning an array of chunks.',
     languages: {
@@ -383,7 +383,7 @@ const questions = [
     title: 'Spiral Matrix',
     category: 'array',
     difficulty: 'Medium',
-    timeLimitSeconds: 240,
+    timeLimitSeconds: 1800,
     description: 'Given an m×n matrix, return its elements in spiral order.',
     prompt: 'Implement function solve(matrix) returning elements in spiral order.',
     languages: {
@@ -402,7 +402,7 @@ const questions = [
     title: 'Longest Substring Without Repeating',
     category: 'string',
     difficulty: 'Medium',
-    timeLimitSeconds: 240,
+    timeLimitSeconds: 1800,
     description: 'Find the length of the longest substring without repeating characters.',
     prompt: 'Implement function solve(s) returning the length of the longest non-repeating substring.',
     languages: {
@@ -423,7 +423,7 @@ const questions = [
     title: 'String Compression',
     category: 'string',
     difficulty: 'Medium',
-    timeLimitSeconds: 180,
+    timeLimitSeconds: 1800,
     description: 'Compress a string using counts of repeated chars. e.g. "aaabb" → "a3b2". If compressed is not shorter, return original.',
     prompt: 'Implement function solve(s) returning the compressed string.',
     languages: {
@@ -443,7 +443,7 @@ const questions = [
     title: 'Title Case Sentence',
     category: 'string',
     difficulty: 'Medium',
-    timeLimitSeconds: 150,
+    timeLimitSeconds: 1800,
     description: 'Convert a sentence so the first letter of each word is capitalized and the rest are lowercase.',
     prompt: 'Implement function solve(str) returning the title-cased string.',
     languages: {
@@ -463,7 +463,7 @@ const questions = [
     title: 'Digital Root',
     category: 'math',
     difficulty: 'Medium',
-    timeLimitSeconds: 150,
+    timeLimitSeconds: 1800,
     description: 'Repeatedly sum digits of a number until a single digit remains. e.g. 493 → 4+9+3=16 → 1+6=7.',
     prompt: 'Implement function solve(n) returning the digital root.',
     languages: {
@@ -483,7 +483,7 @@ const questions = [
     title: 'Transpose Matrix',
     category: 'array',
     difficulty: 'Medium',
-    timeLimitSeconds: 180,
+    timeLimitSeconds: 1800,
     description: 'Transpose a 2D matrix (rows become columns).',
     prompt: 'Implement function solve(matrix) returning the transposed matrix.',
     languages: {
@@ -502,7 +502,7 @@ const questions = [
     title: 'Group Anagrams',
     category: 'string',
     difficulty: 'Medium',
-    timeLimitSeconds: 240,
+    timeLimitSeconds: 1800,
     description: 'Given a list of strings, group anagrams together.',
     prompt: 'Implement function solve(strs) returning grouped anagrams (order within groups does not matter).',
     languages: {
@@ -522,7 +522,7 @@ const questions = [
     title: 'Longest Common Subsequence',
     category: 'dp',
     difficulty: 'Hard',
-    timeLimitSeconds: 300,
+    timeLimitSeconds: 1800,
     description: 'Find the length of the longest common subsequence of two strings.',
     prompt: 'Implement function solve(s1, s2) returning the LCS length.',
     languages: {
@@ -542,7 +542,7 @@ const questions = [
     title: 'Maximum Subarray Sum',
     category: 'dp',
     difficulty: 'Hard',
-    timeLimitSeconds: 240,
+    timeLimitSeconds: 1800,
     description: 'Find the contiguous subarray with the largest sum (Kadane\'s algorithm).',
     prompt: 'Implement function solve(nums) returning the maximum subarray sum.',
     languages: {
@@ -562,7 +562,7 @@ const questions = [
     title: 'Coin Change',
     category: 'dp',
     difficulty: 'Hard',
-    timeLimitSeconds: 300,
+    timeLimitSeconds: 1800,
     description: 'Given coins of different denominations and a total amount, find the fewest coins needed. Return -1 if not possible.',
     prompt: 'Implement function solve(coins, amount) returning the minimum number of coins.',
     languages: {
@@ -583,7 +583,7 @@ const questions = [
     title: 'Climbing Stairs',
     category: 'dp',
     difficulty: 'Hard',
-    timeLimitSeconds: 240,
+    timeLimitSeconds: 1800,
     description: 'You can climb 1 or 2 steps at a time. How many distinct ways to reach the top of n stairs?',
     prompt: 'Implement function solve(n) returning the number of ways to climb n stairs.',
     languages: {
@@ -604,7 +604,7 @@ const questions = [
     title: 'Longest Increasing Subsequence',
     category: 'dp',
     difficulty: 'Hard',
-    timeLimitSeconds: 300,
+    timeLimitSeconds: 1800,
     description: 'Find the length of the longest strictly increasing subsequence.',
     prompt: 'Implement function solve(nums) returning the length of the LIS.',
     languages: {
@@ -624,7 +624,7 @@ const questions = [
     title: 'Validate BST',
     category: 'tree',
     difficulty: 'Hard',
-    timeLimitSeconds: 300,
+    timeLimitSeconds: 1800,
     description: 'Given a binary tree as a nested array [val, left, right], determine if it is a valid BST.',
     prompt: 'Implement function solve(tree) returning true if the tree is a valid BST. Tree format: [value, leftSubtree, rightSubtree] or null.',
     languages: {
@@ -644,7 +644,7 @@ const questions = [
     title: 'Minimum Path Sum',
     category: 'dp',
     difficulty: 'Hard',
-    timeLimitSeconds: 300,
+    timeLimitSeconds: 1800,
     description: 'Given an m×n grid with non-negative numbers, find the path from top-left to bottom-right that minimizes the sum (move only right or down).',
     prompt: 'Implement function solve(grid) returning the minimum path sum.',
     languages: {

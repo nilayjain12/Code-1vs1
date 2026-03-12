@@ -16,7 +16,8 @@ export function connectSocket(token) {
   
   currentToken = token;
 
-  const socketUrl = import.meta.env.VITE_SOCKET_URL || window.location.origin;
+  const isProd = typeof window !== 'undefined' && window.location.hostname !== 'localhost';
+  const socketUrl = isProd ? 'https://code-1vs1-api.onrender.com' : window.location.origin;
   socket = io(socketUrl, {
     auth: { token },
     reconnection: true,

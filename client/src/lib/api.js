@@ -1,6 +1,6 @@
-const API_BASE = import.meta.env.VITE_API_URL
-  ? `${import.meta.env.VITE_API_URL}/api`
-  : '/api';
+// In production, always use the Render backend. In local dev, use the Vite proxy.
+const isProd = typeof window !== 'undefined' && window.location.hostname !== 'localhost';
+const API_BASE = isProd ? 'https://code-1vs1-api.onrender.com/api' : '/api';
 
 function getHeaders() {
   const token = localStorage.getItem('token');

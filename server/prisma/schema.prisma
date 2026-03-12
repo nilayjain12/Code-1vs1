@@ -25,6 +25,7 @@ model User {
   isActive            Boolean  @default(true)
   isBanned            Boolean  @default(false)
   antiCheatViolations Int      @default(0)
+  role                String   @default("user")
 
   matchesAsPlayer1 Match[]        @relation("Player1Matches")
   matchesAsPlayer2 Match[]        @relation("Player2Matches")
@@ -80,4 +81,24 @@ model AntiCheatLog {
 
   @@index([userId])
   @@index([matchId])
+}
+
+model Question {
+  id                String   @id @default(uuid())
+  slug              String   @unique
+  title             String
+  category          String
+  difficulty        String
+  timeLimitSeconds  Int      @default(120)
+  description       String
+  prompt            String
+  languages         Json     // { javascript: { starterCode, wrapperFn }, python: { ... }, ... }
+  testCases         Json     // [{ input: [...], expected: ..., visible: true/false }]
+  topics            Json     @default("[]")
+  isActive          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([category])
+  @@index([difficulty])
 }

@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard';
 import Arena from './pages/Arena';
 import Leaderboard from './pages/Leaderboard';
 import Profile from './pages/Profile';
+import AdminQuestions from './pages/AdminQuestions';
 
 function ProtectedRoute({ children }) {
   const { isAuthenticated, loading } = useAuthStore();
@@ -20,6 +21,20 @@ function ProtectedRoute({ children }) {
     );
   }
   return isAuthenticated ? children : <Navigate to="/login" />;
+}
+
+function AdminRoute({ children }) {
+  const { isAuthenticated, user, loading } = useAuthStore();
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner" />
+      </div>
+    );
+  }
+  if (!isAuthenticated) return <Navigate to="/login" />;
+  if (user?.role !== 'admin') return <Navigate to="/dashboard" />;
+  return children;
 }
 
 function PublicRoute({ children }) {
@@ -52,6 +67,7 @@ export default function App() {
         <Route path="/arena" element={<ProtectedRoute><Arena /></ProtectedRoute>} />
         <Route path="/leaderboard" element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />
         <Route path="/profile/:userId" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="/admin/questions" element={<AdminRoute><AdminQuestions /></AdminRoute>} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </>

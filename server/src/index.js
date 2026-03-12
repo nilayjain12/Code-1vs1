@@ -9,6 +9,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const leaderboardRoutes = require('./routes/leaderboard');
 const cheatRoutes = require('./routes/cheat');
+const adminRoutes = require('./routes/admin');
 const { setupMatchmaker } = require('./socket/matchmaker');
 
 const app = express();
@@ -46,6 +47,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/leaderboard', leaderboardRoutes);
 app.use('/api/cheat', cheatRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

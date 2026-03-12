@@ -56,6 +56,7 @@ router.post('/register', async (req, res) => {
         totalWins: user.totalWins,
         totalLosses: user.totalLosses,
         totalDraws: user.totalDraws,
+        role: user.role,
       },
     });
   } catch (err) {
@@ -111,6 +112,7 @@ router.post('/login', async (req, res) => {
         totalDraws: user.totalDraws,
         favoriteLanguage: user.favoriteLanguage,
         createdAt: user.createdAt,
+        role: user.role,
       },
     });
   } catch (err) {
@@ -174,6 +176,7 @@ router.get('/verify', async (req, res) => {
         totalDraws: user.totalDraws,
         favoriteLanguage: user.favoriteLanguage,
         createdAt: user.createdAt,
+        role: user.role,
       },
     });
   } catch (err) {

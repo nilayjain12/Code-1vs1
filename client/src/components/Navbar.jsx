@@ -29,6 +29,15 @@ export default function Navbar() {
             >
               🏆 Leaderboard
             </button>
+            {user.role === 'admin' && (
+              <button
+                className="retro-btn retro-btn--ghost"
+                style={{ color: '#ffd700', borderColor: '#555', padding: '0.4rem 0.8rem', fontSize: '0.9rem' }}
+                onClick={() => navigate('/admin/questions')}
+              >
+                ⚙️ Admin
+              </button>
+            )}
             <div
               className="navbar__user"
               style={{ cursor: 'pointer' }}

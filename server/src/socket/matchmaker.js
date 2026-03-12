@@ -1,7 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const { evaluateJSCode } = require('../services/sandbox');
 const { executeJudge0, LANGUAGE_ID_MAP } = require('../services/judge0');
-const questions = require('../data/questions');
 const jwt = require('jsonwebtoken');
 
 const prisma = new PrismaClient();
@@ -22,8 +21,21 @@ const queue = [];           // Array of { socketId, userId, language, joinedAt }
 const activeRooms = new Map(); // roomId -> room object
 const socketToUser = new Map(); // socketId -> { userId, username, avatar }
 
-function pickQuestion() {
-  return questions[Math.floor(Math.random() * questions.length)];
+async function pickQuestion() {
+  // Fetch a random active question from the database
+  const count = await prisma.question.count({ where: { isActive: true } });
+  if (count === 0) {
+    // Fallback: return a minimal default question
+    return {
+      title: 'Add Two Numbers', difficulty: 'Easy', timeLimitSeconds: 120,
+      description: 'Return the sum of two integers.', prompt: 'Implement solve(a, b).',
+      languages: { javascript: { starterCode: 'function solve(a, b) {\n  // your code here\n}', wrapperFn: 'solve' } },
+      testCases: [{ input: [1, 2], expected: 3, visible: true }],
+    };
+  }
+  const skip = Math.floor(Math.random() * count);
+  const [question] = await prisma.question.findMany({ where: { isActive: true }, skip, take: 1 });
+  return question;
 }
 
 /**
@@ -260,16 +272,16 @@ function broadcastOnlineCount(io) {
   });
 }
 
-function tryMatchmake(io) {
+async function tryMatchmake(io) {
   while (queue.length >= 2) {
     const playerA = queue.shift();
     const playerB = queue.shift();
-    createHumanMatch(io, playerA, playerB);
+    await createHumanMatch(io, playerA, playerB);
   }
 }
 
-function createHumanMatch(io, playerA, playerB) {
-  const question = pickQuestion();
+async function createHumanMatch(io, playerA, playerB) {
+  const question = await pickQuestion();
   const roomId = `room-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
   const lang = playerA.language || 'javascript';
 
@@ -344,9 +356,9 @@ function createHumanMatch(io, playerA, playerB) {
   }
 }
 
-function createBotMatch(io, socket, player) {
+async function createBotMatch(io, socket, player) {
   const bot = pickBot();
-  const question = pickQuestion();
+  const question = await pickQuestion();
   const roomId = `room-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
   const lang = player.language || 'javascript';
 

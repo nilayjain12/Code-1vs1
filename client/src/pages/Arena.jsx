@@ -425,7 +425,7 @@ export default function Arena() {
               onClick={handleSubmit}
               disabled={submitting || !!matchResult}
             >
-              {submitting ? '⏳ Running Tests...' : '🚀 Submit Code'}
+              {submitting ? '⏳ Running Tests...' : submissionResult?.allPassed ? '🚀 Submit Code' : '🚀 Run Tests'}
             </button>
           </div>
         </div>

@@ -26,6 +26,34 @@ function pickQuestion() {
   return questions[Math.floor(Math.random() * questions.length)];
 }
 
+/**
+ * Generate a fallback starter code for languages not explicitly defined
+ * by extracting the function signature from the JavaScript starter.
+ */
+function generateFallbackStarter(question, language) {
+  // Extract function name and params from JS starter
+  const jsCode = question.languages?.javascript?.starterCode || 'function solve() {\n  // your code here\n}';
+  const match = jsCode.match(/function\s+(\w+)\s*\(([^)]*)\)/);
+  const fnName = match ? match[1] : 'solve';
+  const params = match ? match[2].trim() : '';
+  const paramList = params ? params.split(',').map(p => p.trim()) : [];
+
+  switch (language) {
+    case 'java':
+      return `class Solution {\n  public static Object ${fnName}(${paramList.map(p => 'Object ' + p).join(', ')}) {\n    // your code here\n    return null;\n  }\n}`;
+    case 'cpp':
+      return `#include <iostream>\n#include <vector>\n#include <string>\nusing namespace std;\n\nauto ${fnName}(${paramList.map(p => 'auto ' + p).join(', ')}) {\n  // your code here\n  return 0;\n}`;
+    case 'csharp':
+      return `public class Solution {\n  public static object Solve(${paramList.map(p => 'object ' + p).join(', ')}) {\n    // your code here\n    return null;\n  }\n}`;
+    case 'go':
+      return `package main\n\nfunc ${fnName}(${paramList.map(p => p + ' interface{}').join(', ')}) interface{} {\n  // your code here\n  return nil\n}`;
+    case 'rust':
+      return `fn ${fnName}(${paramList.map(p => p + ': i32').join(', ')}) -> i32 {\n  // your code here\n  0\n}`;
+    default:
+      return jsCode;
+  }
+}
+
 function pickBot() {
   return MOCK_BOTS[Math.floor(Math.random() * MOCK_BOTS.length)];
 }
@@ -119,23 +147,22 @@ function setupMatchmaker(io) {
           result = await executeJudge0(code, language, room.question.testCases);
         }
 
-        player.submitted = true;
-        player.submissionResult = result;
-        player.submittedAt = Date.now();
         player.code = code;
-
         socket.emit('submission-result', result);
 
-        // Check if opponent is a bot
-        const opponent = room.players.find(p => p.socketId !== socket.id);
-
         if (result.allPassed) {
+          // Lock submission only when all tests pass
+          player.submitted = true;
+          player.submissionResult = result;
+          player.submittedAt = Date.now();
+
+          // Check if opponent is a bot
+          const opponent = room.players.find(p => p.socketId !== socket.id);
+
           // Instant win if all tests pass
           concludeRoom(io, room, player, opponent, 'all-tests-passed');
-        } else if (opponent?.isBot && opponent.submitted) {
-          // Both submitted - compare
-          compareAndConclude(io, room);
         }
+        // If not all passed, player can resubmit (submitted stays false)
       } catch (err) {
         socket.emit('submission-result', {
           passed: 0,
@@ -154,15 +181,15 @@ function setupMatchmaker(io) {
       const player = room.players.find(p => p.socketId === socket.id);
       if (!player) return;
 
-      const langData = room.question.languages[language];
-      if (!langData) return;
-
       // Update room language state so server knows what they are using
       room.language = language;
 
+      const langData = room.question.languages[language];
+      const starterCode = langData?.starterCode || generateFallbackStarter(room.question, language);
+
       socket.emit('language-changed', {
         language,
-        starterCode: langData.starterCode
+        starterCode,
       });
     });
 

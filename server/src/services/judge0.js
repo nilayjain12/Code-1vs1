@@ -149,14 +149,11 @@ for _i in range(${numTests}):
 
 // ─── JAVA HARNESS ────────────────────────────────────────
 function buildJavaHarness(code, numTests, expectedJson) {
-  // Extract the user's Solution class body (they write inside class Solution { ... })
-  // We wrap it with imports and a main method
   const escapedExpected = expectedJson.map(e => e.replace(/\\/g, '\\\\').replace(/"/g, '\\"'));
 
   return `
 import java.util.*;
 import java.util.stream.*;
-import org.json.*;
 
 ${code}
 
@@ -167,16 +164,13 @@ class Main {
 
         for (int i = 0; i < ${numTests}; i++) {
             try {
-                String line = sc.nextLine();
-                // Parse input and call solve
-                JSONArray inputArr = new JSONArray(line);
-                // This is a simplified harness — works for primitives
-                Object result = callSolve(inputArr);
-                String resultJson = new JSONObject().put("r", result).get("r").toString();
-                if (resultJson.equals(expected[i])) {
+                String line = sc.nextLine().trim();
+                Object result = callSolve(line);
+                String resultStr = resultToJson(result);
+                if (resultStr.equals(expected[i])) {
                     System.out.println("TESTRESULT:PASS:" + i);
                 } else {
-                    System.out.println("TESTRESULT:FAIL:" + i + ":got " + resultJson);
+                    System.out.println("TESTRESULT:FAIL:" + i + ":got " + resultStr);
                 }
             } catch (Exception e) {
                 System.out.println("TESTRESULT:ERROR:" + i + ":" + e.getMessage());
@@ -184,36 +178,110 @@ class Main {
         }
     }
 
-    static Object callSolve(JSONArray inputArr) throws Exception {
-        // Dynamically call based on argument count
-        // This is simplified — adjust based on your problem set
+    static Object callSolve(String jsonLine) throws Exception {
+        // Parse the JSON array of arguments
+        // Remove outer [ ]
+        jsonLine = jsonLine.trim();
+        if (jsonLine.startsWith("[")) jsonLine = jsonLine.substring(1);
+        if (jsonLine.endsWith("]")) jsonLine = jsonLine.substring(0, jsonLine.length() - 1);
+
         java.lang.reflect.Method[] methods = Solution.class.getMethods();
         for (java.lang.reflect.Method m : methods) {
             if (m.getName().equals("solve")) {
-                Object[] javaArgs = new Object[inputArr.length()];
                 Class<?>[] paramTypes = m.getParameterTypes();
-                for (int j = 0; j < inputArr.length(); j++) {
-                    javaArgs[j] = convertArg(inputArr.get(j), paramTypes[j]);
-                }
+                Object[] javaArgs = parseArgs(jsonLine, paramTypes);
                 return m.invoke(null, javaArgs);
             }
         }
         throw new Exception("No solve method found");
     }
 
-    static Object convertArg(Object jsonVal, Class<?> targetType) {
-        if (targetType == int.class || targetType == Integer.class) return ((Number) jsonVal).intValue();
-        if (targetType == long.class || targetType == Long.class) return ((Number) jsonVal).longValue();
-        if (targetType == double.class || targetType == Double.class) return ((Number) jsonVal).doubleValue();
-        if (targetType == boolean.class || targetType == Boolean.class) return (Boolean) jsonVal;
-        if (targetType == String.class) return jsonVal.toString();
-        if (targetType == int[].class) {
-            JSONArray arr = (JSONArray) jsonVal;
-            int[] result = new int[arr.length()];
-            for (int i = 0; i < arr.length(); i++) result[i] = arr.getInt(i);
-            return result;
+    static Object[] parseArgs(String argsStr, Class<?>[] paramTypes) {
+        // Split top-level arguments (respecting nested brackets)
+        List<String> parts = splitTopLevel(argsStr);
+        Object[] result = new Object[paramTypes.length];
+        for (int i = 0; i < paramTypes.length && i < parts.size(); i++) {
+            result[i] = convertArg(parts.get(i).trim(), paramTypes[i]);
         }
-        return jsonVal;
+        return result;
+    }
+
+    static List<String> splitTopLevel(String s) {
+        List<String> parts = new ArrayList<>();
+        int depth = 0;
+        StringBuilder current = new StringBuilder();
+        boolean inString = false;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '"' && (i == 0 || s.charAt(i-1) != '\\\\')) inString = !inString;
+            if (!inString) {
+                if (c == '[' || c == '{') depth++;
+                if (c == ']' || c == '}') depth--;
+                if (c == ',' && depth == 0) {
+                    parts.add(current.toString());
+                    current = new StringBuilder();
+                    continue;
+                }
+            }
+            current.append(c);
+        }
+        if (current.length() > 0) parts.add(current.toString());
+        return parts;
+    }
+
+    static Object convertArg(String val, Class<?> targetType) {
+        val = val.trim();
+        if (targetType == int.class || targetType == Integer.class) return Integer.parseInt(val);
+        if (targetType == long.class || targetType == Long.class) return Long.parseLong(val);
+        if (targetType == double.class || targetType == Double.class) return Double.parseDouble(val);
+        if (targetType == boolean.class || targetType == Boolean.class) return Boolean.parseBoolean(val);
+        if (targetType == String.class) {
+            if (val.startsWith("\\"") && val.endsWith("\\"")) val = val.substring(1, val.length()-1);
+            return val;
+        }
+        if (targetType == int[].class) {
+            String inner = val.substring(1, val.length()-1).trim();
+            if (inner.isEmpty()) return new int[0];
+            String[] nums = inner.split(",");
+            int[] arr = new int[nums.length];
+            for (int i = 0; i < nums.length; i++) arr[i] = Integer.parseInt(nums[i].trim());
+            return arr;
+        }
+        if (targetType == int[][].class) {
+            List<String> rows = splitTopLevel(val.substring(1, val.length()-1).trim());
+            int[][] arr = new int[rows.size()][];
+            for (int i = 0; i < rows.size(); i++) {
+                String row = rows.get(i).trim();
+                row = row.substring(1, row.length()-1).trim();
+                if (row.isEmpty()) { arr[i] = new int[0]; continue; }
+                String[] nums = row.split(",");
+                arr[i] = new int[nums.length];
+                for (int j = 0; j < nums.length; j++) arr[i][j] = Integer.parseInt(nums[j].trim());
+            }
+            return arr;
+        }
+        return val;
+    }
+
+    static String resultToJson(Object obj) {
+        if (obj == null) return "null";
+        if (obj instanceof Integer || obj instanceof Long || obj instanceof Double || obj instanceof Boolean) return obj.toString();
+        if (obj instanceof String) return "\\"" + obj + "\\"";
+        if (obj instanceof int[]) {
+            int[] arr = (int[]) obj;
+            return "[" + Arrays.stream(arr).mapToObj(String::valueOf).collect(Collectors.joining(",")) + "]";
+        }
+        if (obj instanceof int[][]) {
+            int[][] arr = (int[][]) obj;
+            StringBuilder sb = new StringBuilder("[");
+            for (int i = 0; i < arr.length; i++) {
+                if (i > 0) sb.append(",");
+                sb.append("[").append(Arrays.stream(arr[i]).mapToObj(String::valueOf).collect(Collectors.joining(","))).append("]");
+            }
+            sb.append("]");
+            return sb.toString();
+        }
+        return obj.toString();
     }
 }
 `;

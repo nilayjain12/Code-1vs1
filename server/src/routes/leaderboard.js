@@ -85,15 +85,21 @@ router.get('/user-rank/:userId', async (req, res) => {
     const user = await prisma.user.findUnique({ where: { id: req.params.userId } });
     if (!user) return res.status(404).json({ error: 'User not found' });
 
-    // Count users with a higher streak (or same streak but more wins)
+    // Count users with a higher streak (or same streak but more wins, or same both but older account)
     const usersAbove = await prisma.user.count({
       where: {
         isBanned: false,
+        id: { not: user.id },
         OR: [
           { currentStreak: { gt: user.currentStreak } },
           {
             currentStreak: user.currentStreak,
             totalWins: { gt: user.totalWins },
+          },
+          {
+            currentStreak: user.currentStreak,
+            totalWins: user.totalWins,
+            createdAt: { lt: user.createdAt },
           },
         ],
       },

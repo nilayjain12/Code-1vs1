@@ -1,10 +1,11 @@
 {
   "name": "code-1vs1",
   "version": "1.0.0",
-  "description": "Minimal 1v1 coding arena",
-  "main": "server.js",
+  "private": true,
+  "description": "Competitive real-time coding battle platform",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "install:all": "cd server && npm install && cd ../client && npm install"
   }
 }

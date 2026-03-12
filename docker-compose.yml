@@ -1,0 +1,82 @@
+version: "3.8"
+
+services:
+  # Judge0 API server
+  judge0-server:
+    image: judge0/judge0:1.13.1
+    container_name: judge0-server
+    ports:
+      - "2358:2358"
+    environment:
+      - REDIS_HOST=judge0-redis
+      - POSTGRES_HOST=judge0-db
+      - POSTGRES_DB=judge0
+      - POSTGRES_USER=judge0
+      - POSTGRES_PASSWORD=judge0password
+      - RAILS_MAX_THREADS=2
+      - RAILS_ENV=production
+      - ENABLE_WAIT_RESULT=true
+      - ENABLE_BATCHED_OPERATIONS=true
+    privileged: true
+    restart: unless-stopped
+    depends_on:
+      judge0-db:
+        condition: service_healthy
+      judge0-redis:
+        condition: service_healthy
+
+  # Judge0 worker (processes submissions)
+  judge0-worker:
+    image: judge0/judge0:1.13.1
+    container_name: judge0-worker
+    command: ["./scripts/workers"]
+    environment:
+      - REDIS_HOST=judge0-redis
+      - POSTGRES_HOST=judge0-db
+      - POSTGRES_DB=judge0
+      - POSTGRES_USER=judge0
+      - POSTGRES_PASSWORD=judge0password
+      - RAILS_MAX_THREADS=2
+      - RAILS_ENV=production
+    privileged: true
+    restart: unless-stopped
+    depends_on:
+      judge0-db:
+        condition: service_healthy
+      judge0-redis:
+        condition: service_healthy
+
+  # PostgreSQL for Judge0
+  judge0-db:
+    image: postgres:16-alpine
+    container_name: judge0-db
+    environment:
+      - POSTGRES_DB=judge0
+      - POSTGRES_USER=judge0
+      - POSTGRES_PASSWORD=judge0password
+    volumes:
+      - judge0-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U judge0"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Redis for Judge0
+  judge0-redis:
+    image: redis:7-alpine
+    container_name: judge0-redis
+    command: redis-server --appendonly yes
+    volumes:
+      - judge0-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  judge0-postgres-data:
+  judge0-redis-data:

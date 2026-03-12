@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String   @id @default(uuid())
+  email               String   @unique
+  passwordHash        String
+  username            String   @unique
+  avatar              String   @default("🤖")
+  bio                 String   @default("")
+  currentStreak       Int      @default(0)
+  highestStreak       Int      @default(0)
+  totalWins           Int      @default(0)
+  totalLosses         Int      @default(0)
+  totalDraws          Int      @default(0)
+  favoriteLanguage    String   @default("javascript")
+  createdAt           DateTime @default(now())
+  lastActive          DateTime @default(now())
+  isActive            Boolean  @default(true)
+  isBanned            Boolean  @default(false)
+  antiCheatViolations Int      @default(0)
+
+  matchesAsPlayer1 Match[]        @relation("Player1Matches")
+  matchesAsPlayer2 Match[]        @relation("Player2Matches")
+  wonMatches       Match[]        @relation("WonMatches")
+  antiCheatLogs    AntiCheatLog[]
+}
+
+model Match {
+  id              String   @id @default(uuid())
+  roomId          String
+  player1Id       String
+  player2Id       String
+  winnerId        String?
+  result          String
+  reason          String
+  questionTitle   String
+  questionDiff    String
+  questionCat     String
+  language        String
+  player1Code     String   @default("")
+  player2Code     String   @default("")
+  player1Tests    Int      @default(0)
+  player2Tests    Int      @default(0)
+  totalTests      Int      @default(0)
+  durationSeconds Int      @default(0)
+  createdAt       DateTime @default(now())
+  isMockMatch     Boolean  @default(false)
+
+  player1 User  @relation("Player1Matches", fields: [player1Id], references: [id])
+  player2 User  @relation("Player2Matches", fields: [player2Id], references: [id])
+  winner  User? @relation("WonMatches", fields: [winnerId], references: [id])
+
+  antiCheatLogs AntiCheatLog[]
+
+  @@index([player1Id])
+  @@index([player2Id])
+  @@index([winnerId])
+  @@index([createdAt])
+}
+
+model AntiCheatLog {
+  id            String   @id @default(uuid())
+  userId        String
+  matchId       String?
+  violationType String
+  details       String   @default("")
+  severity      String   @default("warning")
+  resolved      Boolean  @default(false)
+  createdAt     DateTime @default(now())
+
+  user  User   @relation(fields: [userId], references: [id])
+  match Match? @relation(fields: [matchId], references: [id])
+
+  @@index([userId])
+  @@index([matchId])
+}

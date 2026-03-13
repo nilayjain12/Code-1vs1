@@ -21,7 +21,8 @@ const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS
 
 // Middleware
 app.use(cors({ origin: ALLOWED_ORIGINS, credentials: true }));
-app.use(express.json({ limit: '1mb' }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Rate limiter (simple in-memory)
 const rateLimits = new Map();

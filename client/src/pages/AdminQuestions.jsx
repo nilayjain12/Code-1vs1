@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { fetchAPI } from '../lib/api';
 
-const CATEGORIES = ['math', 'array', 'string', 'tree', 'graph', 'dp', 'linked-list', 'sql'];
+const CATEGORIES = ['math', 'array', 'string', 'tree', 'graph', 'dp', 'linked-list', 'sql', 'hash-table', 'binary-search', 'sorting', 'recursion', 'stack', 'queue', 'greedy', 'backtracking', 'divide-and-conquer', 'two-pointers', 'sliding-window', 'general'];
 const DIFFICULTIES = ['Easy', 'Medium', 'Hard'];
 const LANGUAGES = ['javascript', 'python', 'typescript', 'java', 'cpp', 'csharp', 'go', 'rust'];
 
@@ -9,6 +9,15 @@ const LANG_LABELS = {
   javascript: 'JavaScript', python: 'Python', typescript: 'TypeScript',
   java: 'Java', cpp: 'C++', csharp: 'C#', go: 'Go', rust: 'Rust',
 };
+
+// Normalize incoming language keys (c++ → cpp, c# → csharp)
+const LANG_KEY_MAP = {
+  'c++': 'cpp', 'c#': 'csharp', 'cpp': 'cpp', 'csharp': 'csharp',
+  'javascript': 'javascript', 'python': 'python', 'typescript': 'typescript',
+  'java': 'java', 'go': 'go', 'rust': 'rust',
+};
+
+const normalizeLangKey = (key) => LANG_KEY_MAP[(key || '').toLowerCase()] || (key || '').toLowerCase();
 
 const emptyForm = () => ({
   slug: '', title: '', category: 'math', difficulty: 'Easy',
@@ -38,6 +47,7 @@ export default function AdminQuestions() {
   const [importing, setImporting] = useState(false);
   const [importResults, setImportResults] = useState(null);
   const fileInputRef = useRef(null);
+  const formJsonRef = useRef(null);
 
   // UI state for form
   const [activeTab, setActiveTab] = useState('javascript');
@@ -85,6 +95,68 @@ export default function AdminQuestions() {
     setEditing('new');
     setError('');
     setSuccess('');
+  };
+
+  // Parse a JSON file (two_sum.json format) and fill the create form
+  const handleFormJsonUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setError('');
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        let json = JSON.parse(event.target.result);
+        // Support both array-of-one and single object
+        const q = Array.isArray(json) ? json[0] : json;
+        if (!q || !q.title) throw new Error('JSON must contain a question with a title.');
+
+        // Normalize languages
+        const languages = {};
+        for (const l of LANGUAGES) {
+          languages[l] = { starterCode: '', wrapperFn: 'solve' };
+        }
+        if (q.languages && typeof q.languages === 'object') {
+          for (const [rawKey, val] of Object.entries(q.languages)) {
+            const normKey = normalizeLangKey(rawKey);
+            if (LANGUAGES.includes(normKey)) {
+              languages[normKey] = {
+                starterCode: val.starterCode || val.code || '',
+                wrapperFn: val.entrypoint || val.wrapperFn || 'solve',
+              };
+            }
+          }
+        }
+
+        // Normalize testCases
+        const testCases = (q.testCases || []).map(tc => ({
+          input: tc.input || [],
+          expected: tc.expected || '',
+          visible: tc.visibleToPlayer !== undefined ? tc.visibleToPlayer : (tc.visible !== undefined ? tc.visible : true),
+        }));
+
+        const cat = (q.category || (q.topics && q.topics[0]) || 'math').toLowerCase();
+
+        setForm({
+          slug: q.slug || generateSlug(q.title),
+          title: q.title || '',
+          category: CATEGORIES.includes(cat) ? cat : 'math',
+          difficulty: q.difficulty || 'Easy',
+          timeLimitSeconds: q.timeLimitSeconds || 1800,
+          description: q.description || '',
+          prompt: q.prompt || `Write a function to solve: ${q.title}`,
+          languages,
+          testCases: testCases.length > 0 ? testCases : [{ input: [], expected: '', visible: true }],
+          topics: q.topics || [],
+          isActive: q.isActive !== undefined ? q.isActive : true,
+        });
+        setEditing('new');
+        setSuccess(`Loaded "${q.title}" from JSON! Review and hit Deploy.`);
+      } catch (err) {
+        setError(`Failed to parse JSON: ${err.message}`);
+      }
+    };
+    reader.readAsText(file);
+    if (formJsonRef.current) formJsonRef.current.value = '';
   };
 
   const handleOpenImport = () => {
@@ -344,9 +416,19 @@ export default function AdminQuestions() {
             <h1>{editing === 'new' ? '➕ CREATE LEVEL' : '✏️ EDIT LEVEL'}</h1>
             <p>Configure the challenge parameters</p>
           </div>
-          <button className="retro-btn retro-btn--ghost" onClick={() => setEditing(null)}>
-            ← BACK TO HUB
-          </button>
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+            {editing === 'new' && (
+              <>
+                <input type="file" ref={formJsonRef} accept=".json" style={{ display: 'none' }} onChange={handleFormJsonUpload} />
+                <button className="retro-btn retro-btn--primary" style={{ fontSize: '0.95rem' }} onClick={() => formJsonRef.current?.click()}>
+                  📄 LOAD FROM JSON
+                </button>
+              </>
+            )}
+            <button className="retro-btn retro-btn--ghost" onClick={() => setEditing(null)}>
+              ← BACK TO HUB
+            </button>
+          </div>
         </div>
 
         {error && <div className="toast toast--error" style={{ position: 'relative', top: 0, right: 0, marginBottom: '1.5rem', maxWidth: '100%' }}>🚨 {error}</div>}

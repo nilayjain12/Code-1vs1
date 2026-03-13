@@ -1,0 +1,53 @@
+[
+  {
+    "id": "two-sum",
+    "slug": "two-sum",
+    "title": "Two Sum",
+    "category": "array",
+    "difficulty": "Easy",
+    "timeLimitSeconds": 1800,
+    "description": "## Two Sum\n\nGiven an array of integers `nums` and an integer `target`, return *indices of the two numbers such that they add up to `target`*.\n\nYou may assume each input has **exactly one solution**, and you may not use the same element twice.\n\n### Examples\n**Example 1:**\n```\nInput: nums = [2,7,11,15], target = 9\nOutput: [0,1]\n```\n**Example 2:**\n```\nInput: nums = [3,2,4], target = 6\nOutput: [1,2]\n```\n\n### Constraints\n- `2 <= nums.length <= 10^4`\n- `-10^9 <= nums[i] <= 10^9`\n- Only one valid answer exists.",
+    "prompt": "Write function twoSum(nums, target) returning the indices of two numbers that sum to target.",
+    "topics": ["array", "hash-table"],
+    "testCases": [
+      { "input": [[2, 7, 11, 15], 9], "expected": [0, 1], "visibleToPlayer": true },
+      { "input": [[3, 2, 4], 6],       "expected": [1, 2], "visibleToPlayer": true },
+      { "input": [[3, 3], 6],           "expected": [0, 1], "visibleToPlayer": false }
+    ],
+    "languages": {
+      "javascript": {
+        "starterCode": "/**\n * @param {number[]} nums\n * @param {number} target\n * @return {number[]}\n */\nfunction twoSum(nums, target) {\n    // Your code here\n}",
+        "entrypoint": "twoSum"
+      },
+      "python": {
+        "starterCode": "from typing import List\n\nclass Solution:\n    def twoSum(self, nums: List[int], target: int) -> List[int]:\n        # Your code here\n        pass",
+        "entrypoint": "twoSum"
+      },
+      "typescript": {
+        "starterCode": "function twoSum(nums: number[], target: number): number[] {\n    // Your code here\n};",
+        "entrypoint": "twoSum"
+      },
+      "java": {
+        "starterCode": "class Solution {\n    public int[] twoSum(int[] nums, int target) {\n        // Your code here\n        return new int[]{};\n    }\n}",
+        "entrypoint": "twoSum"
+      },
+      "c++": {
+        "starterCode": "class Solution {\npublic:\n    vector<int> twoSum(vector<int>& nums, int target) {\n        // Your code here\n        return {};\n    }\n};",
+        "entrypoint": "twoSum"
+      },
+      "c#": {
+        "starterCode": "public class Solution {\n    public int[] TwoSum(int[] nums, int target) {\n        // Your code here\n        return new int[]{};\n    }\n}",
+        "entrypoint": "twoSum"
+      },
+      "go": {
+        "starterCode": "func twoSum(nums []int, target int) []int {\n    // Your code here\n    return []int{}\n}",
+        "entrypoint": "twoSum"
+      },
+      "rust": {
+        "starterCode": "impl Solution {\n    pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {\n        // Your code here\n        vec![]\n    }\n}",
+        "entrypoint": "twoSum"
+      }
+    },
+    "isActive": true
+  }
+]

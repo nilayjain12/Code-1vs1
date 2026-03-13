@@ -314,6 +314,9 @@ export default function Arena() {
                   marginBottom: '0.5rem',
                   fontFamily: 'var(--font-mono)',
                   fontSize: '0.9rem',
+                  overflowWrap: 'break-word',
+                  wordBreak: 'break-all',
+                  overflow: 'hidden',
                 }}>
                   <div><strong>Input:</strong> {JSON.stringify(tc.input)}</div>
                   <div><strong>Expected:</strong> {JSON.stringify(tc.expected)}</div>

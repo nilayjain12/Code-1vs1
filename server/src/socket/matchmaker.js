@@ -5,6 +5,20 @@ const jwt = require('jsonwebtoken');
 
 const prisma = new PrismaClient();
 
+// Language key normalization: DB may store 'c++' / 'c#' but frontend uses 'cpp' / 'csharp'
+const LANG_NORM = { 'c++': 'cpp', 'c#': 'csharp' };
+const LANG_REVERSE = { 'cpp': 'c++', 'csharp': 'c#' };
+
+// Given a frontend key like 'cpp', try both 'cpp' and 'c++' in the languages object
+function findLangData(languages, frontendKey) {
+  if (!languages) return null;
+  if (languages[frontendKey]) return languages[frontendKey];
+  const altKey = LANG_REVERSE[frontendKey];
+  if (altKey && languages[altKey]) return languages[altKey];
+  return null;
+}
+
+
 const MOCK_BOTS = [
   { name: 'ByteBard', speed: 0.75, emoji: '🤖' },
   { name: 'NeonScribble', speed: 0.6, emoji: '✏️' },
@@ -196,8 +210,8 @@ function setupMatchmaker(io) {
       // Update room language state so server knows what they are using
       room.language = language;
 
-      const langData = room.question.languages[language];
-      const starterCode = langData?.starterCode || generateFallbackStarter(room.question, language);
+      const langData = findLangData(room.question.languages, language);
+      const starterCode = langData?.starterCode || `// No starter code for ${language}\nfunction solve() {\n  // your code here\n}`;
 
       socket.emit('language-changed', {
         language,
@@ -324,8 +338,9 @@ async function createHumanMatch(io, playerA, playerB) {
 
   // Get correct starter code
   const langKey = lang;
-  const starterCode = question.languages?.[langKey]?.starterCode
-    || question.languages?.javascript?.starterCode
+  const langData = findLangData(question.languages, langKey);
+  const starterCode = langData?.starterCode
+    || findLangData(question.languages, 'javascript')?.starterCode
     || 'function solve() {\n  // your code here\n}';
 
   // Notify both players
@@ -337,7 +352,7 @@ async function createHumanMatch(io, playerA, playerB) {
       prompt: question.prompt || question.description,
       starterCode,
       timeLimitSeconds: question.timeLimitSeconds,
-      testCases: question.testCases.filter(t => t.visible).map(t => ({ input: t.input, expected: t.expected })),
+      testCases: question.testCases.filter(t => t.visible || t.visibleToPlayer).map(t => ({ input: t.input, expected: t.expected })),
     },
     endsAt: room.endsAt,
     language: lang,
@@ -426,8 +441,9 @@ async function createBotMatch(io, socket, player) {
   }, botDelay);
 
   // Get starter code
-  const starterCode = question.languages?.[lang]?.starterCode
-    || question.languages?.javascript?.starterCode
+  const botLangData = findLangData(question.languages, lang);
+  const starterCode = botLangData?.starterCode
+    || findLangData(question.languages, 'javascript')?.starterCode
     || 'function solve() {\n  // your code here\n}';
 
   socket.join(roomId);
@@ -439,7 +455,7 @@ async function createBotMatch(io, socket, player) {
       prompt: question.prompt || question.description,
       starterCode,
       timeLimitSeconds: question.timeLimitSeconds,
-      testCases: question.testCases.filter(t => t.visible).map(t => ({ input: t.input, expected: t.expected })),
+      testCases: question.testCases.filter(t => t.visible || t.visibleToPlayer).map(t => ({ input: t.input, expected: t.expected })),
     },
     endsAt: room.endsAt,
     opponentName: `${bot.emoji} ${bot.name}`,

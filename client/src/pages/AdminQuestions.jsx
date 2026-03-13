@@ -102,56 +102,73 @@ export default function AdminQuestions() {
     const file = e.target.files[0];
     if (!file) return;
     setError('');
+    setSuccess('');
     const reader = new FileReader();
     reader.onload = (event) => {
       try {
-        let json = JSON.parse(event.target.result);
+        const rawText = event.target.result;
+        let json = JSON.parse(rawText);
         // Support both array-of-one and single object
         const q = Array.isArray(json) ? json[0] : json;
-        if (!q || !q.title) throw new Error('JSON must contain a question with a title.');
+        if (!q || !q.title) throw new Error('JSON must contain a question object with a title field.');
 
-        // Normalize languages
+        console.log('[Admin] Parsing JSON question:', q.title);
+
+        // ── Build languages object ──
         const languages = {};
         for (const l of LANGUAGES) {
           languages[l] = { starterCode: '', wrapperFn: 'solve' };
         }
         if (q.languages && typeof q.languages === 'object') {
+          console.log('[Admin] Found languages keys:', Object.keys(q.languages));
           for (const [rawKey, val] of Object.entries(q.languages)) {
             const normKey = normalizeLangKey(rawKey);
-            if (LANGUAGES.includes(normKey)) {
-              languages[normKey] = {
-                starterCode: val.starterCode || val.code || '',
-                wrapperFn: val.entrypoint || val.wrapperFn || 'solve',
-              };
+            if (LANGUAGES.includes(normKey) && val) {
+              const code = val.starterCode || val.code || '';
+              const fn = val.entrypoint || val.wrapperFn || 'solve';
+              console.log(`[Admin]   ${rawKey} -> ${normKey}: code length=${code.length}, fn=${fn}`);
+              languages[normKey] = { starterCode: code, wrapperFn: fn };
             }
           }
         }
 
-        // Normalize testCases
-        const testCases = (q.testCases || []).map(tc => ({
-          input: tc.input || [],
-          expected: tc.expected || '',
-          visible: tc.visibleToPlayer !== undefined ? tc.visibleToPlayer : (tc.visible !== undefined ? tc.visible : true),
-        }));
+        // ── Build test cases ──
+        let testCases = [];
+        if (Array.isArray(q.testCases) && q.testCases.length > 0) {
+          testCases = q.testCases.map((tc, idx) => {
+            const vis = tc.visibleToPlayer !== undefined ? tc.visibleToPlayer : (tc.visible !== undefined ? tc.visible : true);
+            console.log(`[Admin]   TC#${idx+1}: input=${JSON.stringify(tc.input)}, expected=${JSON.stringify(tc.expected)}, visible=${vis}`);
+            return { input: tc.input ?? [], expected: tc.expected ?? '', visible: vis };
+          });
+        }
+        if (testCases.length === 0) {
+          testCases = [{ input: [], expected: '', visible: true }];
+        }
 
         const cat = (q.category || (q.topics && q.topics[0]) || 'math').toLowerCase();
+        const langsPopulated = Object.values(languages).filter(l => l.starterCode).length;
+        console.log(`[Admin] category=${cat}, testCases=${testCases.length}, langs with code=${langsPopulated}`);
 
-        setForm({
+        const newForm = {
           slug: q.slug || generateSlug(q.title),
-          title: q.title || '',
-          category: CATEGORIES.includes(cat) ? cat : 'math',
+          title: q.title,
+          category: CATEGORIES.includes(cat) ? cat : 'general',
           difficulty: q.difficulty || 'Easy',
           timeLimitSeconds: q.timeLimitSeconds || 1800,
           description: q.description || '',
           prompt: q.prompt || `Write a function to solve: ${q.title}`,
           languages,
-          testCases: testCases.length > 0 ? testCases : [{ input: [], expected: '', visible: true }],
-          topics: q.topics || [],
+          testCases,
+          topics: Array.isArray(q.topics) ? q.topics : [],
           isActive: q.isActive !== undefined ? q.isActive : true,
-        });
+        };
+
+        console.log('[Admin] Setting form with testCases:', newForm.testCases.length, 'languages:', Object.keys(newForm.languages).filter(k => newForm.languages[k].starterCode));
+        setForm(newForm);
         setEditing('new');
-        setSuccess(`Loaded "${q.title}" from JSON! Review and hit Deploy.`);
+        setSuccess(`✅ Loaded "${q.title}" from JSON! ${testCases.length} test cases, ${langsPopulated} languages populated.`);
       } catch (err) {
+        console.error('[Admin] JSON parse error:', err);
         setError(`Failed to parse JSON: ${err.message}`);
       }
     };
@@ -183,12 +200,22 @@ export default function AdminQuestions() {
     setError('');
     setSuccess('');
     try {
+      // Build clean languages: keep only langs with actual code
+      // Store BOTH normalized keys (cpp, csharp) AND alternate keys (c++, c#)
+      // so the matchmaker can find them regardless of lookup key
       const cleanLangs = {};
+      const LANG_ALT = { 'cpp': 'c++', 'csharp': 'c#' };
       for (const [lang, data] of Object.entries(form.languages)) {
-        if (data.starterCode.trim()) cleanLangs[lang] = data;
+        if (data.starterCode && data.starterCode.trim()) {
+          cleanLangs[lang] = data;
+          if (LANG_ALT[lang]) {
+            cleanLangs[LANG_ALT[lang]] = data;
+          }
+        }
       }
 
       const body = { ...form, languages: cleanLangs };
+      console.log('[Admin] Saving question with', Object.keys(cleanLangs).length, 'language entries:', Object.keys(cleanLangs));
 
       if (editing === 'new') {
         await fetchAPI('/admin/questions', {

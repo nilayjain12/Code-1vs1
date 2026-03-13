@@ -151,4 +151,55 @@ router.delete('/questions/:id', async (req, res) => {
   }
 });
 
+// ─── BULK IMPORT QUESTIONS ─────────────────────────────────
+router.post('/questions/bulk-import', async (req, res) => {
+  try {
+    const questions = req.body;
+    if (!Array.isArray(questions)) {
+      return res.status(400).json({ error: 'Expected an array of questions in the request body.' });
+    }
+
+    let successCount = 0;
+    let errors = [];
+
+    for (let i = 0; i < questions.length; i++) {
+      const q = questions[i];
+      try {
+        if (!q.slug || !q.title || !q.category || !q.difficulty || !q.description || !q.prompt || !q.languages || !q.testCases) {
+          errors.push({ title: q.title || `Item #${i+1}`, error: 'Missing required fields' });
+          continue;
+        }
+
+        await prisma.question.create({
+          data: {
+            slug: q.slug,
+            title: q.title,
+            category: q.category,
+            difficulty: q.difficulty,
+            timeLimitSeconds: q.timeLimitSeconds || 120,
+            description: q.description,
+            prompt: q.prompt,
+            languages: q.languages,
+            testCases: q.testCases,
+            topics: q.topics || [],
+            isActive: q.isActive !== undefined ? q.isActive : true,
+          },
+        });
+        successCount++;
+      } catch (err) {
+        if (err.code === 'P2002') {
+          errors.push({ title: q.title, error: `Question with slug "${q.slug}" already exists` });
+        } else {
+          errors.push({ title: q.title || `Item #${i+1}`, error: err.message });
+        }
+      }
+    }
+
+    res.json({ successCount, errors, total: questions.length });
+  } catch (err) {
+    console.error('Admin bulk import error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 module.exports = router;

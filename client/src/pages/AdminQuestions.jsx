@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { fetchAPI } from '../lib/api';
 
 const CATEGORIES = ['math', 'array', 'string', 'tree', 'graph', 'dp', 'linked-list', 'sql'];
@@ -19,15 +19,25 @@ const emptyForm = () => ({
   isActive: true,
 });
 
+const generateSlug = (title) => {
+  return (title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+};
+
 export default function AdminQuestions() {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [editing, setEditing] = useState(null); // null = list view, 'new' = create, id = edit
+  const [editing, setEditing] = useState(null); // null = list view, 'new' = create, id = edit, 'import' = json bulk
   const [form, setForm] = useState(emptyForm());
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [filter, setFilter] = useState({ category: '', difficulty: '' });
+
+  // Import State
+  const [importData, setImportData] = useState(null);
+  const [importing, setImporting] = useState(false);
+  const [importResults, setImportResults] = useState(null);
+  const fileInputRef = useRef(null);
 
   // UI state for form
   const [activeTab, setActiveTab] = useState('javascript');
@@ -77,6 +87,14 @@ export default function AdminQuestions() {
     setSuccess('');
   };
 
+  const handleOpenImport = () => {
+    setEditing('import');
+    setImportData(null);
+    setImportResults(null);
+    setError('');
+    setSuccess('');
+  };
+
   const handleDelete = async (id) => {
     if (!window.confirm('🗑️ Delete this question permanently?')) return;
     try {
@@ -122,6 +140,101 @@ export default function AdminQuestions() {
     }
   };
 
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setError('');
+    setSuccess('');
+    
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      try {
+        const json = JSON.parse(event.target.result);
+        if (!Array.isArray(json)) throw new Error("JSON must be an array of questions.");
+        
+        const mappedQuestions = json.map(q => {
+          // Map solutions to boilerplate format
+          const languages = {};
+          for (const lang of LANGUAGES) {
+             languages[lang] = { starterCode: '', wrapperFn: 'solve' };
+          }
+          
+          let codesArray = [];
+          if (q.solutions && Array.isArray(q.solutions)) codesArray = q.solutions;
+          else if (q.starterCodes && Array.isArray(q.starterCodes)) codesArray = q.starterCodes;
+
+          codesArray.forEach(sol => {
+             const l = sol.language?.toLowerCase();
+             if (LANGUAGES.includes(l)) {
+                languages[l] = { starterCode: sol.code || '', wrapperFn: 'solve' };
+             }
+          });
+          
+          // Map sampleCases
+          const testCases = (q.sampleCases || []).map(tc => {
+             let expectedVal = tc.output || "";
+             if (typeof expectedVal === 'string' && expectedVal.trim().includes('\n')) {
+                 expectedVal = expectedVal.split('\n')[0].trim();
+             }
+             return {
+                input: tc.input || "",
+                expected: expectedVal,
+                visible: true
+             };
+          });
+
+          const cat = (q.topics && q.topics.length > 0) ? q.topics[0].toLowerCase() : 'math';
+          const validCat = CATEGORIES.includes(cat) ? cat : 'math';
+
+          return {
+             slug: generateSlug(q.title || `q-${q.problemId}`),
+             title: q.title || `Question ${q.problemId}`,
+             category: validCat,
+             difficulty: q.difficulty || 'Medium',
+             timeLimitSeconds: 1800,
+             description: q.description || '',
+             prompt: `Write a function to solve: ${q.title || 'the problem'}`,
+             languages: languages,
+             testCases: testCases,
+             topics: q.topics || [],
+             isActive: true
+          };
+        });
+        
+        setImportData(mappedQuestions);
+      } catch (err) {
+        setError(`Failed to parse JSON: ${err.message}`);
+      }
+    };
+    reader.readAsText(file);
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
+  const executeBulkImport = async () => {
+    setImporting(true);
+    setError('');
+    setSuccess('');
+    setImportResults(null);
+    try {
+      const res = await fetchAPI('/admin/questions/bulk-import', {
+        method: 'POST',
+        body: JSON.stringify(importData)
+      });
+      setImportResults(res);
+      if (res.successCount > 0) {
+        setSuccess(`✅ ${res.successCount} questions imported successfully!`);
+        loadQuestions();
+      }
+      if (res.errors && res.errors.length > 0) {
+        setError(`⚠️ ${res.errors.length} questions failed to import.`);
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setImporting(false);
+    }
+  };
+
   const addTestCase = () => {
     setForm(f => ({ ...f, testCases: [...f.testCases, { input: [], expected: '', visible: true }] }));
   };
@@ -142,7 +255,85 @@ export default function AdminQuestions() {
     return true;
   });
 
-  const getDifficultyBadge = (d) => `badge badge--${d.toLowerCase()}`;
+  const getDifficultyBadge = (d) => `badge badge--${(d && d.toLowerCase()) || 'medium'}`;
+
+  // ─── IMPORT VIEW ───
+  if (editing === 'import') {
+    return (
+      <div className="page-container">
+        <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', textAlign: 'left', marginBottom: '2rem' }}>
+          <div>
+            <h1>📤 BULK JSON IMPORT</h1>
+            <p>Upload a massive payload of levels at once</p>
+          </div>
+          <button className="retro-btn retro-btn--ghost" onClick={() => setEditing(null)}>
+            ← BACK TO HUB
+          </button>
+        </div>
+
+        {error && <div className="toast toast--error" style={{ position: 'relative', top: 0, right: 0, marginBottom: '1.5rem', maxWidth: '100%' }}>{error}</div>}
+        {success && <div className="toast toast--success" style={{ position: 'relative', top: 0, right: 0, marginBottom: '1.5rem', maxWidth: '100%' }}>{success}</div>}
+
+        <div className="retro-card" style={{ textAlign: 'center', padding: '3rem', borderStyle: 'dashed', borderWidth: '4px', borderColor: 'var(--orange-400)', background: 'var(--cream-dark)' }}>
+          <h2 style={{ color: 'var(--ink)', marginBottom: '1rem' }}>DRAG & DROP JSON DATA LOG</h2>
+          <p style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', color: 'var(--ink-muted)', marginBottom: '2rem' }}>
+            Must be an array of objects containing title, difficulty, description, sampleCases, starterCodes, etc.
+          </p>
+          <input type="file" ref={fileInputRef} accept=".json" style={{ display: 'none' }} onChange={handleFileUpload} />
+          <button className="retro-btn retro-btn--primary retro-btn--large" onClick={() => fileInputRef.current?.click()}>
+            📁 SELECT .JSON FILE
+          </button>
+        </div>
+
+        {importData && !importResults && (
+           <div className="retro-card" style={{ marginTop: '2rem', animation: 'slide-up 0.3s ease' }}>
+             <h3 style={{ fontFamily: 'var(--font-display)', color: 'var(--orange-600)', fontSize: '2rem', marginBottom: '1rem' }}>
+               📡 UPLOAD PREVIEW
+             </h3>
+             <p style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', marginBottom: '1.5rem' }}>
+               Ready to inject <strong>{importData.length}</strong> questions into the database.
+             </p>
+             <button className="retro-btn retro-btn--success retro-btn--large retro-btn--glow" style={{ width: '100%' }} onClick={executeBulkImport} disabled={importing}>
+               {importing ? '🔄 INJECTING DATA...' : '⚡ INITIALIZE BULK IMPORT ⚡'}
+             </button>
+           </div>
+        )}
+
+        {importResults && (
+          <div className="retro-card" style={{ marginTop: '2rem' }}>
+             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', marginBottom: '1rem', color: importResults.errors?.length > 0 ? 'var(--neon-pink)' : 'var(--neon-green)' }}>
+               📊 AFTER ACTION REPORT
+             </h3>
+             <div className="stats-grid" style={{ marginBottom: '2rem' }}>
+                <div className="stats-grid__item">
+                   <div className="stats-grid__value" style={{ color: 'var(--ink)' }}>{importResults.total}</div>
+                   <div className="stats-grid__label">TOTAL DETECTED</div>
+                </div>
+                <div className="stats-grid__item" style={{ borderColor: 'var(--neon-green)', background: '#eeffee' }}>
+                   <div className="stats-grid__value" style={{ color: 'var(--neon-green-dim)' }}>{importResults.successCount}</div>
+                   <div className="stats-grid__label">SUCCESSFULLY IMPORTED</div>
+                </div>
+                <div className="stats-grid__item" style={{ borderColor: 'var(--neon-pink)', background: '#ffeeee' }}>
+                   <div className="stats-grid__value" style={{ color: 'var(--neon-pink-dim)' }}>{importResults.errors?.length || 0}</div>
+                   <div className="stats-grid__label">FAILED / REJECTED</div>
+                </div>
+             </div>
+
+             {importResults.errors?.length > 0 && (
+               <div style={{ background: '#2d2d2d', border: 'var(--border-thick)', borderRadius: 'var(--radius-md)', padding: '1.5rem', maxHeight: '400px', overflowY: 'auto' }}>
+                 <h4 style={{ color: 'var(--neon-pink)', marginBottom: '1rem', borderBottom: '2px solid #555', paddingBottom: '0.5rem' }}>FAILED INJECTIONS (DUPLICATES OR ERRORS)</h4>
+                 {importResults.errors.map((e, i) => (
+                   <div key={i} style={{ padding: '0.5rem', borderBottom: '1px solid #444', fontFamily: 'var(--font-mono)', fontSize: '0.9rem' }}>
+                     <strong style={{ color: 'var(--orange-400)' }}>{e.title}</strong>: <span style={{ color: '#ccc' }}>{e.error}</span>
+                   </div>
+                 ))}
+               </div>
+             )}
+          </div>
+        )}
+      </div>
+    );
+  }
 
   // ─── FORM VIEW ───
   if (editing !== null) {
@@ -337,10 +528,13 @@ export default function AdminQuestions() {
           <h1>👑 ADMIN TERMINAL</h1>
           <p>Manage the arcade question repository</p>
         </div>
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
           <span className="badge badge--streak" style={{ fontSize: '1rem', padding: '0.4rem 0.8rem' }}>
              TOTAL: {questions.length}
           </span>
+          <button className="retro-btn retro-btn--primary" onClick={handleOpenImport} style={{ background: 'var(--orange-500)' }}>
+            📤 IMPORT JSON
+          </button>
           <button className="retro-btn retro-btn--primary" onClick={handleNew}>
             + NEW LEVEL
           </button>
@@ -350,7 +544,7 @@ export default function AdminQuestions() {
       {error && <div className="toast toast--error" style={{ position: 'relative', top: 0, right: 0, marginBottom: '1.5rem', maxWidth: '100%' }}>🚨 {error}</div>}
       {success && <div className="toast toast--success" style={{ position: 'relative', top: 0, right: 0, marginBottom: '1.5rem', maxWidth: '100%' }}>✅ {success}</div>}
 
-      <div className="retro-card" style={{ marginBottom: '2rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+      <div className="retro-card" style={{ marginBottom: '2rem', display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
         <h3 style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--ink)' }}>
           <span style={{ fontSize: '1.5rem' }}>🔍</span> FILTERS
         </h3>

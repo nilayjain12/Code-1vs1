@@ -252,51 +252,50 @@ export default function AdminQuestions() {
         if (!Array.isArray(json)) throw new Error("JSON must be an array of questions.");
         
         const mappedQuestions = json.map(q => {
-          // Map solutions to boilerplate format
+          // ── Build languages object ──
           const languages = {};
-          for (const lang of LANGUAGES) {
-             languages[lang] = { starterCode: '', wrapperFn: 'solve' };
+          const LANG_ALT = { 'cpp': 'c++', 'csharp': 'c#' };
+          
+          if (q.languages && typeof q.languages === 'object') {
+            for (const [rawKey, val] of Object.entries(q.languages)) {
+              const normKey = normalizeLangKey(rawKey);
+              if (LANGUAGES.includes(normKey) && val) {
+                const code = val.starterCode || val.code || '';
+                const fn = val.entrypoint || val.wrapperFn || 'solve';
+                
+                if (code.trim()) {
+                  languages[normKey] = { starterCode: code, wrapperFn: fn };
+                  if (LANG_ALT[normKey]) {
+                    languages[LANG_ALT[normKey]] = { starterCode: code, wrapperFn: fn };
+                  }
+                }
+              }
+            }
           }
-          
-          let codesArray = [];
-          if (q.solutions && Array.isArray(q.solutions)) codesArray = q.solutions;
-          else if (q.starterCodes && Array.isArray(q.starterCodes)) codesArray = q.starterCodes;
 
-          codesArray.forEach(sol => {
-             const l = sol.language?.toLowerCase();
-             if (LANGUAGES.includes(l)) {
-                languages[l] = { starterCode: sol.code || '', wrapperFn: 'solve' };
-             }
-          });
-          
-          // Map sampleCases
-          const testCases = (q.sampleCases || []).map(tc => {
-             let expectedVal = tc.output || "";
-             if (typeof expectedVal === 'string' && expectedVal.trim().includes('\n')) {
-                 expectedVal = expectedVal.split('\n')[0].trim();
-             }
-             return {
-                input: tc.input || "",
-                expected: expectedVal,
-                visible: true
-             };
-          });
+          // ── Build test cases ──
+          let testCases = [];
+          if (Array.isArray(q.testCases) && q.testCases.length > 0) {
+            testCases = q.testCases.map((tc) => {
+              const vis = tc.visibleToPlayer !== undefined ? tc.visibleToPlayer : (tc.visible !== undefined ? tc.visible : true);
+              return { input: tc.input ?? [], expected: tc.expected ?? '', visible: vis };
+            });
+          }
 
-          const cat = (q.topics && q.topics.length > 0) ? q.topics[0].toLowerCase() : 'math';
-          const validCat = CATEGORIES.includes(cat) ? cat : 'math';
+          const cat = (q.category || (q.topics && q.topics[0]) || 'math').toLowerCase();
 
           return {
-             slug: generateSlug(q.title || `q-${q.problemId}`),
+             slug: q.slug || generateSlug(q.title || `q-${q.problemId}`),
              title: q.title || `Question ${q.problemId}`,
-             category: validCat,
-             difficulty: q.difficulty || 'Medium',
-             timeLimitSeconds: 1800,
+             category: CATEGORIES.includes(cat) ? cat : 'general',
+             difficulty: q.difficulty || 'Easy',
+             timeLimitSeconds: q.timeLimitSeconds || 1800,
              description: q.description || '',
-             prompt: `Write a function to solve: ${q.title || 'the problem'}`,
-             languages: languages,
-             testCases: testCases,
-             topics: q.topics || [],
-             isActive: true
+             prompt: q.prompt || `Write a function to solve: ${q.title || 'the problem'}`,
+             languages,
+             testCases,
+             topics: Array.isArray(q.topics) ? q.topics : [],
+             isActive: q.isActive !== undefined ? q.isActive : true
           };
         });
         

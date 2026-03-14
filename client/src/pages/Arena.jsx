@@ -40,12 +40,12 @@ export default function Arena() {
   const tabTimerRef = useRef(null);
   const editorRef = useRef(null);
 
-  // Initialize code from starter
+  // Initialize code from starter ONLY on first match load
   useEffect(() => {
-    if (currentMatch?.question?.starterCode) {
+    if (currentMatch?.question?.starterCode && !code) {
       setCode(currentMatch.question.starterCode);
     }
-  }, [currentMatch]);
+  }, [currentMatch?.roomId]);
 
   // Redirect if no match
   useEffect(() => {

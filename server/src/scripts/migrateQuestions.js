@@ -8,32 +8,7 @@ const questions = require('../data/questions');
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log(`📦 Migrating ${questions.length} questions to database...`);
-
-  for (const q of questions) {
-    const slug = q.id; // e.g. 'easy-sum'
-    const existing = await prisma.question.findUnique({ where: { slug } });
-    if (existing) {
-      console.log(`  ⏭️  Skipping "${q.title}" (already exists)`);
-      continue;
-    }
-
-    await prisma.question.create({
-      data: {
-        slug,
-        title: q.title,
-        category: q.category,
-        difficulty: q.difficulty,
-        timeLimitSeconds: q.timeLimitSeconds,
-        description: q.description,
-        prompt: q.prompt,
-        languages: q.languages,
-        testCases: q.testCases,
-        topics: q.topics || [],
-      },
-    });
-    console.log(`  ✅ Migrated: "${q.title}"`);
-  }
+  console.log(`📦 Migration script running. Skipping default questions insertion as per user request.`);
 
   // Set admin user
   const adminEmail = 'aiappsontheside@gmail.com';

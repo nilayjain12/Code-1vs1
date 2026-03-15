@@ -320,6 +320,7 @@ export default function Arena() {
                 }}>
                   <div><strong>Input:</strong> {JSON.stringify(tc.input)}</div>
                   <div><strong>Expected:</strong> {JSON.stringify(tc.expected)}</div>
+                  {tc.description && <div style={{ marginTop: '0.25rem' }}><strong>Note:</strong> {tc.description}</div>}
                 </div>
               ))}
             </div>

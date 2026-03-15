@@ -138,11 +138,11 @@ export default function AdminQuestions() {
           testCases = q.testCases.map((tc, idx) => {
             const vis = tc.visibleToPlayer !== undefined ? tc.visibleToPlayer : (tc.visible !== undefined ? tc.visible : true);
             console.log(`[Admin]   TC#${idx+1}: input=${JSON.stringify(tc.input)}, expected=${JSON.stringify(tc.expected)}, visible=${vis}`);
-            return { input: tc.input ?? [], expected: tc.expected ?? '', visible: vis };
+            return { input: tc.input ?? [], expected: tc.expected ?? '', description: tc.description || '', visible: vis };
           });
         }
         if (testCases.length === 0) {
-          testCases = [{ input: [], expected: '', visible: true }];
+          testCases = [{ input: [], expected: '', description: '', visible: true }];
         }
 
         const cat = (q.category || (q.topics && q.topics[0]) || 'math').toLowerCase();
@@ -278,7 +278,7 @@ export default function AdminQuestions() {
           if (Array.isArray(q.testCases) && q.testCases.length > 0) {
             testCases = q.testCases.map((tc) => {
               const vis = tc.visibleToPlayer !== undefined ? tc.visibleToPlayer : (tc.visible !== undefined ? tc.visible : true);
-              return { input: tc.input ?? [], expected: tc.expected ?? '', visible: vis };
+              return { input: tc.input ?? [], expected: tc.expected ?? '', description: tc.description || '', visible: vis };
             });
           }
 
@@ -334,7 +334,7 @@ export default function AdminQuestions() {
   };
 
   const addTestCase = () => {
-    setForm(f => ({ ...f, testCases: [...f.testCases, { input: [], expected: '', visible: true }] }));
+    setForm(f => ({ ...f, testCases: [...f.testCases, { input: [], expected: '', description: '', visible: true }] }));
   };
 
   const removeTestCase = (idx) => {
@@ -536,7 +536,7 @@ export default function AdminQuestions() {
                </button>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', overflowY: 'auto', maxHeight: '600px', paddingRight: '0.5rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', overflowY: 'auto', maxHeight: 'calc(100vh - 350px)', paddingRight: '0.5rem', paddingTop: '15px' }}>
               {form.testCases.map((tc, idx) => (
                 <div key={idx} style={{ background: 'white', border: '3px solid #000', borderRadius: '8px', padding: '1rem', position: 'relative', boxShadow: '3px 3px 0 #000' }}>
                   <div style={{ position: 'absolute', top: '-10px', left: '10px', background: 'var(--neon-yellow)', padding: '0 8px', border: '2px solid #000', borderRadius: '4px', fontWeight: 'bold', fontSize: '0.8rem' }}>
@@ -556,6 +556,13 @@ export default function AdminQuestions() {
                     <input className="retro-input" style={{ padding: '0.4rem 0.8rem', fontSize: '0.9rem' }} value={typeof tc.expected === 'string' ? tc.expected : JSON.stringify(tc.expected)}
                       onChange={e => { try { updateTestCase(idx, 'expected', JSON.parse(e.target.value)); } catch { updateTestCase(idx, 'expected', e.target.value); } }}
                       placeholder='3' />
+                  </div>
+
+                  <div className="form-group" style={{ marginTop: '0.5rem' }}>
+                    <label style={{ fontSize: '0.9rem' }}>Description (optional)</label>
+                    <input className="retro-input" style={{ padding: '0.4rem 0.8rem', fontSize: '0.9rem' }} value={tc.description || ''}
+                      onChange={e => updateTestCase(idx, 'description', e.target.value)}
+                      placeholder='E.g. Typical array without negatives' />
                   </div>
 
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem' }}>

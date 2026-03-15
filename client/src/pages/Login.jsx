@@ -37,7 +37,10 @@ export default function Login() {
       <span className="floating-emoji" style={{ top: '15%', left: '10%' }}>🔑</span>
       <span className="floating-emoji" style={{ top: '25%', right: '10%', animationDelay: '1s' }}>🎮</span>
 
-      <div className="retro-card" style={{ maxWidth: '440px', width: '100%' }}>
+      <div className="retro-card" style={{ maxWidth: '440px', width: '100%', position: 'relative' }}>
+        <Link to="/" style={{ display: 'inline-block', marginBottom: '0.5rem', color: 'var(--ink-light)', textDecoration: 'none', fontWeight: 'bold', fontSize: '0.9rem', fontFamily: 'var(--font-heading)' }}>
+          ← Home
+        </Link>
         <h2 style={{
           textAlign: 'center',
           marginBottom: '0.25rem',

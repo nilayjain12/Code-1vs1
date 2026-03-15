@@ -53,7 +53,10 @@ export default function Register() {
       <span className="floating-emoji" style={{ top: '10%', right: '8%' }}>⚡</span>
       <span className="floating-emoji" style={{ bottom: '15%', left: '8%', animationDelay: '1.5s' }}>🚀</span>
 
-      <div className="retro-card" style={{ maxWidth: '440px', width: '100%' }}>
+      <div className="retro-card" style={{ maxWidth: '440px', width: '100%', position: 'relative' }}>
+        <Link to="/" style={{ display: 'inline-block', marginBottom: '0.5rem', color: 'var(--ink-light)', textDecoration: 'none', fontWeight: 'bold', fontSize: '0.9rem', fontFamily: 'var(--font-heading)' }}>
+          ← Home
+        </Link>
         <h2 style={{
           textAlign: 'center',
           marginBottom: '0.25rem',

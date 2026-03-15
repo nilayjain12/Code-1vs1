@@ -526,56 +526,58 @@ export default function AdminQuestions() {
           </div>
 
           {/* RIGHT COL: TEST CASES */}
-          <div className="retro-card" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', background: 'var(--cream-dark)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: 'var(--border-thick)', paddingBottom: '0.5rem', marginBottom: '0.5rem' }}>
-               <h3 style={{ fontFamily: 'var(--font-display)', color: 'var(--neon-pink)', fontSize: '1.8rem', margin: 0 }}>
-                 🧪 TEST CHAMBER
-               </h3>
-               <button className="retro-btn" style={{ padding: '0.3rem 0.8rem', fontSize: '0.9rem' }} onClick={addTestCase}>
-                 + ADD TEST
-               </button>
-            </div>
+          <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+            <div className="retro-card" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', background: 'var(--cream-dark)', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, margin: 0 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: 'var(--border-thick)', paddingBottom: '0.5rem', marginBottom: '0.5rem' }}>
+                 <h3 style={{ fontFamily: 'var(--font-display)', color: 'var(--neon-pink)', fontSize: '1.8rem', margin: 0 }}>
+                   🧪 TEST CHAMBER
+                 </h3>
+                 <button className="retro-btn" style={{ padding: '0.3rem 0.8rem', fontSize: '0.9rem' }} onClick={addTestCase}>
+                   + ADD TEST
+                 </button>
+              </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', overflowY: 'auto', maxHeight: 'calc(100vh - 350px)', paddingRight: '0.5rem', paddingTop: '15px' }}>
-              {form.testCases.map((tc, idx) => (
-                <div key={idx} style={{ background: 'white', border: '3px solid #000', borderRadius: '8px', padding: '1rem', position: 'relative', boxShadow: '3px 3px 0 #000' }}>
-                  <div style={{ position: 'absolute', top: '-10px', left: '10px', background: 'var(--neon-yellow)', padding: '0 8px', border: '2px solid #000', borderRadius: '4px', fontWeight: 'bold', fontSize: '0.8rem' }}>
-                    TEST #{idx + 1}
-                  </div>
-                  <button onClick={() => removeTestCase(idx)} style={{ position: 'absolute', top: '10px', right: '10px', background: 'var(--neon-pink)', color: 'white', border: '2px solid #000', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>✕</button>
-                  
-                  <div className="form-group" style={{ marginTop: '0.5rem' }}>
-                    <label style={{ fontSize: '0.9rem' }}>INPUT (JSON ARRAY)</label>
-                    <input className="retro-input" style={{ padding: '0.4rem 0.8rem', fontSize: '0.9rem' }} value={typeof tc.input === 'string' ? tc.input : JSON.stringify(tc.input)}
-                      onChange={e => { try { updateTestCase(idx, 'input', JSON.parse(e.target.value)); } catch { updateTestCase(idx, 'input', e.target.value); } }}
-                      placeholder='[1, 2]' />
-                  </div>
-                  
-                  <div className="form-group">
-                    <label style={{ fontSize: '0.9rem' }}>EXPECTED (JSON VALUE)</label>
-                    <input className="retro-input" style={{ padding: '0.4rem 0.8rem', fontSize: '0.9rem' }} value={typeof tc.expected === 'string' ? tc.expected : JSON.stringify(tc.expected)}
-                      onChange={e => { try { updateTestCase(idx, 'expected', JSON.parse(e.target.value)); } catch { updateTestCase(idx, 'expected', e.target.value); } }}
-                      placeholder='3' />
-                  </div>
+              <div style={{ display: 'flex', flexDirection: 'column', flex: 1, gap: '1rem', overflowY: 'auto', paddingRight: '0.5rem', paddingTop: '15px', paddingBottom: '10px' }}>
+                {form.testCases.map((tc, idx) => (
+                  <div key={idx} style={{ background: 'white', border: '3px solid #000', borderRadius: '8px', padding: '1rem', position: 'relative', boxShadow: '3px 3px 0 #000' }}>
+                    <div style={{ position: 'absolute', top: '-10px', left: '10px', background: 'var(--neon-yellow)', padding: '0 8px', border: '2px solid #000', borderRadius: '4px', fontWeight: 'bold', fontSize: '0.8rem' }}>
+                      TEST #{idx + 1}
+                    </div>
+                    <button onClick={() => removeTestCase(idx)} style={{ position: 'absolute', top: '10px', right: '10px', background: 'var(--neon-pink)', color: 'white', border: '2px solid #000', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>✕</button>
+                    
+                    <div className="form-group" style={{ marginTop: '0.5rem' }}>
+                      <label style={{ fontSize: '0.9rem' }}>INPUT (JSON ARRAY)</label>
+                      <input className="retro-input" style={{ padding: '0.4rem 0.8rem', fontSize: '0.9rem' }} value={typeof tc.input === 'string' ? tc.input : JSON.stringify(tc.input)}
+                        onChange={e => { try { updateTestCase(idx, 'input', JSON.parse(e.target.value)); } catch { updateTestCase(idx, 'input', e.target.value); } }}
+                        placeholder='[1, 2]' />
+                    </div>
+                    
+                    <div className="form-group">
+                      <label style={{ fontSize: '0.9rem' }}>EXPECTED (JSON VALUE)</label>
+                      <input className="retro-input" style={{ padding: '0.4rem 0.8rem', fontSize: '0.9rem' }} value={typeof tc.expected === 'string' ? tc.expected : JSON.stringify(tc.expected)}
+                        onChange={e => { try { updateTestCase(idx, 'expected', JSON.parse(e.target.value)); } catch { updateTestCase(idx, 'expected', e.target.value); } }}
+                        placeholder='3' />
+                    </div>
 
-                  <div className="form-group" style={{ marginTop: '0.5rem' }}>
-                    <label style={{ fontSize: '0.9rem' }}>Description (optional)</label>
-                    <input className="retro-input" style={{ padding: '0.4rem 0.8rem', fontSize: '0.9rem' }} value={tc.description || ''}
-                      onChange={e => updateTestCase(idx, 'description', e.target.value)}
-                      placeholder='E.g. Typical array without negatives' />
-                  </div>
+                    <div className="form-group" style={{ marginTop: '0.5rem' }}>
+                      <label style={{ fontSize: '0.9rem' }}>Description (optional)</label>
+                      <input className="retro-input" style={{ padding: '0.4rem 0.8rem', fontSize: '0.9rem' }} value={tc.description || ''}
+                        onChange={e => updateTestCase(idx, 'description', e.target.value)}
+                        placeholder='E.g. Typical array without negatives' />
+                    </div>
 
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem' }}>
-                    <input type="checkbox" checked={tc.visible} id={`visible-${idx}`} style={{ accentColor: 'var(--neon-pink)' }} onChange={() => updateTestCase(idx, 'visible', !tc.visible)} />
-                    <label htmlFor={`visible-${idx}`} style={{ fontSize: '0.9rem', cursor: 'pointer' }}>Visible to Player</label>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem' }}>
+                      <input type="checkbox" checked={tc.visible} id={`visible-${idx}`} style={{ accentColor: 'var(--neon-pink)' }} onChange={() => updateTestCase(idx, 'visible', !tc.visible)} />
+                      <label htmlFor={`visible-${idx}`} style={{ fontSize: '0.9rem', cursor: 'pointer' }}>Visible to Player</label>
+                    </div>
                   </div>
-                </div>
-              ))}
-              {form.testCases.length === 0 && (
-                <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--ink-muted)', fontStyle: 'italic' }}>
-                  No test cases defined. Players will always pass!
-                </div>
-              )}
+                ))}
+                {form.testCases.length === 0 && (
+                  <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--ink-muted)', fontStyle: 'italic' }}>
+                    No test cases defined. Players will always pass!
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

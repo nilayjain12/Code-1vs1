@@ -1,0 +1,437 @@
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567922",
+    "slug": "medium-construct-binary-tree-preorder-inorder",
+    "title": "Construct Binary Tree from Preorder and Inorder Traversal",
+    "category": "tree",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree. Construct and return the binary tree.",
+    "prompt": "Implement function buildTree(preorder, inorder) constructing binary tree.",
+    "languages": {
+      "python": { "wrapperFn": "buildTree", "starterCode": "def buildTree(preorder, inorder):\n    pass" },
+      "javascript": { "wrapperFn": "buildTree", "starterCode": "function buildTree(preorder, inorder) {\n  return null;\n}" },
+      "typescript": { "wrapperFn": "buildTree", "starterCode": "function buildTree(preorder: number[], inorder: number[]): TreeNode | null {\n  return null;\n}" },
+      "java": { "wrapperFn": "Solution.buildTree", "starterCode": "class Solution {\n  public TreeNode buildTree(int[] preorder, int[] inorder) {\n    return null;\n  }\n}" },
+      "cpp": { "wrapperFn": "buildTree", "starterCode": "TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {\n  return nullptr;\n}" },
+      "csharp": { "wrapperFn": "Solution.BuildTree", "starterCode": "public TreeNode BuildTree(int[] preorder, int[] inorder) {\n  return null;\n}" },
+      "go": { "wrapperFn": "buildTree", "starterCode": "func buildTree(preorder []int, inorder []int) *TreeNode {\n  return nil\n}" },
+      "rust": { "wrapperFn": "build_tree", "starterCode": "pub fn build_tree(preorder: Vec<i32>, inorder: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {\n  None\n}" }
+    },
+    "testCases": [
+      { "input": [[[3, 9, 20, 15, 7], [9, 3, 15, 20, 7]]], "expected": [[3, 9, 20, null, null, 15, 7]], "visible": true, "description": "Construct tree from traversals" },
+      { "input": [[[1], [1]]], "expected": [[1]], "visible": true, "description": "Single node" },
+      { "input": [[[1, 2], [2, 1]]], "expected": [[1, 2]], "visible": false, "description": "Left-skewed tree" }
+    ],
+    "topics": ["tree", "array", "hash-table", "divide-and-conquer"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567923",
+    "slug": "hard-binary-tree-maximum-path-sum",
+    "title": "Binary Tree Maximum Path Sum",
+    "category": "tree",
+    "difficulty": "Hard",
+    "timeLimitSeconds": 1800,
+    "description": "A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node can only appear in the sequence at most once. Note that the path does not need to pass through the root. Return the maximum path sum of any non-empty path.",
+    "prompt": "Implement function maxPathSum(root) returning maximum path sum.",
+    "languages": {
+      "python": { "wrapperFn": "maxPathSum", "starterCode": "def maxPathSum(root):\n    pass" },
+      "javascript": { "wrapperFn": "maxPathSum", "starterCode": "function maxPathSum(root) {\n  return 0;\n}" },
+      "typescript": { "wrapperFn": "maxPathSum", "starterCode": "function maxPathSum(root: TreeNode | null): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.maxPathSum", "starterCode": "class Solution {\n  public int maxPathSum(TreeNode root) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "maxPathSum", "starterCode": "int maxPathSum(TreeNode* root) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.MaxPathSum", "starterCode": "public int MaxPathSum(TreeNode root) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "maxPathSum", "starterCode": "func maxPathSum(root *TreeNode) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "max_path_sum", "starterCode": "pub fn max_path_sum(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": [[[1, 2, 3]]], "expected": 6, "visible": true, "description": "Path sum is 2+1+3=6" },
+      { "input": [[[10, 5, 15, null, null, 6, 15]]], "expected": 40, "visible": true, "description": "Maximum path without root" },
+      { "input": [[-10]], "expected": -10, "visible": false, "description": "Single negative node" }
+    ],
+    "topics": ["tree", "depth-first-search", "dynamic-programming"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567924",
+    "slug": "medium-number-of-islands",
+    "title": "Number of Islands",
+    "category": "graph",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.",
+    "prompt": "Implement function numIslands(grid) returning the number of islands.",
+    "languages": {
+      "python": { "wrapperFn": "numIslands", "starterCode": "def numIslands(grid):\n    pass" },
+      "javascript": { "wrapperFn": "numIslands", "starterCode": "function numIslands(grid) {\n  return 0;\n}" },
+      "typescript": { "wrapperFn": "numIslands", "starterCode": "function numIslands(grid: string[][]): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.numIslands", "starterCode": "class Solution {\n  public int numIslands(char[][] grid) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "numIslands", "starterCode": "int numIslands(vector<vector<char>>& grid) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.NumIslands", "starterCode": "public int NumIslands(char[][] grid) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "numIslands", "starterCode": "func numIslands(grid [][]byte) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "num_islands", "starterCode": "pub fn num_islands(grid: Vec<Vec<char>>) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": [[["1", "1", "1", "1", "0"], ["1", "1", "0", "1", "0"], ["1", "1", "0", "0", "0"], ["0", "0", "0", "0", "0"]]], "expected": 1, "visible": true, "description": "One island" },
+      { "input": [[["1", "1", "0", "0", "0"], ["1", "1", "0", "0", "0"], ["0", "0", "1", "0", "0"], ["0", "0", "0", "1", "1"]]], "expected": 3, "visible": true, "description": "Three islands" },
+      { "input": [[["0"]]], "expected": 0, "visible": false, "description": "All water" }
+    ],
+    "topics": ["array", "depth-first-search", "breadth-first-search", "union-find"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567925",
+    "slug": "medium-clone-graph",
+    "title": "Clone Graph",
+    "category": "graph",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given a reference of a node in a connected undirected graph. Return a deep copy (clone) of the graph. Each node in the graph contains a val (int) and a list (List[Node]) of its neighbors.",
+    "prompt": "Implement function cloneGraph(node) returning deep copy of graph.",
+    "languages": {
+      "python": { "wrapperFn": "cloneGraph", "starterCode": "def cloneGraph(node):\n    pass" },
+      "javascript": { "wrapperFn": "cloneGraph", "starterCode": "function cloneGraph(node) {\n  return null;\n}" },
+      "typescript": { "wrapperFn": "cloneGraph", "starterCode": "function cloneGraph(node: Node | null): Node | null {\n  return null;\n}" },
+      "java": { "wrapperFn": "Solution.cloneGraph", "starterCode": "class Solution {\n  public Node cloneGraph(Node node) {\n    return null;\n  }\n}" },
+      "cpp": { "wrapperFn": "cloneGraph", "starterCode": "Node* cloneGraph(Node* node) {\n  return nullptr;\n}" },
+      "csharp": { "wrapperFn": "Solution.CloneGraph", "starterCode": "public Node CloneGraph(Node node) {\n  return null;\n}" },
+      "go": { "wrapperFn": "cloneGraph", "starterCode": "func cloneGraph(node *Node) *Node {\n  return nil\n}" },
+      "rust": { "wrapperFn": "clone_graph", "starterCode": "pub fn clone_graph(node: Option<Rc<RefCell<Node>>>) -> Option<Rc<RefCell<Node>>> {\n  None\n}" }
+    },
+    "testCases": [
+      { "input": [[[1, 2, 4], [2, 1, 3], [3, 2, 4], [4, 1, 3]]], "expected": [[1, 2, 4], [2, 1, 3], [3, 2, 4], [4, 1, 3]], "visible": true, "description": "Clone connected graph" },
+      { "input": [[[1]]], "expected": [[1]], "visible": true, "description": "Single node" },
+      { "input": [[]], "expected": [], "visible": false, "description": "Empty graph" }
+    ],
+    "topics": ["graph", "depth-first-search", "breadth-first-search", "hash-table"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567926",
+    "slug": "hard-alien-dictionary",
+    "title": "Alien Dictionary",
+    "category": "graph",
+    "difficulty": "Hard",
+    "timeLimitSeconds": 1800,
+    "description": "There is a new alien language which uses the latin alphabet. However, the order among letters are unknown to you. You receive a list of non-empty strings from the dictionary, where words are sorted alphabetically by the rules of this new language. Derive the order of letters in this alien language.",
+    "prompt": "Implement function alienOrder(words) deriving character order.",
+    "languages": {
+      "python": { "wrapperFn": "alienOrder", "starterCode": "def alienOrder(words):\n    pass" },
+      "javascript": { "wrapperFn": "alienOrder", "starterCode": "function alienOrder(words) {\n  return '';\n}" },
+      "typescript": { "wrapperFn": "alienOrder", "starterCode": "function alienOrder(words: string[]): string {\n  return '';\n}" },
+      "java": { "wrapperFn": "Solution.alienOrder", "starterCode": "class Solution {\n  public String alienOrder(String[] words) {\n    return '';\n  }\n}" },
+      "cpp": { "wrapperFn": "alienOrder", "starterCode": "string alienOrder(vector<string>& words) {\n  return '';\n}" },
+      "csharp": { "wrapperFn": "Solution.AlienOrder", "starterCode": "public string AlienOrder(string[] words) {\n  return '';\n}" },
+      "go": { "wrapperFn": "alienOrder", "starterCode": "func alienOrder(words []string) string {\n  return ''\n}" },
+      "rust": { "wrapperFn": "alien_order", "starterCode": "pub fn alien_order(words: Vec<String>) -> String {\n  String::new()\n}" }
+    },
+    "testCases": [
+      { "input": [["wrt", "wrf", "er", "ett", "rftt"]], "expected": "wertf", "visible": true, "description": "Derive alien order" },
+      { "input": [["z", "x"]], "expected": "zx", "visible": true, "description": "Simple two-character order" },
+      { "input": [["z", "x", "z"]], "expected": "", "visible": false, "description": "Invalid ordering" }
+    ],
+    "topics": ["graph", "topological-sort", "depth-first-search"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567927",
+    "slug": "medium-graph-valid-tree",
+    "title": "Graph Valid Tree",
+    "category": "graph",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given n nodes labeled from 0 to n - 1 and a list of undirected edges (each edge is a pair of nodes), write a function to check whether these edges make a valid tree.",
+    "prompt": "Implement function validTree(n, edges) checking if edges form valid tree.",
+    "languages": {
+      "python": { "wrapperFn": "validTree", "starterCode": "def validTree(n, edges):\n    pass" },
+      "javascript": { "wrapperFn": "validTree", "starterCode": "function validTree(n, edges) {\n  return false;\n}" },
+      "typescript": { "wrapperFn": "validTree", "starterCode": "function validTree(n: number, edges: number[][]): boolean {\n  return false;\n}" },
+      "java": { "wrapperFn": "Solution.validTree", "starterCode": "class Solution {\n  public boolean validTree(int n, int[][] edges) {\n    return false;\n  }\n}" },
+      "cpp": { "wrapperFn": "validTree", "starterCode": "bool validTree(int n, vector<vector<int>>& edges) {\n  return false;\n}" },
+      "csharp": { "wrapperFn": "Solution.ValidTree", "starterCode": "public bool ValidTree(int n, int[][] edges) {\n  return false;\n}" },
+      "go": { "wrapperFn": "validTree", "starterCode": "func validTree(n int, edges [][]int) bool {\n  return false\n}" },
+      "rust": { "wrapperFn": "valid_tree", "starterCode": "pub fn valid_tree(n: i32, edges: Vec<Vec<i32>>) -> bool {\n  false\n}" }
+    },
+    "testCases": [
+      { "input": [5, [[0, 1], [0, 2], [0, 3], [1, 4]]], "expected": true, "visible": true, "description": "Valid tree structure" },
+      { "input": [5, [[0, 1], [1, 2], [2, 3], [1, 3], [1, 4]]], "expected": false, "visible": true, "description": "Cycle exists" },
+      { "input": [1, []], "expected": true, "visible": false, "description": "Single node" }
+    ],
+    "topics": ["graph", "union-find", "depth-first-search"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567928",
+    "slug": "medium-number-connected-components",
+    "title": "Number of Connected Components in an Undirected Graph",
+    "category": "graph",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "You have a graph of n nodes. You are given an integer n and an array edges where edges[i] = [ai, bi] indicates that there is an edge between ai and bi in the graph. Return the number of connected components in this graph.",
+    "prompt": "Implement function countComponents(n, edges) returning connected components.",
+    "languages": {
+      "python": { "wrapperFn": "countComponents", "starterCode": "def countComponents(n, edges):\n    pass" },
+      "javascript": { "wrapperFn": "countComponents", "starterCode": "function countComponents(n, edges) {\n  return 0;\n}" },
+      "typescript": { "wrapperFn": "countComponents", "starterCode": "function countComponents(n: number, edges: number[][]): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.countComponents", "starterCode": "class Solution {\n  public int countComponents(int n, int[][] edges) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "countComponents", "starterCode": "int countComponents(int n, vector<vector<int>>& edges) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.CountComponents", "starterCode": "public int CountComponents(int n, int[][] edges) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "countComponents", "starterCode": "func countComponents(n int, edges [][]int) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "count_components", "starterCode": "pub fn count_components(n: i32, edges: Vec<Vec<i32>>) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": [5, [[0, 1], [1, 2], [3, 4]]], "expected": 2, "visible": true, "description": "Two connected components" },
+      { "input": [5, [[0, 1], [1, 2], [2, 3], [3, 4]]], "expected": 1, "visible": true, "description": "One connected component" },
+      { "input": [3, []], "expected": 3, "visible": false, "description": "No edges" }
+    ],
+    "topics": ["graph", "union-find", "depth-first-search"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567929",
+    "slug": "medium-longest-increasing-subsequence",
+    "title": "Longest Increasing Subsequence",
+    "category": "dynamic-programming",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given an integer array nums, return the length of the longest strictly increasing subsequence.",
+    "prompt": "Implement function lengthOfLIS(nums) returning LIS length.",
+    "languages": {
+      "python": { "wrapperFn": "lengthOfLIS", "starterCode": "def lengthOfLIS(nums):\n    pass" },
+      "javascript": { "wrapperFn": "lengthOfLIS", "starterCode": "function lengthOfLIS(nums) {\n  return 0;\n}" },
+      "typescript": { "wrapperFn": "lengthOfLIS", "starterCode": "function lengthOfLIS(nums: number[]): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.lengthOfLIS", "starterCode": "class Solution {\n  public int lengthOfLIS(int[] nums) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "lengthOfLIS", "starterCode": "int lengthOfLIS(vector<int>& nums) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.LengthOfLIS", "starterCode": "public int LengthOfLIS(int[] nums) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "lengthOfLIS", "starterCode": "func lengthOfLIS(nums []int) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "length_of_lis", "starterCode": "pub fn length_of_lis(nums: Vec<i32>) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": [[10, 9, 2, 5, 3, 7, 101, 18]], "expected": 4, "visible": true, "description": "LIS is [2,3,7,101]" },
+      { "input": [[0, 1, 0, 4, 4, 4, 3, 2, 1]], "expected": 2, "visible": true, "description": "LIS has length 2" },
+      { "input": [[1]], "expected": 1, "visible": false, "description": "Single element" }
+    ],
+    "topics": ["array", "dynamic-programming", "binary-search"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567930",
+    "slug": "medium-longest-common-subsequence",
+    "title": "Longest Common Subsequence",
+    "category": "dynamic-programming",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given two strings text1 and text2, return the length of their longest common subsequence. If there is no common subsequence, return 0.",
+    "prompt": "Implement function longestCommonSubsequence(text1, text2) returning LCS length.",
+    "languages": {
+      "python": { "wrapperFn": "longestCommonSubsequence", "starterCode": "def longestCommonSubsequence(text1, text2):\n    pass" },
+      "javascript": { "wrapperFn": "longestCommonSubsequence", "starterCode": "function longestCommonSubsequence(text1, text2) {\n  return 0;\n}" },
+      "typescript": { "wrapperFn": "longestCommonSubsequence", "starterCode": "function longestCommonSubsequence(text1: string, text2: string): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.longestCommonSubsequence", "starterCode": "class Solution {\n  public int longestCommonSubsequence(String text1, String text2) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "longestCommonSubsequence", "starterCode": "int longestCommonSubsequence(string text1, string text2) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.LongestCommonSubsequence", "starterCode": "public int LongestCommonSubsequence(string text1, string text2) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "longestCommonSubsequence", "starterCode": "func longestCommonSubsequence(text1 string, text2 string) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "longest_common_subsequence", "starterCode": "pub fn longest_common_subsequence(text1: String, text2: String) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": ["abcde", "ace"], "expected": 3, "visible": true, "description": "LCS is 'ace'" },
+      { "input": ["abc", "abc"], "expected": 3, "visible": true, "description": "Identical strings" },
+      { "input": ["abc", "def"], "expected": 0, "visible": false, "description": "No common subsequence" }
+    ],
+    "topics": ["string", "dynamic-programming"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567931",
+    "slug": "medium-word-break",
+    "title": "Word Break",
+    "category": "dynamic-programming",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of dictionary words.",
+    "prompt": "Implement function wordBreak(s, wordDict) checking if word break is possible.",
+    "languages": {
+      "python": { "wrapperFn": "wordBreak", "starterCode": "def wordBreak(s, wordDict):\n    pass" },
+      "javascript": { "wrapperFn": "wordBreak", "starterCode": "function wordBreak(s, wordDict) {\n  return false;\n}" },
+      "typescript": { "wrapperFn": "wordBreak", "starterCode": "function wordBreak(s: string, wordDict: string[]): boolean {\n  return false;\n}" },
+      "java": { "wrapperFn": "Solution.wordBreak", "starterCode": "class Solution {\n  public boolean wordBreak(String s, List<String> wordDict) {\n    return false;\n  }\n}" },
+      "cpp": { "wrapperFn": "wordBreak", "starterCode": "bool wordBreak(string s, vector<string>& wordDict) {\n  return false;\n}" },
+      "csharp": { "wrapperFn": "Solution.WordBreak", "starterCode": "public bool WordBreak(string s, IList<string> wordDict) {\n  return false;\n}" },
+      "go": { "wrapperFn": "wordBreak", "starterCode": "func wordBreak(s string, wordDict []string) bool {\n  return false\n}" },
+      "rust": { "wrapperFn": "word_break", "starterCode": "pub fn word_break(s: String, word_dict: Vec<String>) -> bool {\n  false\n}" }
+    },
+    "testCases": [
+      { "input": ["leetcode", ["leet", "code"]], "expected": true, "visible": true, "description": "Can be segmented" },
+      { "input": ["applepenapple", ["apple", "pen"]], "expected": true, "visible": true, "description": "Two words can form string" },
+      { "input": ["catsandog", ["cat", "cats", "and", "sand", "dog"]], "expected": false, "visible": false, "description": "Cannot be segmented" }
+    ],
+    "topics": ["array", "hash-table", "string", "dynamic-programming"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567932",
+    "slug": "medium-combination-sum-iv",
+    "title": "Combination Sum IV",
+    "category": "dynamic-programming",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given an array of distinct integers nums and a target integer target, return the number of possible combinations that add up to target.",
+    "prompt": "Implement function combinationSum4(nums, target) returning number of combinations.",
+    "languages": {
+      "python": { "wrapperFn": "combinationSum4", "starterCode": "def combinationSum4(nums, target):\n    pass" },
+      "javascript": { "wrapperFn": "combinationSum4", "starterCode": "function combinationSum4(nums, target) {\n  return 0;\n}" },
+      "typescript": { "wrapperFn": "combinationSum4", "starterCode": "function combinationSum4(nums: number[], target: number): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.combinationSum4", "starterCode": "class Solution {\n  public int combinationSum4(int[] nums, int target) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "combinationSum4", "starterCode": "int combinationSum4(vector<int>& nums, int target) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.CombinationSum4", "starterCode": "public int CombinationSum4(int[] nums, int target) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "combinationSum4", "starterCode": "func combinationSum4(nums []int, target int) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "combination_sum4", "starterCode": "pub fn combination_sum4(nums: Vec<i32>, target: i32) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": [[1, 2, 3], 4], "expected": 7, "visible": true, "description": "7 combinations sum to 4" },
+      { "input": [[9], 3], "expected": 0, "visible": true, "description": "No combinations" },
+      { "input": [[10], 10], "expected": 1, "visible": false, "description": "One combination" }
+    ],
+    "topics": ["array", "dynamic-programming"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567933",
+    "slug": "easy-house-robber",
+    "title": "House Robber",
+    "category": "dynamic-programming",
+    "difficulty": "Easy",
+    "timeLimitSeconds": 1800,
+    "description": "You are a professional robber planning to rob houses along a street. You cannot rob two adjacent houses. Given an integer array nums representing the amount of money in each house, return the maximum amount of money you can rob without alerting the police.",
+    "prompt": "Implement function rob(nums) returning maximum money robbed.",
+    "languages": {
+      "python": { "wrapperFn": "rob", "starterCode": "def rob(nums):\n    pass" },
+      "javascript": { "wrapperFn": "rob", "starterCode": "function rob(nums) {\n  return 0;\n}" },
+      "typescript": { "wrapperFn": "rob", "starterCode": "function rob(nums: number[]): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.rob", "starterCode": "class Solution {\n  public int rob(int[] nums) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "rob", "starterCode": "int rob(vector<int>& nums) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.Rob", "starterCode": "public int Rob(int[] nums) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "rob", "starterCode": "func rob(nums []int) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "rob", "starterCode": "pub fn rob(nums: Vec<i32>) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": [[1, 2, 3, 1]], "expected": 4, "visible": true, "description": "Rob 1 and 3 for total 4" },
+      { "input": [[2, 7, 9, 3, 1]], "expected": 12, "visible": true, "description": "Rob 2, 9, 1 for total 12" },
+      { "input": [[5]], "expected": 5, "visible": false, "description": "Single house" }
+    ],
+    "topics": ["array", "dynamic-programming"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567934",
+    "slug": "medium-house-robber-ii",
+    "title": "House Robber II",
+    "category": "dynamic-programming",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "You are a professional robber planning to rob houses along a street. You cannot rob two adjacent houses. Also, the houses are arranged in a circle. Return the maximum amount of money you can rob without alerting the police.",
+    "prompt": "Implement function rob(nums) for circular house arrangement.",
+    "languages": {
+      "python": { "wrapperFn": "rob", "starterCode": "def rob(nums):\n    pass" },
+      "javascript": { "wrapperFn": "rob", "starterCode": "function rob(nums) {\n  return 0;\n}" },
+      "typescript": { "wrapperFn": "rob", "starterCode": "function rob(nums: number[]): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.rob", "starterCode": "class Solution {\n  public int rob(int[] nums) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "rob", "starterCode": "int rob(vector<int>& nums) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.Rob", "starterCode": "public int Rob(int[] nums) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "rob", "starterCode": "func rob(nums []int) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "rob", "starterCode": "pub fn rob(nums: Vec<i32>) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": [[1, 2, 3, 1]], "expected": 4, "visible": true, "description": "Rob 1 and 3 for total 4" },
+      { "input": [[2, 3, 2]], "expected": 3, "visible": true, "description": "Rob 3 for total 3" },
+      { "input": [[5, 3, 4, 11, 2]], "expected": 14, "visible": false, "description": "Circular constraint" }
+    ],
+    "topics": ["array", "dynamic-programming"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567935",
+    "slug": "medium-decode-ways",
+    "title": "Decode Ways",
+    "category": "dynamic-programming",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "A message containing letters from A-Z can be encoded into numbers using 'A' -> 1, 'B' -> 2, ..., 'Z' -> 26. Given a string s containing only digits, return the number of ways to decode it.",
+    "prompt": "Implement function numDecodings(s) returning number of decode ways.",
+    "languages": {
+      "python": { "wrapperFn": "numDecodings", "starterCode": "def numDecodings(s):\n    pass" },
+      "javascript": { "wrapperFn": "numDecodings", "starterCode": "function numDecodings(s) {\n  return 0;\n}" },
+      "typescript": { "wrapperFn": "numDecodings", "starterCode": "function numDecodings(s: string): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.numDecodings", "starterCode": "class Solution {\n  public int numDecodings(String s) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "numDecodings", "starterCode": "int numDecodings(string s) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.NumDecodings", "starterCode": "public int NumDecodings(string s) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "numDecodings", "starterCode": "func numDecodings(s string) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "num_decodings", "starterCode": "pub fn num_decodings(s: String) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": ["12"], "expected": 2, "visible": true, "description": "Two ways: 1-2 and 12" },
+      { "input": ["226"], "expected": 3, "visible": true, "description": "Three ways: 2-2-6, 2-26, 22-6" },
+      { "input": ["0"], "expected": 0, "visible": false, "description": "No leading zeros allowed" }
+    ],
+    "topics": ["string", "dynamic-programming"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567936",
+    "slug": "easy-climbing-stairs",
+    "title": "Climbing Stairs",
+    "category": "dynamic-programming",
+    "difficulty": "Easy",
+    "timeLimitSeconds": 1800,
+    "description": "You are climbing a staircase. It takes n steps to reach the top. Each time you can climb 1 or 2 steps. In how many distinct ways can you climb to the top?",
+    "prompt": "Implement function climbStairs(n) returning distinct ways to climb.",
+    "languages": {
+      "python": { "wrapperFn": "climbStairs", "starterCode": "def climbStairs(n):\n    pass" },
+      "javascript": { "wrapperFn": "climbStairs", "starterCode": "function climbStairs(n) {\n  return 0;\n}" },
+      "typescript": { "wrapperFn": "climbStairs", "starterCode": "function climbStairs(n: number): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.climbStairs", "starterCode": "class Solution {\n  public int climbStairs(int n) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "climbStairs", "starterCode": "int climbStairs(int n) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.ClimbStairs", "starterCode": "public int ClimbStairs(int n) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "climbStairs", "starterCode": "func climbStairs(n int) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "climb_stairs", "starterCode": "pub fn climb_stairs(n: i32) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": [2], "expected": 2, "visible": true, "description": "Two ways: 1+1, 2" },
+      { "input": [3], "expected": 3, "visible": true, "description": "Three ways: 1+1+1, 1+2, 2+1" },
+      { "input": [1], "expected": 1, "visible": false, "description": "Only one way for single step" }
+    ],
+    "topics": ["math", "dynamic-programming", "memoization"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  }
+]

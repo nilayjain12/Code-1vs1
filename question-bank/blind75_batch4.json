@@ -1,0 +1,437 @@
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567937",
+    "slug": "medium-jump-game",
+    "title": "Jump Game",
+    "category": "dynamic-programming",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length from that position. Return true if you can reach the last index.",
+    "prompt": "Implement function canJump(nums) determining if last index is reachable.",
+    "languages": {
+      "python": { "wrapperFn": "canJump", "starterCode": "def canJump(nums):\n    pass" },
+      "javascript": { "wrapperFn": "canJump", "starterCode": "function canJump(nums) {\n  return false;\n}" },
+      "typescript": { "wrapperFn": "canJump", "starterCode": "function canJump(nums: number[]): boolean {\n  return false;\n}" },
+      "java": { "wrapperFn": "Solution.canJump", "starterCode": "class Solution {\n  public boolean canJump(int[] nums) {\n    return false;\n  }\n}" },
+      "cpp": { "wrapperFn": "canJump", "starterCode": "bool canJump(vector<int>& nums) {\n  return false;\n}" },
+      "csharp": { "wrapperFn": "Solution.CanJump", "starterCode": "public bool CanJump(int[] nums) {\n  return false;\n}" },
+      "go": { "wrapperFn": "canJump", "starterCode": "func canJump(nums []int) bool {\n  return false\n}" },
+      "rust": { "wrapperFn": "can_jump", "starterCode": "pub fn can_jump(nums: Vec<i32>) -> bool {\n  false\n}" }
+    },
+    "testCases": [
+      { "input": [[2, 3, 1, 1, 4]], "expected": true, "visible": true, "description": "Can reach last index" },
+      { "input": [[3, 2, 1, 0, 4]], "expected": false, "visible": true, "description": "Always arrive at index 3" },
+      { "input": [[0]], "expected": true, "visible": false, "description": "Already at last index" }
+    ],
+    "topics": ["array", "dynamic-programming", "greedy"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567938",
+    "slug": "medium-unique-paths",
+    "title": "Unique Paths",
+    "category": "dynamic-programming",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "There is a robot on an m x n grid. The robot is initially at the top-left corner. The robot tries to move to the bottom-right corner. How many possible unique paths are there?",
+    "prompt": "Implement function uniquePaths(m, n) returning number of unique paths.",
+    "languages": {
+      "python": { "wrapperFn": "uniquePaths", "starterCode": "def uniquePaths(m, n):\n    pass" },
+      "javascript": { "wrapperFn": "uniquePaths", "starterCode": "function uniquePaths(m, n) {\n  return 0;\n}" },
+      "typescript": { "wrapperFn": "uniquePaths", "starterCode": "function uniquePaths(m: number, n: number): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.uniquePaths", "starterCode": "class Solution {\n  public int uniquePaths(int m, int n) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "uniquePaths", "starterCode": "int uniquePaths(int m, int n) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.UniquePaths", "starterCode": "public int UniquePaths(int m, int n) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "uniquePaths", "starterCode": "func uniquePaths(m int, n int) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "unique_paths", "starterCode": "pub fn unique_paths(m: i32, n: i32) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": [3, 7], "expected": 28, "visible": true, "description": "3x7 grid has 28 paths" },
+      { "input": [3, 3], "expected": 6, "visible": true, "description": "3x3 grid has 6 paths" },
+      { "input": [1, 1], "expected": 1, "visible": false, "description": "Single cell" }
+    ],
+    "topics": ["math", "dynamic-programming", "combinatorics"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567939",
+    "slug": "medium-unique-paths-ii",
+    "title": "Unique Paths II",
+    "category": "dynamic-programming",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "You are given an m x n integer array grid. There is a robot initially at the top-left corner, and it tries to move to the bottom-right corner. The robot can only move either down or right at any point in time. An obstacle and space is marked as 1; a space is marked as 0. Return the number of unique paths.",
+    "prompt": "Implement function uniquePathsWithObstacles(obstacleGrid) with obstacles.",
+    "languages": {
+      "python": { "wrapperFn": "uniquePathsWithObstacles", "starterCode": "def uniquePathsWithObstacles(obstacleGrid):\n    pass" },
+      "javascript": { "wrapperFn": "uniquePathsWithObstacles", "starterCode": "function uniquePathsWithObstacles(obstacleGrid) {\n  return 0;\n}" },
+      "typescript": { "wrapperFn": "uniquePathsWithObstacles", "starterCode": "function uniquePathsWithObstacles(obstacleGrid: number[][]): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.uniquePathsWithObstacles", "starterCode": "class Solution {\n  public int uniquePathsWithObstacles(int[][] obstacleGrid) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "uniquePathsWithObstacles", "starterCode": "int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.UniquePathsWithObstacles", "starterCode": "public int UniquePathsWithObstacles(int[][] obstacleGrid) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "uniquePathsWithObstacles", "starterCode": "func uniquePathsWithObstacles(obstacleGrid [][]int) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "unique_paths_with_obstacles", "starterCode": "pub fn unique_paths_with_obstacles(obstacle_grid: Vec<Vec<i32>>) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": [[[0, 0, 0], [0, 1, 0], [0, 0, 0]]], "expected": 2, "visible": true, "description": "Obstacle in middle" },
+      { "input": [[[0, 1], [0, 0]]], "expected": 1, "visible": true, "description": "Obstacle at top-right" },
+      { "input": [[[1]]], "expected": 0, "visible": false, "description": "Start position blocked" }
+    ],
+    "topics": ["array", "dynamic-programming"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567940",
+    "slug": "medium-coin-change",
+    "title": "Coin Change",
+    "category": "dynamic-programming",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money. Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.",
+    "prompt": "Implement function coinChange(coins, amount) returning fewest coins.",
+    "languages": {
+      "python": { "wrapperFn": "coinChange", "starterCode": "def coinChange(coins, amount):\n    pass" },
+      "javascript": { "wrapperFn": "coinChange", "starterCode": "function coinChange(coins, amount) {\n  return -1;\n}" },
+      "typescript": { "wrapperFn": "coinChange", "starterCode": "function coinChange(coins: number[], amount: number): number {\n  return -1;\n}" },
+      "java": { "wrapperFn": "Solution.coinChange", "starterCode": "class Solution {\n  public int coinChange(int[] coins, int amount) {\n    return -1;\n  }\n}" },
+      "cpp": { "wrapperFn": "coinChange", "starterCode": "int coinChange(vector<int>& coins, int amount) {\n  return -1;\n}" },
+      "csharp": { "wrapperFn": "Solution.CoinChange", "starterCode": "public int CoinChange(int[] coins, int amount) {\n  return -1;\n}" },
+      "go": { "wrapperFn": "coinChange", "starterCode": "func coinChange(coins []int, amount int) int {\n  return -1\n}" },
+      "rust": { "wrapperFn": "coin_change", "starterCode": "pub fn coin_change(coins: Vec<i32>, amount: i32) -> i32 {\n  -1\n}" }
+    },
+    "testCases": [
+      { "input": [[1, 2, 5], 5], "expected": 1, "visible": true, "description": "One coin of 5" },
+      { "input": [[2], 3], "expected": -1, "visible": true, "description": "Impossible" },
+      { "input": [[10], 10], "expected": 1, "visible": false, "description": "Single coin equals amount" }
+    ],
+    "topics": ["array", "dynamic-programming", "breadth-first-search"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567941",
+    "slug": "medium-permutations",
+    "title": "Permutations",
+    "category": "backtracking",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.",
+    "prompt": "Implement function permute(nums) returning all permutations.",
+    "languages": {
+      "python": { "wrapperFn": "permute", "starterCode": "def permute(nums):\n    pass" },
+      "javascript": { "wrapperFn": "permute", "starterCode": "function permute(nums) {\n  return [];\n}" },
+      "typescript": { "wrapperFn": "permute", "starterCode": "function permute(nums: number[]): number[][] {\n  return [];\n}" },
+      "java": { "wrapperFn": "Solution.permute", "starterCode": "class Solution {\n  public List<List<Integer>> permute(int[] nums) {\n    return new ArrayList<>();\n  }\n}" },
+      "cpp": { "wrapperFn": "permute", "starterCode": "vector<vector<int>> permute(vector<int>& nums) {\n  return {};\n}" },
+      "csharp": { "wrapperFn": "Solution.Permute", "starterCode": "public IList<IList<int>> Permute(int[] nums) {\n  return new List<IList<int>>();\n}" },
+      "go": { "wrapperFn": "permute", "starterCode": "func permute(nums []int) [][]int {\n  return [][]int{}\n}" },
+      "rust": { "wrapperFn": "permute", "starterCode": "pub fn permute(nums: Vec<i32>) -> Vec<Vec<i32>> {\n  vec![]\n}" }
+    },
+    "testCases": [
+      { "input": [[1, 2, 3]], "expected": "6 permutations", "visible": true, "description": "All 6 permutations of [1,2,3]" },
+      { "input": [[0, 1]], "expected": "2 permutations", "visible": true, "description": "Two permutations" },
+      { "input": [[1]], "expected": "1 permutation", "visible": false, "description": "Single element" }
+    ],
+    "topics": ["array", "backtracking"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567942",
+    "slug": "medium-subsets",
+    "title": "Subsets",
+    "category": "backtracking",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given an integer array nums of unique elements, return all possible subsets (the power set). The solution set must not contain duplicate subsets.",
+    "prompt": "Implement function subsets(nums) returning all subsets.",
+    "languages": {
+      "python": { "wrapperFn": "subsets", "starterCode": "def subsets(nums):\n    pass" },
+      "javascript": { "wrapperFn": "subsets", "starterCode": "function subsets(nums) {\n  return [];\n}" },
+      "typescript": { "wrapperFn": "subsets", "starterCode": "function subsets(nums: number[]): number[][] {\n  return [];\n}" },
+      "java": { "wrapperFn": "Solution.subsets", "starterCode": "class Solution {\n  public List<List<Integer>> subsets(int[] nums) {\n    return new ArrayList<>();\n  }\n}" },
+      "cpp": { "wrapperFn": "subsets", "starterCode": "vector<vector<int>> subsets(vector<int>& nums) {\n  return {};\n}" },
+      "csharp": { "wrapperFn": "Solution.Subsets", "starterCode": "public IList<IList<int>> Subsets(int[] nums) {\n  return new List<IList<int>>();\n}" },
+      "go": { "wrapperFn": "subsets", "starterCode": "func subsets(nums []int) [][]int {\n  return [][]int{}\n}" },
+      "rust": { "wrapperFn": "subsets", "starterCode": "pub fn subsets(nums: Vec<i32>) -> Vec<Vec<i32>> {\n  vec![]\n}" }
+    },
+    "testCases": [
+      { "input": [[1, 2, 3]], "expected": "8 subsets", "visible": true, "description": "All 8 subsets" },
+      { "input": [[0]], "expected": "2 subsets", "visible": true, "description": "Two subsets: [], [0]" },
+      { "input": [], "expected": "1 subset", "visible": false, "description": "Empty set has one subset" }
+    ],
+    "topics": ["array", "backtracking", "bit-manipulation"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567943",
+    "slug": "medium-combinations",
+    "title": "Combinations",
+    "category": "backtracking",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given two integers n and k, return all possible combinations of k numbers chosen from the range [1, n]. You may return the answer in any order.",
+    "prompt": "Implement function combine(n, k) returning all k-combinations.",
+    "languages": {
+      "python": { "wrapperFn": "combine", "starterCode": "def combine(n, k):\n    pass" },
+      "javascript": { "wrapperFn": "combine", "starterCode": "function combine(n, k) {\n  return [];\n}" },
+      "typescript": { "wrapperFn": "combine", "starterCode": "function combine(n: number, k: number): number[][] {\n  return [];\n}" },
+      "java": { "wrapperFn": "Solution.combine", "starterCode": "class Solution {\n  public List<List<Integer>> combine(int n, int k) {\n    return new ArrayList<>();\n  }\n}" },
+      "cpp": { "wrapperFn": "combine", "starterCode": "vector<vector<int>> combine(int n, int k) {\n  return {};\n}" },
+      "csharp": { "wrapperFn": "Solution.Combine", "starterCode": "public IList<IList<int>> Combine(int n, int k) {\n  return new List<IList<int>>();\n}" },
+      "go": { "wrapperFn": "combine", "starterCode": "func combine(n int, k int) [][]int {\n  return [][]int{}\n}" },
+      "rust": { "wrapperFn": "combine", "starterCode": "pub fn combine(n: i32, k: i32) -> Vec<Vec<i32>> {\n  vec![]\n}" }
+    },
+    "testCases": [
+      { "input": [4, 2], "expected": "6 combinations", "visible": true, "description": "C(4,2) = 6" },
+      { "input": [1, 1], "expected": "1 combination", "visible": true, "description": "Only [1]" },
+      { "input": [5, 3], "expected": "10 combinations", "visible": false, "description": "C(5,3) = 10" }
+    ],
+    "topics": ["backtracking"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567944",
+    "slug": "medium-letter-combinations-phone-number",
+    "title": "Letter Combinations of a Phone Number",
+    "category": "backtracking",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.",
+    "prompt": "Implement function letterCombinations(digits) returning letter combinations.",
+    "languages": {
+      "python": { "wrapperFn": "letterCombinations", "starterCode": "def letterCombinations(digits):\n    pass" },
+      "javascript": { "wrapperFn": "letterCombinations", "starterCode": "function letterCombinations(digits) {\n  return [];\n}" },
+      "typescript": { "wrapperFn": "letterCombinations", "starterCode": "function letterCombinations(digits: string): string[] {\n  return [];\n}" },
+      "java": { "wrapperFn": "Solution.letterCombinations", "starterCode": "class Solution {\n  public List<String> letterCombinations(String digits) {\n    return new ArrayList<>();\n  }\n}" },
+      "cpp": { "wrapperFn": "letterCombinations", "starterCode": "vector<string> letterCombinations(string digits) {\n  return {};\n}" },
+      "csharp": { "wrapperFn": "Solution.LetterCombinations", "starterCode": "public IList<string> LetterCombinations(string digits) {\n  return new List<string>();\n}" },
+      "go": { "wrapperFn": "letterCombinations", "starterCode": "func letterCombinations(digits string) []string {\n  return []string{}\n}" },
+      "rust": { "wrapperFn": "letter_combinations", "starterCode": "pub fn letter_combinations(digits: String) -> Vec<String> {\n  vec![]\n}" }
+    },
+    "testCases": [
+      { "input": ["23"], "expected": ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"], "visible": true, "description": "All 9 combinations" },
+      { "input": [""], "expected": [], "visible": true, "description": "Empty string" },
+      { "input": ["2"], "expected": ["a", "b", "c"], "visible": false, "description": "Single digit" }
+    ],
+    "topics": ["hash-table", "string", "backtracking"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567945",
+    "slug": "medium-palindrome-partitioning",
+    "title": "Palindrome Partitioning",
+    "category": "backtracking",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.",
+    "prompt": "Implement function partition(s) returning all palindrome partitions.",
+    "languages": {
+      "python": { "wrapperFn": "partition", "starterCode": "def partition(s):\n    pass" },
+      "javascript": { "wrapperFn": "partition", "starterCode": "function partition(s) {\n  return [];\n}" },
+      "typescript": { "wrapperFn": "partition", "starterCode": "function partition(s: string): string[][] {\n  return [];\n}" },
+      "java": { "wrapperFn": "Solution.partition", "starterCode": "class Solution {\n  public List<List<String>> partition(String s) {\n    return new ArrayList<>();\n  }\n}" },
+      "cpp": { "wrapperFn": "partition", "starterCode": "vector<vector<string>> partition(string s) {\n  return {};\n}" },
+      "csharp": { "wrapperFn": "Solution.Partition", "starterCode": "public IList<IList<string>> Partition(string s) {\n  return new List<IList<string>>();\n}" },
+      "go": { "wrapperFn": "partition", "starterCode": "func partition(s string) [][]string {\n  return [][]string{}\n}" },
+      "rust": { "wrapperFn": "partition", "starterCode": "pub fn partition(s: String) -> Vec<Vec<String>> {\n  vec![]\n}" }
+    },
+    "testCases": [
+      { "input": ["aab"], "expected": [["a", "a", "b"], ["aa", "b"]], "visible": true, "description": "Two palindrome partitions" },
+      { "input": ["a"], "expected": [["a"]], "visible": true, "description": "Single character" },
+      { "input": ["nitin"], "expected": "multiple partitions", "visible": false, "description": "Multiple palindrome partitions" }
+    ],
+    "topics": ["string", "backtracking", "dynamic-programming"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567946",
+    "slug": "hard-n-queens",
+    "title": "N-Queens",
+    "category": "backtracking",
+    "difficulty": "Hard",
+    "timeLimitSeconds": 1800,
+    "description": "The n-queens problem is the problem of placing n queens on an n×n chessboard such that no two queens attack each other. Given an integer n, return all distinct solutions to the n-queens puzzle.",
+    "prompt": "Implement function solveNQueens(n) returning all valid placements.",
+    "languages": {
+      "python": { "wrapperFn": "solveNQueens", "starterCode": "def solveNQueens(n):\n    pass" },
+      "javascript": { "wrapperFn": "solveNQueens", "starterCode": "function solveNQueens(n) {\n  return [];\n}" },
+      "typescript": { "wrapperFn": "solveNQueens", "starterCode": "function solveNQueens(n: number): string[][] {\n  return [];\n}" },
+      "java": { "wrapperFn": "Solution.solveNQueens", "starterCode": "class Solution {\n  public List<List<String>> solveNQueens(int n) {\n    return new ArrayList<>();\n  }\n}" },
+      "cpp": { "wrapperFn": "solveNQueens", "starterCode": "vector<vector<string>> solveNQueens(int n) {\n  return {};\n}" },
+      "csharp": { "wrapperFn": "Solution.SolveNQueens", "starterCode": "public IList<IList<string>> SolveNQueens(int n) {\n  return new List<IList<string>>();\n}" },
+      "go": { "wrapperFn": "solveNQueens", "starterCode": "func solveNQueens(n int) [][]string {\n  return [][]string{}\n}" },
+      "rust": { "wrapperFn": "solve_n_queens", "starterCode": "pub fn solve_n_queens(n: i32) -> Vec<Vec<String>> {\n  vec![]\n}" }
+    },
+    "testCases": [
+      { "input": [4], "expected": "2 solutions", "visible": true, "description": "4-Queens has 2 solutions" },
+      { "input": [1], "expected": "1 solution", "visible": true, "description": "1-Queens trivial" },
+      { "input": [8], "expected": "92 solutions", "visible": false, "description": "8-Queens has 92 solutions" }
+    ],
+    "topics": ["array", "backtracking"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567947",
+    "slug": "medium-word-search",
+    "title": "Word Search",
+    "category": "backtracking",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given an m x n grid of characters board and a string word, return true if word exists in the grid. The word can be constructed from letters of sequentially adjacent cells.",
+    "prompt": "Implement function exist(board, word) searching for word in grid.",
+    "languages": {
+      "python": { "wrapperFn": "exist", "starterCode": "def exist(board, word):\n    pass" },
+      "javascript": { "wrapperFn": "exist", "starterCode": "function exist(board, word) {\n  return false;\n}" },
+      "typescript": { "wrapperFn": "exist", "starterCode": "function exist(board: string[][], word: string): boolean {\n  return false;\n}" },
+      "java": { "wrapperFn": "Solution.exist", "starterCode": "class Solution {\n  public boolean exist(char[][] board, String word) {\n    return false;\n  }\n}" },
+      "cpp": { "wrapperFn": "exist", "starterCode": "bool exist(vector<vector<char>>& board, string word) {\n  return false;\n}" },
+      "csharp": { "wrapperFn": "Solution.Exist", "starterCode": "public bool Exist(char[][] board, string word) {\n  return false;\n}" },
+      "go": { "wrapperFn": "exist", "starterCode": "func exist(board [][]byte, word string) bool {\n  return false\n}" },
+      "rust": { "wrapperFn": "exist", "starterCode": "pub fn exist(board: Vec<Vec<char>>, word: String) -> bool {\n  false\n}" }
+    },
+    "testCases": [
+      { "input": [[["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]], "ABCCED"], "expected": true, "visible": true, "description": "Word found" },
+      { "input": [[["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]], "SEE"], "expected": true, "visible": true, "description": "Another word found" },
+      { "input": [[["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]], "ABCB"], "expected": false, "visible": false, "description": "Word not found" }
+    ],
+    "topics": ["array", "backtracking"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567948",
+    "slug": "hard-word-search-ii",
+    "title": "Word Search II",
+    "category": "backtracking",
+    "difficulty": "Hard",
+    "timeLimitSeconds": 1800,
+    "description": "Given an m x n board of characters and a list of strings words, return all words on the board. Each word must be constructed from letters of sequentially adjacent cells.",
+    "prompt": "Implement function findWords(board, words) finding all words in grid.",
+    "languages": {
+      "python": { "wrapperFn": "findWords", "starterCode": "def findWords(board, words):\n    pass" },
+      "javascript": { "wrapperFn": "findWords", "starterCode": "function findWords(board, words) {\n  return [];\n}" },
+      "typescript": { "wrapperFn": "findWords", "starterCode": "function findWords(board: string[][], words: string[]): string[] {\n  return [];\n}" },
+      "java": { "wrapperFn": "Solution.findWords", "starterCode": "class Solution {\n  public List<String> findWords(char[][] board, String[] words) {\n    return new ArrayList<>();\n  }\n}" },
+      "cpp": { "wrapperFn": "findWords", "starterCode": "vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {\n  return {};\n}" },
+      "csharp": { "wrapperFn": "Solution.FindWords", "starterCode": "public IList<string> FindWords(char[][] board, string[] words) {\n  return new List<string>();\n}" },
+      "go": { "wrapperFn": "findWords", "starterCode": "func findWords(board [][]byte, words []string) []string {\n  return []string{}\n}" },
+      "rust": { "wrapperFn": "find_words", "starterCode": "pub fn find_words(board: Vec<Vec<char>>, words: Vec<String>) -> Vec<String> {\n  vec![]\n}" }
+    },
+    "testCases": [
+      { "input": [[["o", "a", "a", "n"], ["e", "t", "a", "e"], ["i", "h", "k", "r"], ["i", "f", "l", "v"]], ["oath", "pea", "eat", "rain"]], "expected": ["eat", "oath"], "visible": true, "description": "Two words found" },
+      { "input": [[["a", "b"], ["c", "d"]], ["abcb"]], "expected": [], "visible": true, "description": "No words found" },
+      { "input": [[["a"]], ["a"]], "expected": ["a"], "visible": false, "description": "Single character match" }
+    ],
+    "topics": ["array", "string", "backtracking", "trie"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567949",
+    "slug": "medium-implement-trie",
+    "title": "Implement Trie (Prefix Tree)",
+    "category": "trie",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Implement the Trie (also called Prefix Tree) data structure.",
+    "prompt": "Implement class Trie with insert(), search(), startsWith() methods.",
+    "languages": {
+      "python": { "wrapperFn": "Trie", "starterCode": "class Trie:\n    def __init__(self):\n        pass\n    \n    def insert(self, word):\n        pass\n    \n    def search(self, word):\n        pass\n    \n    def startsWith(self, prefix):\n        pass" },
+      "javascript": { "wrapperFn": "Trie", "starterCode": "class Trie {\n  constructor() {}\n  insert(word) {}\n  search(word) { return false; }\n  startsWith(prefix) { return false; }\n}" },
+      "typescript": { "wrapperFn": "Trie", "starterCode": "class Trie {\n  constructor() {}\n  insert(word: string): void {}\n  search(word: string): boolean { return false; }\n  startsWith(prefix: string): boolean { return false; }\n}" },
+      "java": { "wrapperFn": "Trie", "starterCode": "class Trie {\n  public Trie() {}\n  public void insert(String word) {}\n  public boolean search(String word) { return false; }\n  public boolean startsWith(String prefix) { return false; }\n}" },
+      "cpp": { "wrapperFn": "Trie", "starterCode": "class Trie {\npublic:\n  Trie() {}\n  void insert(string word) {}\n  bool search(string word) { return false; }\n  bool startsWith(string prefix) { return false; }\n};" },
+      "csharp": { "wrapperFn": "Trie", "starterCode": "public class Trie {\n  public Trie() {}\n  public void Insert(string word) {}\n  public bool Search(string word) { return false; }\n  public bool StartsWith(string prefix) { return false; }\n}" },
+      "go": { "wrapperFn": "Trie", "starterCode": "type Trie struct{}\n\nfunc Constructor() Trie { return Trie{} }\nfunc (this *Trie) Insert(word string) {}\nfunc (this *Trie) Search(word string) bool { return false }\nfunc (this *Trie) StartsWith(prefix string) bool { return false }" },
+      "rust": { "wrapperFn": "Trie", "starterCode": "struct Trie {}\n\nimpl Trie {\n  fn new() -> Self { Trie {} }\n  fn insert(&mut self, word: String) {}\n  fn search(&self, word: String) -> bool { false }\n  fn starts_with(&self, prefix: String) -> bool { false }\n}" }
+    },
+    "testCases": [
+      { "input": [["Trie", "insert", "search", "search", "startsWith", "insert", "search"], ["", "apple", "apple", "app", "app", "app", "app"]], "expected": [null, null, true, false, true, null, true], "visible": true, "description": "Basic Trie operations" },
+      { "input": [["Trie", "insert", "search"], ["", "a", "a"]], "expected": [null, null, true], "visible": true, "description": "Simple insert and search" },
+      { "input": [["Trie", "startsWith"], ["", "a"]], "expected": [null, false], "visible": false, "description": "StartsWith on empty trie" }
+    ],
+    "topics": ["hash-table", "string", "design", "trie"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567950",
+    "slug": "medium-add-and-search-word",
+    "title": "Design Add and Search Words Data Structure",
+    "category": "trie",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Design a data structure that supports adding new words and finding if a string matches any previously added string where single letter wildcards are allowed.",
+    "prompt": "Implement WordDictionary class with addWord() and search() supporting wildcards.",
+    "languages": {
+      "python": { "wrapperFn": "WordDictionary", "starterCode": "class WordDictionary:\n    def __init__(self):\n        pass\n    \n    def addWord(self, word):\n        pass\n    \n    def search(self, word):\n        pass" },
+      "javascript": { "wrapperFn": "WordDictionary", "starterCode": "class WordDictionary {\n  constructor() {}\n  addWord(word) {}\n  search(word) { return false; }\n}" },
+      "typescript": { "wrapperFn": "WordDictionary", "starterCode": "class WordDictionary {\n  constructor() {}\n  addWord(word: string): void {}\n  search(word: string): boolean { return false; }\n}" },
+      "java": { "wrapperFn": "WordDictionary", "starterCode": "class WordDictionary {\n  public WordDictionary() {}\n  public void addWord(String word) {}\n  public boolean search(String word) { return false; }\n}" },
+      "cpp": { "wrapperFn": "WordDictionary", "starterCode": "class WordDictionary {\npublic:\n  WordDictionary() {}\n  void addWord(string word) {}\n  bool search(string word) { return false; }\n};" },
+      "csharp": { "wrapperFn": "WordDictionary", "starterCode": "public class WordDictionary {\n  public WordDictionary() {}\n  public void AddWord(string word) {}\n  public bool Search(string word) { return false; }\n}" },
+      "go": { "wrapperFn": "WordDictionary", "starterCode": "type WordDictionary struct{}\n\nfunc Constructor() WordDictionary { return WordDictionary{} }\nfunc (this *WordDictionary) AddWord(word string) {}\nfunc (this *WordDictionary) Search(word string) bool { return false }" },
+      "rust": { "wrapperFn": "WordDictionary", "starterCode": "struct WordDictionary {}\n\nimpl WordDictionary {\n  fn new() -> Self { WordDictionary {} }\n  fn add_word(&mut self, word: String) {}\n  fn search(&self, word: String) -> bool { false }\n}" }
+    },
+    "testCases": [
+      { "input": [["WordDictionary", "addWord", "addWord", "addWord", "search", "search", "search", "search"], ["", "bad", "dad", "mad", "pad", "bad", ".ad", "b.."]], "expected": [null, null, null, null, false, true, true, true], "visible": true, "description": "Search with wildcards" },
+      { "input": [["WordDictionary", "addWord", "search"], ["", "a", "."]], "expected": [null, null, true], "visible": true, "description": "Wildcard matches single char" },
+      { "input": [["WordDictionary", "addWord", "search"], ["", "ab", "a"]], "expected": [null, null, false], "visible": false, "description": "No wildcard match" }
+    ],
+    "topics": ["string", "design", "depth-first-search", "trie"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567951",
+    "slug": "medium-topological-sort",
+    "title": "Topological Sort (Course Schedule)",
+    "category": "graph",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. Some courses have prerequisites. Given prerequisites, determine if you can finish all courses.",
+    "prompt": "Implement function canFinish(numCourses, prerequisites) checking if all courses can be completed.",
+    "languages": {
+      "python": { "wrapperFn": "canFinish", "starterCode": "def canFinish(numCourses, prerequisites):\n    pass" },
+      "javascript": { "wrapperFn": "canFinish", "starterCode": "function canFinish(numCourses, prerequisites) {\n  return false;\n}" },
+      "typescript": { "wrapperFn": "canFinish", "starterCode": "function canFinish(numCourses: number, prerequisites: number[][]): boolean {\n  return false;\n}" },
+      "java": { "wrapperFn": "Solution.canFinish", "starterCode": "class Solution {\n  public boolean canFinish(int numCourses, int[][] prerequisites) {\n    return false;\n  }\n}" },
+      "cpp": { "wrapperFn": "canFinish", "starterCode": "bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {\n  return false;\n}" },
+      "csharp": { "wrapperFn": "Solution.CanFinish", "starterCode": "public bool CanFinish(int numCourses, int[][] prerequisites) {\n  return false;\n}" },
+      "go": { "wrapperFn": "canFinish", "starterCode": "func canFinish(numCourses int, prerequisites [][]int) bool {\n  return false\n}" },
+      "rust": { "wrapperFn": "can_finish", "starterCode": "pub fn can_finish(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> bool {\n  false\n}" }
+    },
+    "testCases": [
+      { "input": [2, [[1, 0]]], "expected": true, "visible": true, "description": "Can finish all courses" },
+      { "input": [2, [[1, 0], [0, 1]]], "expected": false, "visible": true, "description": "Circular dependency" },
+      { "input": [3, [[0, 1], [1, 2]]], "expected": true, "visible": false, "description": "Linear prerequisites" }
+    ],
+    "topics": ["depth-first-search", "breadth-first-search", "graph", "topological-sort"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  }
+]

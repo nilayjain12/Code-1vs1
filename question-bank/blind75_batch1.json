@@ -1,0 +1,466 @@
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "slug": "easy-two-sum",
+    "title": "Two Sum",
+    "category": "array",
+    "difficulty": "Easy",
+    "timeLimitSeconds": 1800,
+    "description": "Given an array of integers and a target, return the indices of the two numbers that add up to the target.",
+    "prompt": "Implement function solve(nums, target) returning [i, j] of two values summing to target.",
+    "languages": {
+      "python": { "wrapperFn": "solve", "starterCode": "def solve(nums, target):\n    pass" },
+      "javascript": { "wrapperFn": "solve", "starterCode": "function solve(nums, target) {\n  // your code here\n}" },
+      "typescript": { "wrapperFn": "solve", "starterCode": "function solve(nums: number[], target: number): number[] {\n  // your code here\n}" },
+      "java": { "wrapperFn": "Solution.solve", "starterCode": "class Solution {\n  public static int[] solve(int[] nums, int target) {\n    return new int[]{};\n  }\n}" },
+      "cpp": { "wrapperFn": "solve", "starterCode": "vector<int> solve(vector<int>& nums, int target) {\n  return {};\n}" },
+      "csharp": { "wrapperFn": "Solution.Solve", "starterCode": "public static int[] Solve(int[] nums, int target) {\n  return new int[]{};\n}" },
+      "go": { "wrapperFn": "solve", "starterCode": "func solve(nums []int, target int) []int {\n  return []int{}\n}" },
+      "rust": { "wrapperFn": "solve", "starterCode": "fn solve(nums: Vec<i32>, target: i32) -> Vec<i32> {\n  vec![]\n}" }
+    },
+    "testCases": [
+      { "input": [[2, 7, 11, 15], 9], "expected": [0, 1], "visible": true, "description": "nums[0] + nums[1] == 9" },
+      { "input": [[3, 2, 4], 6], "expected": [1, 2], "visible": true, "description": "nums[1] + nums[2] == 6" },
+      { "input": [[3, 3], 6], "expected": [0, 1], "visible": false, "description": "Same element twice" }
+    ],
+    "topics": ["array", "hash-table"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567891",
+    "slug": "easy-best-time-buy-sell-stock",
+    "title": "Best Time to Buy and Sell Stock",
+    "category": "array",
+    "difficulty": "Easy",
+    "timeLimitSeconds": 1800,
+    "description": "You are given an array prices where prices[i] is the price of a given stock on the ith day. Return the maximum profit you can achieve.",
+    "prompt": "Implement function maxProfit(prices) returning the maximum profit from one buy-sell transaction.",
+    "languages": {
+      "python": { "wrapperFn": "maxProfit", "starterCode": "def maxProfit(prices):\n    pass" },
+      "javascript": { "wrapperFn": "maxProfit", "starterCode": "function maxProfit(prices) {\n  // your code here\n}" },
+      "typescript": { "wrapperFn": "maxProfit", "starterCode": "function maxProfit(prices: number[]): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.maxProfit", "starterCode": "class Solution {\n  public int maxProfit(int[] prices) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "maxProfit", "starterCode": "int maxProfit(vector<int>& prices) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.MaxProfit", "starterCode": "public int MaxProfit(int[] prices) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "maxProfit", "starterCode": "func maxProfit(prices []int) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "max_profit", "starterCode": "pub fn max_profit(prices: Vec<i32>) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": [[7, 1, 5, 3, 6, 4]], "expected": 5, "visible": true, "description": "Buy at 1, sell at 6" },
+      { "input": [[7, 6, 4, 3, 1]], "expected": 0, "visible": true, "description": "No profit possible" },
+      { "input": [[2, 4, 1, 7, 5, 11]], "expected": 10, "visible": false, "description": "Buy at 1, sell at 11" }
+    ],
+    "topics": ["array", "dynamic-programming"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567892",
+    "slug": "easy-contains-duplicate",
+    "title": "Contains Duplicate",
+    "category": "array",
+    "difficulty": "Easy",
+    "timeLimitSeconds": 1800,
+    "description": "Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.",
+    "prompt": "Implement function containsDuplicate(nums) returning true if duplicates exist.",
+    "languages": {
+      "python": { "wrapperFn": "containsDuplicate", "starterCode": "def containsDuplicate(nums):\n    pass" },
+      "javascript": { "wrapperFn": "containsDuplicate", "starterCode": "function containsDuplicate(nums) {\n  // your code here\n}" },
+      "typescript": { "wrapperFn": "containsDuplicate", "starterCode": "function containsDuplicate(nums: number[]): boolean {\n  return false;\n}" },
+      "java": { "wrapperFn": "Solution.containsDuplicate", "starterCode": "class Solution {\n  public boolean containsDuplicate(int[] nums) {\n    return false;\n  }\n}" },
+      "cpp": { "wrapperFn": "containsDuplicate", "starterCode": "bool containsDuplicate(vector<int>& nums) {\n  return false;\n}" },
+      "csharp": { "wrapperFn": "Solution.ContainsDuplicate", "starterCode": "public bool ContainsDuplicate(int[] nums) {\n  return false;\n}" },
+      "go": { "wrapperFn": "containsDuplicate", "starterCode": "func containsDuplicate(nums []int) bool {\n  return false\n}" },
+      "rust": { "wrapperFn": "contains_duplicate", "starterCode": "pub fn contains_duplicate(nums: Vec<i32>) -> bool {\n  false\n}" }
+    },
+    "testCases": [
+      { "input": [[1, 2, 3, 1]], "expected": true, "visible": true, "description": "Element 1 appears twice" },
+      { "input": [[1, 2, 3, 4]], "expected": false, "visible": true, "description": "All elements are distinct" },
+      { "input": [[99, 99]], "expected": true, "visible": false, "description": "All same elements" }
+    ],
+    "topics": ["array", "hash-table"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567893",
+    "slug": "medium-product-of-array-except-self",
+    "title": "Product of Array Except Self",
+    "category": "array",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given an integer array nums, return an array output where output[i] is the product of all elements except nums[i]. Solve without using division operator.",
+    "prompt": "Implement function productExceptSelf(nums) returning products without division.",
+    "languages": {
+      "python": { "wrapperFn": "productExceptSelf", "starterCode": "def productExceptSelf(nums):\n    pass" },
+      "javascript": { "wrapperFn": "productExceptSelf", "starterCode": "function productExceptSelf(nums) {\n  // your code here\n}" },
+      "typescript": { "wrapperFn": "productExceptSelf", "starterCode": "function productExceptSelf(nums: number[]): number[] {\n  return [];\n}" },
+      "java": { "wrapperFn": "Solution.productExceptSelf", "starterCode": "class Solution {\n  public int[] productExceptSelf(int[] nums) {\n    return new int[]{};\n  }\n}" },
+      "cpp": { "wrapperFn": "productExceptSelf", "starterCode": "vector<int> productExceptSelf(vector<int>& nums) {\n  return {};\n}" },
+      "csharp": { "wrapperFn": "Solution.ProductExceptSelf", "starterCode": "public int[] ProductExceptSelf(int[] nums) {\n  return new int[]{};\n}" },
+      "go": { "wrapperFn": "productExceptSelf", "starterCode": "func productExceptSelf(nums []int) []int {\n  return []int{}\n}" },
+      "rust": { "wrapperFn": "product_except_self", "starterCode": "pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {\n  vec![]\n}" }
+    },
+    "testCases": [
+      { "input": [[1, 2, 3, 4]], "expected": [24, 12, 8, 6], "visible": true, "description": "Products: 2*3*4, 1*3*4, 1*2*4, 1*2*3" },
+      { "input": [[-1, 1, 0, -3, 3]], "expected": [0, 0, 9, 0, 0], "visible": true, "description": "Handle zeros and negatives" },
+      { "input": [[2, 3, 4, 5]], "expected": [60, 40, 30, 24], "visible": false, "description": "All positive numbers" }
+    ],
+    "topics": ["array", "prefix-product"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567894",
+    "slug": "easy-maximum-subarray",
+    "title": "Maximum Subarray",
+    "category": "array",
+    "difficulty": "Easy",
+    "timeLimitSeconds": 1800,
+    "description": "Given an integer array nums, find the contiguous subarray with the largest sum and return its sum. This is known as the maximum subarray problem.",
+    "prompt": "Implement function maxSubArray(nums) returning the maximum sum of any contiguous subarray.",
+    "languages": {
+      "python": { "wrapperFn": "maxSubArray", "starterCode": "def maxSubArray(nums):\n    pass" },
+      "javascript": { "wrapperFn": "maxSubArray", "starterCode": "function maxSubArray(nums) {\n  // your code here\n}" },
+      "typescript": { "wrapperFn": "maxSubArray", "starterCode": "function maxSubArray(nums: number[]): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.maxSubArray", "starterCode": "class Solution {\n  public int maxSubArray(int[] nums) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "maxSubArray", "starterCode": "int maxSubArray(vector<int>& nums) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.MaxSubArray", "starterCode": "public int MaxSubArray(int[] nums) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "maxSubArray", "starterCode": "func maxSubArray(nums []int) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "max_sub_array", "starterCode": "pub fn max_sub_array(nums: Vec<i32>) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": [[-2, 1, -3, 4, -1, 2, 1, -5, 4]], "expected": 6, "visible": true, "description": "Subarray [4, -1, 2, 1] has max sum 6" },
+      { "input": [[5]], "expected": 5, "visible": true, "description": "Single element" },
+      { "input": [[-1]], "expected": -1, "visible": false, "description": "Negative single element" }
+    ],
+    "topics": ["array", "dynamic-programming"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567895",
+    "slug": "medium-maximum-product-subarray",
+    "title": "Maximum Product Subarray",
+    "category": "array",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given an integer array nums, find a contiguous non-empty subarray with the largest product and return the product.",
+    "prompt": "Implement function maxProduct(nums) returning the maximum product of any contiguous subarray.",
+    "languages": {
+      "python": { "wrapperFn": "maxProduct", "starterCode": "def maxProduct(nums):\n    pass" },
+      "javascript": { "wrapperFn": "maxProduct", "starterCode": "function maxProduct(nums) {\n  // your code here\n}" },
+      "typescript": { "wrapperFn": "maxProduct", "starterCode": "function maxProduct(nums: number[]): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.maxProduct", "starterCode": "class Solution {\n  public int maxProduct(int[] nums) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "maxProduct", "starterCode": "int maxProduct(vector<int>& nums) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.MaxProduct", "starterCode": "public int MaxProduct(int[] nums) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "maxProduct", "starterCode": "func maxProduct(nums []int) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "max_product", "starterCode": "pub fn max_product(nums: Vec<i32>) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": [[2, 3, -2, 4]], "expected": 6, "visible": true, "description": "Subarray [2, 3] has product 6" },
+      { "input": [[-2]], "expected": -2, "visible": true, "description": "Single negative element" },
+      { "input": [[0, 2]], "expected": 2, "visible": false, "description": "With zero" }
+    ],
+    "topics": ["array", "dynamic-programming"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567896",
+    "slug": "medium-find-minimum-rotated-sorted-array",
+    "title": "Find Minimum in Rotated Sorted Array",
+    "category": "array",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Suppose an array of length n sorted in ascending order is rotated between 1 and n times. Find the minimum element in the array.",
+    "prompt": "Implement function findMin(nums) returning the minimum element in rotated sorted array.",
+    "languages": {
+      "python": { "wrapperFn": "findMin", "starterCode": "def findMin(nums):\n    pass" },
+      "javascript": { "wrapperFn": "findMin", "starterCode": "function findMin(nums) {\n  // your code here\n}" },
+      "typescript": { "wrapperFn": "findMin", "starterCode": "function findMin(nums: number[]): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.findMin", "starterCode": "class Solution {\n  public int findMin(int[] nums) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "findMin", "starterCode": "int findMin(vector<int>& nums) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.FindMin", "starterCode": "public int FindMin(int[] nums) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "findMin", "starterCode": "func findMin(nums []int) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "find_min", "starterCode": "pub fn find_min(nums: Vec<i32>) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": [[3, 4, 5, 1, 2]], "expected": 1, "visible": true, "description": "Rotated [1,2,3,4,5]" },
+      { "input": [[2, 1]], "expected": 1, "visible": true, "description": "Rotated [1,2]" },
+      { "input": [[3, 1, 2]], "expected": 1, "visible": false, "description": "Rotated [1,2,3]" }
+    ],
+    "topics": ["array", "binary-search"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567897",
+    "slug": "medium-search-rotated-sorted-array",
+    "title": "Search in Rotated Sorted Array",
+    "category": "array",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "You are given a rotated sorted array and an integer target. Return the index of target if it is in the array, or -1 if it is not.",
+    "prompt": "Implement function search(nums, target) returning the index of target or -1.",
+    "languages": {
+      "python": { "wrapperFn": "search", "starterCode": "def search(nums, target):\n    pass" },
+      "javascript": { "wrapperFn": "search", "starterCode": "function search(nums, target) {\n  // your code here\n}" },
+      "typescript": { "wrapperFn": "search", "starterCode": "function search(nums: number[], target: number): number {\n  return -1;\n}" },
+      "java": { "wrapperFn": "Solution.search", "starterCode": "class Solution {\n  public int search(int[] nums, int target) {\n    return -1;\n  }\n}" },
+      "cpp": { "wrapperFn": "search", "starterCode": "int search(vector<int>& nums, int target) {\n  return -1;\n}" },
+      "csharp": { "wrapperFn": "Solution.Search", "starterCode": "public int Search(int[] nums, int target) {\n  return -1;\n}" },
+      "go": { "wrapperFn": "search", "starterCode": "func search(nums []int, target int) int {\n  return -1\n}" },
+      "rust": { "wrapperFn": "search", "starterCode": "pub fn search(nums: Vec<i32>, target: i32) -> i32 {\n  -1\n}" }
+    },
+    "testCases": [
+      { "input": [[4, 5, 6, 7, 0, 1, 2], 0], "expected": 4, "visible": true, "description": "Target 0 at index 4" },
+      { "input": [[4, 5, 6, 7, 0, 1, 2], 3], "expected": -1, "visible": true, "description": "Target 3 not found" },
+      { "input": [[1], 1], "expected": 0, "visible": false, "description": "Single element array" }
+    ],
+    "topics": ["array", "binary-search"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567898",
+    "slug": "medium-3sum",
+    "title": "3Sum",
+    "category": "array",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given an integer array nums, return all unique triplets in the array that sum to zero.",
+    "prompt": "Implement function threeSum(nums) returning all unique triplets that sum to 0.",
+    "languages": {
+      "python": { "wrapperFn": "threeSum", "starterCode": "def threeSum(nums):\n    pass" },
+      "javascript": { "wrapperFn": "threeSum", "starterCode": "function threeSum(nums) {\n  // your code here\n}" },
+      "typescript": { "wrapperFn": "threeSum", "starterCode": "function threeSum(nums: number[]): number[][] {\n  return [];\n}" },
+      "java": { "wrapperFn": "Solution.threeSum", "starterCode": "class Solution {\n  public List<List<Integer>> threeSum(int[] nums) {\n    return new ArrayList<>();\n  }\n}" },
+      "cpp": { "wrapperFn": "threeSum", "starterCode": "vector<vector<int>> threeSum(vector<int>& nums) {\n  return {};\n}" },
+      "csharp": { "wrapperFn": "Solution.ThreeSum", "starterCode": "public IList<IList<int>> ThreeSum(int[] nums) {\n  return new List<IList<int>>();\n}" },
+      "go": { "wrapperFn": "threeSum", "starterCode": "func threeSum(nums []int) [][]int {\n  return [][]int{}\n}" },
+      "rust": { "wrapperFn": "three_sum", "starterCode": "pub fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {\n  vec![]\n}" }
+    },
+    "testCases": [
+      { "input": [[-1, 0, 1, 2, -1, -4]], "expected": [[-1, -1, 2], [-1, 0, 1]], "visible": true, "description": "Two unique triplets summing to 0" },
+      { "input": [[0, 0, 0, 0]], "expected": [[0, 0, 0]], "visible": true, "description": "All zeros" },
+      { "input": [[-2, 0, 1, 1, 2]], "expected": [[-2, 0, 2], [-2, 1, 1]], "visible": false, "description": "Multiple valid triplets" }
+    ],
+    "topics": ["array", "two-pointers"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567899",
+    "slug": "medium-container-with-most-water",
+    "title": "Container With Most Water",
+    "category": "array",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "You are given an integer array height of length n. Find two lines that together with the x-axis form a container such that the container holds the most water.",
+    "prompt": "Implement function maxArea(height) returning the maximum area of water that can be contained.",
+    "languages": {
+      "python": { "wrapperFn": "maxArea", "starterCode": "def maxArea(height):\n    pass" },
+      "javascript": { "wrapperFn": "maxArea", "starterCode": "function maxArea(height) {\n  // your code here\n}" },
+      "typescript": { "wrapperFn": "maxArea", "starterCode": "function maxArea(height: number[]): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.maxArea", "starterCode": "class Solution {\n  public int maxArea(int[] height) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "maxArea", "starterCode": "int maxArea(vector<int>& height) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.MaxArea", "starterCode": "public int MaxArea(int[] height) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "maxArea", "starterCode": "func maxArea(height []int) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "max_area", "starterCode": "pub fn max_area(height: Vec<i32>) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": [[1, 8, 6, 2, 5, 4, 8, 3, 7]], "expected": 49, "visible": true, "description": "Max area between index 1 and 8" },
+      { "input": [[1, 1]], "expected": 1, "visible": true, "description": "Two lines of height 1" },
+      { "input": [[2, 3, 4, 5, 18, 2, 6]], "expected": 17, "visible": false, "description": "Maximum area calculation" }
+    ],
+    "topics": ["array", "two-pointers"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567900",
+    "slug": "hard-trapping-rain-water",
+    "title": "Trapping Rain Water",
+    "category": "array",
+    "difficulty": "Hard",
+    "timeLimitSeconds": 1800,
+    "description": "Given n non-negative integers representing an elevation map, compute how much water it can trap after raining.",
+    "prompt": "Implement function trap(height) returning the total amount of water trapped.",
+    "languages": {
+      "python": { "wrapperFn": "trap", "starterCode": "def trap(height):\n    pass" },
+      "javascript": { "wrapperFn": "trap", "starterCode": "function trap(height) {\n  // your code here\n}" },
+      "typescript": { "wrapperFn": "trap", "starterCode": "function trap(height: number[]): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.trap", "starterCode": "class Solution {\n  public int trap(int[] height) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "trap", "starterCode": "int trap(vector<int>& height) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.Trap", "starterCode": "public int Trap(int[] height) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "trap", "starterCode": "func trap(height []int) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "trap", "starterCode": "pub fn trap(height: Vec<i32>) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": [[0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]], "expected": 6, "visible": true, "description": "Water trapped in valleys" },
+      { "input": [[4, 2, 0, 3, 2, 5]], "expected": 9, "visible": true, "description": "Water between elevated bars" },
+      { "input": [[0, 1, 2, 1, 0]], "expected": 0, "visible": false, "description": "No trapped water" }
+    ],
+    "topics": ["array", "stack", "dynamic-programming"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567901",
+    "slug": "medium-merge-intervals",
+    "title": "Merge Intervals",
+    "category": "array",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given an array of intervals, merge all overlapping intervals and return an array of non-overlapping intervals.",
+    "prompt": "Implement function merge(intervals) returning merged non-overlapping intervals.",
+    "languages": {
+      "python": { "wrapperFn": "merge", "starterCode": "def merge(intervals):\n    pass" },
+      "javascript": { "wrapperFn": "merge", "starterCode": "function merge(intervals) {\n  // your code here\n}" },
+      "typescript": { "wrapperFn": "merge", "starterCode": "function merge(intervals: number[][]): number[][] {\n  return [];\n}" },
+      "java": { "wrapperFn": "Solution.merge", "starterCode": "class Solution {\n  public int[][] merge(int[][] intervals) {\n    return new int[][]{};\n  }\n}" },
+      "cpp": { "wrapperFn": "merge", "starterCode": "vector<vector<int>> merge(vector<vector<int>>& intervals) {\n  return {};\n}" },
+      "csharp": { "wrapperFn": "Solution.Merge", "starterCode": "public int[][] Merge(int[][] intervals) {\n  return new int[][]{};\n}" },
+      "go": { "wrapperFn": "merge", "starterCode": "func merge(intervals [][]int) [][]int {\n  return [][]int{}\n}" },
+      "rust": { "wrapperFn": "merge", "starterCode": "pub fn merge(intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n  vec![]\n}" }
+    },
+    "testCases": [
+      { "input": [[[1, 3], [2, 6], [8, 10], [15, 18]]], "expected": [[1, 6], [8, 10], [15, 18]], "visible": true, "description": "Merge overlapping intervals" },
+      { "input": [[[1, 4], [4, 5]]], "expected": [[1, 5]], "visible": true, "description": "Adjacent intervals" },
+      { "input": [[[1, 5], [1, 4]]], "expected": [[1, 5]], "visible": false, "description": "Contained intervals" }
+    ],
+    "topics": ["array", "sorting"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567902",
+    "slug": "easy-valid-parentheses",
+    "title": "Valid Parentheses",
+    "category": "string",
+    "difficulty": "Easy",
+    "timeLimitSeconds": 1800,
+    "description": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.",
+    "prompt": "Implement function isValid(s) returning true if parentheses are properly matched.",
+    "languages": {
+      "python": { "wrapperFn": "isValid", "starterCode": "def isValid(s):\n    pass" },
+      "javascript": { "wrapperFn": "isValid", "starterCode": "function isValid(s) {\n  // your code here\n}" },
+      "typescript": { "wrapperFn": "isValid", "starterCode": "function isValid(s: string): boolean {\n  return false;\n}" },
+      "java": { "wrapperFn": "Solution.isValid", "starterCode": "class Solution {\n  public boolean isValid(String s) {\n    return false;\n  }\n}" },
+      "cpp": { "wrapperFn": "isValid", "starterCode": "bool isValid(string s) {\n  return false;\n}" },
+      "csharp": { "wrapperFn": "Solution.IsValid", "starterCode": "public bool IsValid(string s) {\n  return false;\n}" },
+      "go": { "wrapperFn": "isValid", "starterCode": "func isValid(s string) bool {\n  return false\n}" },
+      "rust": { "wrapperFn": "is_valid", "starterCode": "pub fn is_valid(s: String) -> bool {\n  false\n}" }
+    },
+    "testCases": [
+      { "input": ["()"], "expected": true, "visible": true, "description": "Valid pair" },
+      { "input": ["()[]{}"], "expected": true, "visible": true, "description": "All brackets matched" },
+      { "input": ["(]"], "expected": false, "visible": false, "description": "Mismatched brackets" }
+    ],
+    "topics": ["string", "stack"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567903",
+    "slug": "medium-longest-substring-without-repeating",
+    "title": "Longest Substring Without Repeating Characters",
+    "category": "string",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given a string s, find the length of the longest substring without repeating characters.",
+    "prompt": "Implement function lengthOfLongestSubstring(s) returning the length of longest substring.",
+    "languages": {
+      "python": { "wrapperFn": "lengthOfLongestSubstring", "starterCode": "def lengthOfLongestSubstring(s):\n    pass" },
+      "javascript": { "wrapperFn": "lengthOfLongestSubstring", "starterCode": "function lengthOfLongestSubstring(s) {\n  // your code here\n}" },
+      "typescript": { "wrapperFn": "lengthOfLongestSubstring", "starterCode": "function lengthOfLongestSubstring(s: string): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.lengthOfLongestSubstring", "starterCode": "class Solution {\n  public int lengthOfLongestSubstring(String s) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "lengthOfLongestSubstring", "starterCode": "int lengthOfLongestSubstring(string s) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.LengthOfLongestSubstring", "starterCode": "public int LengthOfLongestSubstring(string s) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "lengthOfLongestSubstring", "starterCode": "func lengthOfLongestSubstring(s string) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "length_of_longest_substring", "starterCode": "pub fn length_of_longest_substring(s: String) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": ["abcabcbb"], "expected": 3, "visible": true, "description": "Longest is 'abc'" },
+      { "input": ["bbbbb"], "expected": 1, "visible": true, "description": "Only 'b'" },
+      { "input": ["pwwkew"], "expected": 3, "visible": false, "description": "Longest is 'wke'" }
+    ],
+    "topics": ["string", "sliding-window", "hash-table"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567904",
+    "slug": "medium-longest-repeating-character-replacement",
+    "title": "Longest Repeating Character Replacement",
+    "category": "string",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "You are given a string s and an integer k. You can choose any character and change it to any other uppercase English character. You can perform this operation at most k times. Return the length of the longest substring with same letters after replacements.",
+    "prompt": "Implement function characterReplacement(s, k) returning the length of longest valid substring.",
+    "languages": {
+      "python": { "wrapperFn": "characterReplacement", "starterCode": "def characterReplacement(s, k):\n    pass" },
+      "javascript": { "wrapperFn": "characterReplacement", "starterCode": "function characterReplacement(s, k) {\n  // your code here\n}" },
+      "typescript": { "wrapperFn": "characterReplacement", "starterCode": "function characterReplacement(s: string, k: number): number {\n  return 0;\n}" },
+      "java": { "wrapperFn": "Solution.characterReplacement", "starterCode": "class Solution {\n  public int characterReplacement(String s, int k) {\n    return 0;\n  }\n}" },
+      "cpp": { "wrapperFn": "characterReplacement", "starterCode": "int characterReplacement(string s, int k) {\n  return 0;\n}" },
+      "csharp": { "wrapperFn": "Solution.CharacterReplacement", "starterCode": "public int CharacterReplacement(string s, int k) {\n  return 0;\n}" },
+      "go": { "wrapperFn": "characterReplacement", "starterCode": "func characterReplacement(s string, k int) int {\n  return 0\n}" },
+      "rust": { "wrapperFn": "character_replacement", "starterCode": "pub fn character_replacement(s: String, k: i32) -> i32 {\n  0\n}" }
+    },
+    "testCases": [
+      { "input": ["ABAB", 2], "expected": 4, "visible": true, "description": "Replace A's to get BBBB" },
+      { "input": ["AABABBA", 1], "expected": 4, "visible": true, "description": "Replace one A to get AABBBA" },
+      { "input": ["ABBB", 2], "expected": 4, "visible": false, "description": "Already valid" }
+    ],
+    "topics": ["string", "sliding-window"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567905",
+    "slug": "hard-minimum-window-substring",
+    "title": "Minimum Window Substring",
+    "category": "string",
+    "difficulty": "Hard",
+    "timeLimitSeconds": 1800,
+    "description": "Given two strings s and t, return the minimum window substring of s such that every character in t (including duplicates) is included in the window.",
+    "prompt": "Implement function minWindow(s, t) returning the minimum window substring.",
+    "languages": {
+      "python": { "wrapperFn": "minWindow", "starterCode": "def minWindow(s, t):\n    pass" },
+      "javascript": { "wrapperFn": "minWindow", "starterCode": "function minWindow(s, t) {\n  // your code here\n}" },
+      "typescript": { "wrapperFn": "minWindow", "starterCode": "function minWindow(s: string, t: string): string {\n  return '';\n}" },
+      "java": { "wrapperFn": "Solution.minWindow", "starterCode": "class Solution {\n  public String minWindow(String s, String t) {\n    return '';\n  }\n}" },
+      "cpp": { "wrapperFn": "minWindow", "starterCode": "string minWindow(string s, string t) {\n  return '';\n}" },
+      "csharp": { "wrapperFn": "Solution.MinWindow", "starterCode": "public string MinWindow(string s, string t) {\n  return '';\n}" },
+      "go": { "wrapperFn": "minWindow", "starterCode": "func minWindow(s string, t string) string {\n  return ''\n}" },
+      "rust": { "wrapperFn": "min_window", "starterCode": "pub fn min_window(s: String, t: String) -> String {\n  String::new()\n}" }
+    },
+    "testCases": [
+      { "input": ["ADOBECODEBANC", "ABC"], "expected": "BANC", "visible": true, "description": "Minimum window substring" },
+      { "input": ["a", "a"], "expected": "a", "visible": true, "description": "Single character" },
+      { "input": ["a", "aa"], "expected": "", "visible": false, "description": "Not enough characters" }
+    ],
+    "topics": ["string", "sliding-window", "hash-table"],
+    "isActive": true,
+    "createdAt": "2026-03-13 23:30:13.000",
+    "updatedAt": "2026-03-13 23:30:13.000"
+  }
+]

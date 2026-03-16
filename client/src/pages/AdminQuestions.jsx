@@ -249,56 +249,164 @@ export default function AdminQuestions() {
     reader.onload = async (event) => {
       try {
         const json = JSON.parse(event.target.result);
-        if (!Array.isArray(json)) throw new Error("JSON must be an array of questions.");
         
-        const mappedQuestions = json.map(q => {
-          // ── Build languages object ──
-          const languages = {};
-          const LANG_ALT = { 'cpp': 'c++', 'csharp': 'c#' };
-          
-          if (q.languages && typeof q.languages === 'object') {
-            for (const [rawKey, val] of Object.entries(q.languages)) {
-              const normKey = normalizeLangKey(rawKey);
-              if (LANGUAGES.includes(normKey) && val) {
-                const code = val.starterCode || val.code || '';
-                const fn = val.entrypoint || val.wrapperFn || 'solve';
-                
-                if (code.trim()) {
-                  languages[normKey] = { starterCode: code, wrapperFn: fn };
-                  if (LANG_ALT[normKey]) {
-                    languages[LANG_ALT[normKey]] = { starterCode: code, wrapperFn: fn };
+        // Validation Check
+        if (!Array.isArray(json) && (!json.questions || !Array.isArray(json.questions))) {
+          throw new Error("Unknown JSON format. Expected an array of questions or an object with a 'questions' array.");
+        }
+
+        let mappedQuestions = [];
+
+        // format detection!
+        if (json.questions && Array.isArray(json.questions)) {
+          // NEW FORMAT
+          mappedQuestions = json.questions.map((q) => {
+            
+            // ── Transform `code_snippets` -> `languages` ──
+            const languages = {};
+            const ALLOWED_LANGS = ['python', 'javascript', 'typescript', 'java', 'cpp', 'csharp', 'go', 'rust'];
+            const LANG_ALT = { 'cpp': 'c++', 'csharp': 'c#' };
+
+            if (q.code_snippets && typeof q.code_snippets === 'object') {
+              // Merge python3 into python if python is missing
+              if (q.code_snippets['python3'] && !q.code_snippets['python']) {
+                q.code_snippets['python'] = q.code_snippets['python3'];
+              }
+
+              for (const [rawKey, code] of Object.entries(q.code_snippets)) {
+                if (!ALLOWED_LANGS.includes(rawKey) || !code) continue;
+
+                let fn = 'solve';
+                if (rawKey === 'python') {
+                  const m = code.match(/def\s+([a-zA-Z0-9_]+)\s*\(/);
+                  if (m) fn = m[1];
+                } else if (rawKey === 'java' || rawKey === 'csharp' || rawKey === 'cpp') {
+                  // e.g. public int[] twoSum(
+                  const m = code.match(/(?:(?:public|private|protected|static|virtual|override)\s+)*(?:[\w<>\[\]:]+\s+)+([a-zA-Z0-9_]+)\s*\(/);
+                  if (m) fn = m[1];
+                } else if (rawKey === 'javascript' || rawKey === 'typescript') {
+                  let m = code.match(/(?:var|let|const|function)\s+([a-zA-Z0-9_]+)\s*(?:=|\()/);
+                  if (m) fn = m[1];
+                } else if (rawKey === 'go') {
+                  const m = code.match(/func\s+([a-zA-Z0-9_]+)\s*\(/);
+                  if (m) fn = m[1];
+                } else if (rawKey === 'rust') {
+                  const m = code.match(/fn\s+([a-zA-Z0-9_]+)\s*\(/);
+                  if (m) fn = m[1];
+                }
+
+                languages[rawKey] = { starterCode: code, wrapperFn: fn };
+                if (LANG_ALT[rawKey]) languages[LANG_ALT[rawKey]] = { starterCode: code, wrapperFn: fn };
+              }
+            }
+
+            // ── Transform `examples` -> `testCases` ──
+            let testCases = [];
+            if (Array.isArray(q.examples)) {
+              testCases = q.examples.map((ex, idx) => {
+                const text = ex.example_text || '';
+                const inputMatch = text.match(/Input:\s*(.*?)(?=\nOutput:|$)/i);
+                const outputMatch = text.match(/Output:\s*(.*?)(?=\nExplanation:|$)/i);
+                const explanationMatch = text.match(/Explanation:\s*(.*)/i);
+
+                let inputArr = [];
+                if (inputMatch) {
+                  const inputStr = inputMatch[1].trim();
+                  // Try to find values assigned to variables
+                  const eqMatches = [...inputStr.matchAll(/=\s*(\[.*?\]|"[^"]*"|'[^']*'|-?\d+\.?\d*|true|false)/g)];
+                  if (eqMatches.length > 0) {
+                    inputArr = eqMatches.map(m => {
+                      try { return JSON.parse(m[1].replace(/'/g, '"')); } catch { return m[1]; }
+                    });
+                  } else {
+                    // Try rough split
+                    try { inputArr = JSON.parse('[' + inputStr + ']'); } catch { inputArr = [inputStr]; }
+                  }
+                }
+
+                let expectedOut = '';
+                if (outputMatch) {
+                  const outStr = outputMatch[1].trim();
+                  try { expectedOut = JSON.parse(outStr.replace(/'/g, '"')); } catch { expectedOut = outStr; }
+                }
+
+                const description = explanationMatch ? explanationMatch[1].trim() : (idx < 2 ? `Example ${idx+1}` : '');
+
+                return {
+                  input: inputArr,
+                  expected: expectedOut,
+                  description,
+                  visible: idx < 2
+                };
+              });
+            }
+            if (testCases.length === 0) testCases.push({ input: [], expected: '', description: '', visible: true });
+
+            const cat = (q.topics && q.topics[0] ? q.topics[0] : 'math').toLowerCase();
+
+            return {
+              slug: q.problem_slug || generateSlug(q.title || `q-${q.problem_id}`),
+              title: q.title || `Question ${q.problem_id}`,
+              category: CATEGORIES.includes(cat) ? cat : 'general',
+              difficulty: q.difficulty || 'Easy',
+              timeLimitSeconds: 1800,
+              description: q.description || '',
+              prompt: `Implement solution for ${q.title || 'this problem'}`,
+              languages,
+              testCases,
+              topics: Array.isArray(q.topics) ? q.topics : [],
+              isActive: true
+            };
+          });
+        } else {
+          // OLD FORMAT
+          mappedQuestions = json.map(q => {
+            const languages = {};
+            const LANG_ALT = { 'cpp': 'c++', 'csharp': 'c#' };
+            
+            if (q.languages && typeof q.languages === 'object') {
+              for (const [rawKey, val] of Object.entries(q.languages)) {
+                const normKey = normalizeLangKey(rawKey);
+                if (LANGUAGES.includes(normKey) && val) {
+                  const code = val.starterCode || val.code || '';
+                  const fn = val.entrypoint || val.wrapperFn || 'solve';
+                  
+                  if (code.trim()) {
+                    languages[normKey] = { starterCode: code, wrapperFn: fn };
+                    if (LANG_ALT[normKey]) {
+                      languages[LANG_ALT[normKey]] = { starterCode: code, wrapperFn: fn };
+                    }
                   }
                 }
               }
             }
-          }
 
-          // ── Build test cases ──
-          let testCases = [];
-          if (Array.isArray(q.testCases) && q.testCases.length > 0) {
-            testCases = q.testCases.map((tc) => {
-              const vis = tc.visibleToPlayer !== undefined ? tc.visibleToPlayer : (tc.visible !== undefined ? tc.visible : true);
-              return { input: tc.input ?? [], expected: tc.expected ?? '', description: tc.description || '', visible: vis };
-            });
-          }
+            let testCases = [];
+            if (Array.isArray(q.testCases) && q.testCases.length > 0) {
+              testCases = q.testCases.map((tc) => {
+                const vis = tc.visibleToPlayer !== undefined ? tc.visibleToPlayer : (tc.visible !== undefined ? tc.visible : true);
+                return { input: tc.input ?? [], expected: tc.expected ?? '', description: tc.description || '', visible: vis };
+              });
+            }
 
-          const cat = (q.category || (q.topics && q.topics[0]) || 'math').toLowerCase();
+            const cat = (q.category || (q.topics && q.topics[0]) || 'math').toLowerCase();
 
-          return {
-             slug: q.slug || generateSlug(q.title || `q-${q.problemId}`),
-             title: q.title || `Question ${q.problemId}`,
-             category: CATEGORIES.includes(cat) ? cat : 'general',
-             difficulty: q.difficulty || 'Easy',
-             timeLimitSeconds: q.timeLimitSeconds || 1800,
-             description: q.description || '',
-             prompt: q.prompt || `Write a function to solve: ${q.title || 'the problem'}`,
-             languages,
-             testCases,
-             topics: Array.isArray(q.topics) ? q.topics : [],
-             isActive: q.isActive !== undefined ? q.isActive : true
-          };
-        });
-        
+            return {
+               slug: q.slug || generateSlug(q.title || `q-${q.problemId}`),
+               title: q.title || `Question ${q.problemId}`,
+               category: CATEGORIES.includes(cat) ? cat : 'general',
+               difficulty: q.difficulty || 'Easy',
+               timeLimitSeconds: q.timeLimitSeconds || 1800,
+               description: q.description || '',
+               prompt: q.prompt || `Write a function to solve: ${q.title || 'the problem'}`,
+               languages,
+               testCases,
+               topics: Array.isArray(q.topics) ? q.topics : [],
+               isActive: q.isActive !== undefined ? q.isActive : true
+            };
+          });
+        }
+
         setImportData(mappedQuestions);
       } catch (err) {
         setError(`Failed to parse JSON: ${err.message}`);

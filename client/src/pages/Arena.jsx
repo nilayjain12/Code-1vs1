@@ -36,8 +36,9 @@ const MAX_SPLIT = 60;
 
 export default function Arena() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, token, updateUser } = useAuthStore();
-  const { currentMatch, setSubmissionResult, submissionResult, setMatchResult, matchResult, clearMatch, updateMatchLanguage } = useGameStore();
+  const { currentMatch, setSubmissionResult, submissionResult, setMatchResult, matchResult, clearMatch, updateMatchLanguage, setCurrentMatch } = useGameStore();
   const [code, setCode] = useState('');
   const [timeLeft, setTimeLeft] = useState(0);
   const [submitting, setSubmitting] = useState(false);
@@ -45,6 +46,10 @@ export default function Arena() {
   const [tabCountdown, setTabCountdown] = useState(5);
   const tabTimerRef = useRef(null);
   const editorRef = useRef(null);
+  
+  const searchParams = new URLSearchParams(location.search);
+  const isTestMode = searchParams.has('testId');
+  const testId = searchParams.get('testId');
 
   // ─── Forfeit confirmation modal ────────────
   const [showForfeitModal, setShowForfeitModal] = useState(false);
@@ -66,16 +71,24 @@ export default function Arena() {
     }
   }, [currentMatch?.roomId]);
 
-  // Redirect if no match
+  // Redirect if no match AND not in test mode requesting a match
   useEffect(() => {
-    if (!currentMatch) {
+    if (!currentMatch && !isTestMode) {
       navigate('/dashboard');
     }
-  }, [currentMatch, navigate]);
+  }, [currentMatch, isTestMode, navigate]);
 
   // Socket listeners
   useEffect(() => {
     const socket = getSocket() || connectSocket(token);
+
+    if (isTestMode && !currentMatch) {
+      socket.emit('start-admin-test', { questionId: testId });
+    }
+
+    socket.on('match-found', (matchData) => {
+      setCurrentMatch(matchData);
+    });
 
     socket.on('submission-result', (result) => {
       setSubmissionResult(result);
@@ -84,11 +97,13 @@ export default function Arena() {
 
     socket.on('match-result', (result) => {
       setMatchResult(result);
-      // Update the user's latest stats in store
-      if (result.userStats) {
-        updateUser(result.userStats);
-      } else if (result.streak !== undefined) {
-        updateUser({ currentStreak: result.streak });
+      // Update the user's latest stats in store (skip in test mode since it shouldn't affect stats)
+      if (!isTestMode) {
+        if (result.userStats) {
+          updateUser(result.userStats);
+        } else if (result.streak !== undefined) {
+          updateUser({ currentStreak: result.streak });
+        }
       }
     });
 
@@ -101,13 +116,20 @@ export default function Arena() {
       setCode(starterCode);
     });
 
+    socket.on('error-msg', (data) => {
+        alert(data.message);
+        if (isTestMode) navigate('/admin/questions');
+    });
+
     return () => {
+      socket.off('match-found');
       socket.off('submission-result');
       socket.off('match-result');
       socket.off('opponent-tab-switch');
       socket.off('language-changed');
+      socket.off('error-msg');
     };
-  }, [token, setSubmissionResult, setMatchResult, updateUser, updateMatchLanguage]);
+  }, [token, setSubmissionResult, setMatchResult, updateUser, updateMatchLanguage, isTestMode, testId, currentMatch, setCurrentMatch, navigate]);
 
   // Timer countdown
   useEffect(() => {
@@ -126,7 +148,7 @@ export default function Arena() {
 
   // ─── ANTI-CHEAT: Tab visibility ────────────
   useEffect(() => {
-    if (!currentMatch) return;
+    if (!currentMatch || isTestMode) return;
 
     const handleVisibility = () => {
       if (document.hidden) {
@@ -165,11 +187,11 @@ export default function Arena() {
       document.removeEventListener('visibilitychange', handleVisibility);
       if (tabTimerRef.current) clearInterval(tabTimerRef.current);
     };
-  }, [currentMatch]);
+  }, [currentMatch, isTestMode]);
 
   // ─── ANTI-CHEAT: Copy-paste prevention ─────
   useEffect(() => {
-    if (!currentMatch) return;
+    if (!currentMatch || isTestMode) return;
 
     const preventCopy = (e) => {
       e.preventDefault();
@@ -203,7 +225,7 @@ export default function Arena() {
       document.removeEventListener('keydown', preventKeyboard);
       document.removeEventListener('contextmenu', preventContextMenu);
     };
-  }, [currentMatch]);
+  }, [currentMatch, isTestMode]);
 
   // ─── SPLITTER DRAG LOGIC ───────────────────
   const handleSplitterPointerDown = useCallback((e) => {
@@ -355,8 +377,8 @@ export default function Arena() {
       <div className="arena__top-bar">
         <div className="arena__vs">
           <span className="arena__vs-name">{user?.username}</span>
-          <span>⚔️</span>
-          <span className="arena__vs-name">{opponentName}</span>
+          {!isTestMode && <><span>⚔️</span><span className="arena__vs-name">{opponentName}</span></>}
+          {isTestMode && <span className="arena__vs-name" style={{ color: '#00ffff', marginLeft: '1rem' }}>🧪 TEST MODE</span>}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <span className={`badge badge--${diffBadge}`}>{question.difficulty}</span>
@@ -519,13 +541,23 @@ export default function Arena() {
 
           {/* Action Bar */}
           <div className="arena__actions">
-            <button
-              className="retro-btn retro-btn--danger"
-              onClick={handleForfeitClick}
-              style={{ fontSize: '0.9rem', padding: '0.5rem 1rem' }}
-            >
-              🏳️ Forfeit
-            </button>
+            {!isTestMode ? (
+              <button
+                className="retro-btn retro-btn--danger"
+                onClick={handleForfeitClick}
+                style={{ fontSize: '0.9rem', padding: '0.5rem 1rem' }}
+              >
+                🏳️ Forfeit
+              </button>
+            ) : (
+              <button
+                className="retro-btn"
+                onClick={() => navigate('/admin/questions')}
+                style={{ fontSize: '0.9rem', padding: '0.5rem 1rem', background: '#555', color: 'white' }}
+              >
+                ✖️ Close Test
+              </button>
+            )}
 
             <button
               className="retro-btn retro-btn--primary retro-btn--glow"

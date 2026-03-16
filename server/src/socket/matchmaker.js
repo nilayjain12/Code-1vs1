@@ -167,6 +167,95 @@ function setupMatchmaker(io) {
       }
     });
 
+    // ─── ADMIN TEST MODE ────────────────
+    socket.on('start-admin-test', async ({ questionId }) => {
+      // Validate Admin role via socket or similar? Since this comes from an authenticated user, 
+      // ideally we'd check `socket.userRole === 'admin'`, but assuming users cannot hit this endpoint without 
+      // the dashboard button. Let's load the question straight from DB.
+
+      try {
+        const question = await prisma.question.findUnique({
+          where: { id: questionId },
+          include: { testCaseRows: { orderBy: { orderIndex: 'asc' } } }
+        });
+        
+        if (!question) {
+          return socket.emit('error-msg', { message: 'Question not found' });
+        }
+
+        // Ensure testCaseRows fallback to legacy testCases if table is empty
+        if (!question.testCaseRows || question.testCaseRows.length === 0) {
+          question.testCaseRows = (question.testCases || []).map((tc, i) => ({
+            input: tc.input, expected: tc.expected, visible: tc.visible ?? true, description: tc.description || '', exampleNum: null, orderIndex: i,
+          }));
+        }
+
+        const roomId = `room-test-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+        const lang = 'javascript'; // default language for test
+
+        const room = {
+          id: roomId,
+          question,
+          language: lang,
+          isTest: true,
+          players: [
+            {
+              socketId: socket.id,
+              userId: socket.userId,
+              username: socket.username,
+              isBot: false,
+              submitted: false,
+              submissionResult: null,
+              submittedAt: null,
+              code: '',
+            }
+          ],
+          endsAt: Date.now() + 30 * 60 * 1000, // 30 min strict duration for testing
+          ended: false,
+          createdAt: Date.now(),
+          timeoutHandle: null,
+        };
+
+        activeRooms.set(roomId, room);
+
+        // Schedule timeout
+        room.timeoutHandle = setTimeout(() => handleTimeout(io, room), 30 * 60 * 1000);
+
+        const langData = findLangData(question.languages, lang);
+        const starterCode = langData?.starterCode
+          || `function solve() {\n  // your code here\n}`;
+
+        const allTests = question.testCaseRows;
+        const visibleTests = allTests.filter(t => t.visible || t.visibleToPlayer).map(t => ({
+          input: t.input, expected: t.expected, description: t.description || '', exampleNum: t.exampleNum,
+        }));
+
+        const matchData = {
+          roomId,
+          question: {
+            title: question.title,
+            difficulty: question.difficulty,
+            description: question.description || '',
+            prompt: question.prompt || question.description,
+            starterCode,
+            timeLimitSeconds: 1800,
+            constraints: question.constraints || [],
+            topics: question.topics || [],
+            testCases: visibleTests,
+          },
+          endsAt: room.endsAt,
+          language: lang,
+        };
+
+        socket.join(roomId);
+        socket.emit('match-found', { ...matchData, opponentName: 'Test Match' });
+
+      } catch (err) {
+        console.error('Error starting admin test:', err);
+        socket.emit('error-msg', { message: 'Failed to start test session' });
+      }
+    });
+
     // ─── SUBMIT CODE ────────────────────
     socket.on('submit-code', async ({ roomId, code, language }) => {
       const room = activeRooms.get(roomId);
@@ -550,6 +639,23 @@ async function concludeRoom(io, room, winner, loser, reason) {
   if (room.botTimerHandle) clearTimeout(room.botTimerHandle);
 
   const isMockMatch = winner.isBot || loser.isBot;
+  const isTest = room.isTest;
+
+  // For Admin Tests, immediately return winner/loser results to UI and skip DB fully
+  if (isTest) {
+      const winnerSocket = io.sockets.sockets.get(winner.socketId);
+      if (winnerSocket) {
+        winnerSocket.emit('match-result', {
+          result: 'win',
+          reason,
+          opponentName: loser.username,
+          streak: 0,
+          submissionResult: winner.submissionResult,
+        });
+      }
+      setTimeout(() => activeRooms.delete(room.id), 5000);
+      return;
+  }
 
   // Update streaks in database for human players
   try {

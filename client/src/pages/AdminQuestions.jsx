@@ -852,8 +852,9 @@ export default function AdminQuestions() {
                     </td>
                     <td style={{ padding: '1rem', borderBottom: '2px solid var(--ink)', textAlign: 'center' }}>
                       <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
-                        <button className="retro-btn" style={{ padding: '0.4rem 0.8rem', fontSize: '0.9rem', background: 'var(--orange-300)' }} onClick={() => handleEdit(q.id)}>✏️</button>
-                        <button className="retro-btn retro-btn--danger" style={{ padding: '0.4rem 0.8rem', fontSize: '0.9rem' }} onClick={() => handleDelete(q.id)}>🗑️</button>
+                        <button className="retro-btn" style={{ padding: '0.4rem 0.8rem', fontSize: '0.9rem', background: '#00ffff', color: '#000', fontWeight: 'bold' }} onClick={() => navigate(`/arena?testId=${q.id}`)}>🧪 TEST</button>
+                        <button className="retro-btn" style={{ padding: '0.4rem 0.8rem', fontSize: '0.9rem', background: 'var(--orange-300)' }} onClick={() => handleEdit(q.id)}>✏️ EDIT</button>
+                        <button className="retro-btn retro-btn--danger" style={{ padding: '0.4rem 0.8rem', fontSize: '0.9rem' }} onClick={() => handleDelete(q.id)}>🗑️ DELETE</button>
                       </div>
                     </td>
                   </tr>

@@ -185,10 +185,13 @@ function setupMatchmaker(io) {
           ? room.question.testCaseRows
           : room.question.testCases;
         let result;
+        const langData = room.question.languages?.[language] || {};
+        const wrapperFn = langData.wrapperFn || 'solve';
+        
         if (language === 'javascript' || language === 'typescript') {
-          result = evaluateJSCode(code, allTestCases);
+          result = evaluateJSCode(code, allTestCases, wrapperFn);
         } else {
-          result = await executeJudge0(code, language, allTestCases);
+          result = await executeJudge0(code, language, allTestCases, wrapperFn);
         }
 
         player.code = code;

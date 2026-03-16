@@ -23,7 +23,7 @@ const LANGUAGE_ID_MAP = {
  *
  * Returns { passed, total, allPassed, errors, executionTimeMs }
  */
-async function executeJudge0(code, language, testCases) {
+async function executeJudge0(code, language, testCases, wrapperFn = 'solve') {
   const languageId = LANGUAGE_ID_MAP[language];
   if (!languageId) {
     return {
@@ -46,7 +46,7 @@ async function executeJudge0(code, language, testCases) {
     };
   }
 
-  const wrappedCode = wrapWithTestHarness(code, language, testCases);
+  const wrappedCode = wrapWithTestHarness(code, language, testCases, wrapperFn);
   const stdinData = buildStdin(testCases);
   const startTime = Date.now();
 
@@ -103,23 +103,23 @@ function buildStdin(testCases) {
  *
  * This avoids running one Judge0 submission per test case.
  */
-function wrapWithTestHarness(code, language, testCases) {
+function wrapWithTestHarness(code, language, testCases, wrapperFn) {
   const numTests = testCases.length;
   const expectedJson = testCases.map(tc => JSON.stringify(tc.expected));
 
   switch (language) {
     case 'python':
-      return buildPythonHarness(code, numTests, expectedJson);
+      return buildPythonHarness(code, numTests, expectedJson, wrapperFn);
     case 'java':
-      return buildJavaHarness(code, numTests, expectedJson);
+      return buildJavaHarness(code, numTests, expectedJson, wrapperFn);
     case 'cpp':
-      return buildCppHarness(code, numTests, expectedJson);
+      return buildCppHarness(code, numTests, expectedJson, wrapperFn);
     case 'csharp':
-      return buildCsharpHarness(code, numTests, expectedJson);
+      return buildCsharpHarness(code, numTests, expectedJson, wrapperFn);
     case 'go':
-      return buildGoHarness(code, numTests, expectedJson);
+      return buildGoHarness(code, numTests, expectedJson, wrapperFn);
     case 'rust':
-      return buildRustHarness(code, numTests, expectedJson);
+      return buildRustHarness(code, numTests, expectedJson, wrapperFn);
     default:
       // Fallback: just send the code with a comment
       return code + '\n// Test harness not implemented for this language';
@@ -127,7 +127,7 @@ function wrapWithTestHarness(code, language, testCases) {
 }
 
 // ─── PYTHON HARNESS ──────────────────────────────────────
-function buildPythonHarness(code, numTests, expectedJson) {
+function buildPythonHarness(code, numTests, expectedJson, wrapperFn) {
   let harness = code + '\n\nimport json, sys\n';
   harness += `
 _expected_list = [${expectedJson.map(e => `json.loads('${e.replace(/'/g, "\\'")}')`).join(', ')}]
@@ -136,7 +136,22 @@ for _i in range(${numTests}):
     try:
         _line = input()
         _args = json.loads(_line)
-        _result = solve(*_args)
+        _func = None
+
+        if 'Solution' in globals() and hasattr(Solution, '${wrapperFn}'):
+            _sol = Solution()
+            _func = getattr(_sol, '${wrapperFn}')
+        elif '${wrapperFn}' in globals():
+            _func = globals()['${wrapperFn}']
+        elif 'solve' in globals():
+            _func = globals()['solve']
+        elif 'Solution' in globals() and hasattr(Solution, 'solve'):
+            _sol = Solution()
+            _func = getattr(_sol, 'solve')
+        else:
+            raise Exception(f"Function '${wrapperFn}' not found")
+
+        _result = _func(*_args)
         if _result == _expected_list[_i]:
             print(f"TESTRESULT:PASS:{_i}")
         else:
@@ -187,13 +202,18 @@ class Main {
 
         java.lang.reflect.Method[] methods = Solution.class.getMethods();
         for (java.lang.reflect.Method m : methods) {
-            if (m.getName().equals("solve")) {
+            String mName = m.getName();
+            if (mName.equals("${wrapperFn}") || mName.equals("solve")) {
                 Class<?>[] paramTypes = m.getParameterTypes();
                 Object[] javaArgs = parseArgs(jsonLine, paramTypes);
-                return m.invoke(null, javaArgs);
+                if (java.lang.reflect.Modifier.isStatic(m.getModifiers())) {
+                    return m.invoke(null, javaArgs);
+                } else {
+                    return m.invoke(new Solution(), javaArgs);
+                }
             }
         }
-        throw new Exception("No solve method found");
+        throw new Exception("No solve or ${wrapperFn} method found in Solution class");
     }
 
     static Object[] parseArgs(String argsStr, Class<?>[] paramTypes) {

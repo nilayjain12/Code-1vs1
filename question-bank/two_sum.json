@@ -6,50 +6,94 @@
     "category": "array",
     "difficulty": "Easy",
     "timeLimitSeconds": 1800,
-    "description": "Given an array of integers and a target, return the indices of the two numbers that add up to the target.",
-    "prompt": "Implement function solve(nums, target) returning [i, j] of two values summing to target.",
+    "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\n\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\n\nYou can return the answer in any order.",
+    "prompt": "Implement function to find the indices of two numbers that add up to the target.",
+    "constraints": [
+      "2 <= nums.length <= 10^4",
+      "-10^9 <= nums[i] <= 10^9",
+      "-10^9 <= target <= 10^9",
+      "Only one valid answer exists."
+    ],
+    "hints": [
+      "A really brute force way would be to search for all possible pairs of numbers but that would be too slow. Again, it's best to try out brute force solutions for completeness. It is from these brute force solutions that you can come up with optimizations.",
+      "So, if we fix one of the numbers, say x, we have to scan the entire array to find the next number y which is value - x where value is the input parameter. Can we change our array somehow so that this search becomes faster?",
+      "The second train of thought is, without changing the array, can we use additional space somehow? Like maybe a hash map to speed up the search?"
+    ],
+    "follow_ups": [
+      "Can you solve it in one pass?",
+      "What if the same element is allowed to be used twice?",
+      "What if there are multiple valid pairs? Return all of them.",
+      "What if we need to find three numbers that sum to a target? (3Sum problem)"
+    ],
     "languages": {
       "python": {
-        "wrapperFn": "solve",
-        "starterCode": "def solve(nums, target):\n    # your code here\n    pass"
+        "wrapperFn": "twoSum",
+        "starterCode": "class Solution(object):\n    def twoSum(self, nums, target):\n        \"\"\"\n        :type nums: List[int]\n        :type target: int\n        :rtype: List[int]\n        \"\"\"\n        # Your implementation here\n        pass"
       },
       "javascript": {
-        "wrapperFn": "solve",
-        "starterCode": "function solve(nums, target) {\n  // your code here\n}"
+        "wrapperFn": "twoSum",
+        "starterCode": "/**\n * @param {number[]} nums\n * @param {number} target\n * @return {number[]}\n */\nvar twoSum = function(nums, target) {\n    // Your implementation here\n};"
       },
       "typescript": {
-        "wrapperFn": "solve",
-        "starterCode": "function solve(nums: number[], target: number): number[] {\n  // your code here\n}"
+        "wrapperFn": "twoSum",
+        "starterCode": "function twoSum(nums: number[], target: number): number[] {\n    // Your implementation here\n}"
       },
       "java": {
-        "wrapperFn": "Solution.solve",
-        "starterCode": "class Solution {\n  public static int[] solve(int[] nums, int target) {\n    // your code here\n    return new int[]{};\n  }\n}"
+        "wrapperFn": "twoSum",
+        "starterCode": "class Solution {\n    public int[] twoSum(int[] nums, int target) {\n        // Your implementation here\n        return new int[]{};\n    }\n}"
       },
       "cpp": {
-        "wrapperFn": "solve",
-        "starterCode": "#include <vector>\nusing namespace std;\nvector<int> solve(vector<int>& nums, int target) {\n  // your code here\n  return {};\n}"
+        "wrapperFn": "twoSum",
+        "starterCode": "class Solution {\npublic:\n    vector<int> twoSum(vector<int>& nums, int target) {\n        // Your implementation here\n        return {};\n    }\n};"
       },
       "csharp": {
-        "wrapperFn": "Solution.Solve",
-        "starterCode": "public class Solution {\n  public static int[] Solve(int[] nums, int target) {\n    // your code here\n    return new int[]{};\n  }\n}"
+        "wrapperFn": "TwoSum",
+        "starterCode": "public class Solution {\n    public int[] TwoSum(int[] nums, int target) {\n        // Your implementation here\n        return new int[]{};\n    }\n}"
       },
       "go": {
-        "wrapperFn": "solve",
-        "starterCode": "package main\nfunc solve(nums []int, target int) []int {\n  // your code here\n  return []int{}\n}"
+        "wrapperFn": "twoSum",
+        "starterCode": "func twoSum(nums []int, target int) []int {\n    // Your implementation here\n    return []int{}\n}"
       },
       "rust": {
-        "wrapperFn": "solve",
-        "starterCode": "fn solve(nums: Vec<i32>, target: i32) -> Vec<i32> {\n  // your code here\n  vec![]\n}"
+        "wrapperFn": "two_sum",
+        "starterCode": "impl Solution {\n    pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {\n        // Your implementation here\n        vec![]\n    }\n}"
       }
     },
     "testCases": [
-      { "input": [[2, 7, 11, 15], 9], "expected": [0, 1], "visible": true, "description": "Because nums[0] + nums[1] == 9, we return [0, 1]." },
-      { "input": [[3, 2, 4], 6],       "expected": [1, 2], "visible": true, "description": "Because nums[1] + nums[2] == 6, we return [1, 2]." },
-      { "input": [[3, 3], 6],           "expected": [0, 1], "visible": false, "description": "Because nums[0] + nums[1] == 6, we return [0, 1]." }
+      {
+        "input": [[2, 7, 11, 15], 9],
+        "expected": [0, 1],
+        "visible": true,
+        "description": "Because nums[0] + nums[1] == 9, we return [0, 1]."
+      },
+      {
+        "input": [[3, 2, 4], 6],
+        "expected": [1, 2],
+        "visible": true,
+        "description": "Because nums[1] + nums[2] == 6, we return [1, 2]."
+      },
+      {
+        "input": [[3, 3], 6],
+        "expected": [0, 1],
+        "visible": false,
+        "description": "Because nums[0] + nums[1] == 6, we return [0, 1]."
+      },
+      {
+        "input": [[1, 2, 7, 11], 9],
+        "expected": [1, 3],
+        "visible": false,
+        "description": "Because nums[1] + nums[3] == 9, we return [1, 3]."
+      },
+      {
+        "input": [[-1, 0, 1, 2, -1, -4], -2],
+        "expected": [0, 4],
+        "visible": false,
+        "description": "Because nums[0] + nums[4] == -2, we return [0, 4]."
+      }
     ],
     "topics": ["array", "hash-table"],
     "isActive": true,
     "createdAt": "2026-03-13 23:30:13.000",
-    "updatedAt": "2026-03-13 23:30:13.000"
+    "updatedAt": "2026-03-16 12:00:00.000"
   }
 ]

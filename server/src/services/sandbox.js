@@ -4,7 +4,7 @@ const vm = require('vm');
  * Evaluate JavaScript/TypeScript code in an isolated Node.js VM sandbox.
  * Returns { passed, total, allPassed, errors, executionTimeMs }
  */
-function evaluateJSCode(code, testCases) {
+function evaluateJSCode(code, testCases, wrapperFn = 'solve') {
   const errors = [];
   let passed = 0;
   const total = testCases.length;
@@ -33,7 +33,17 @@ function evaluateJSCode(code, testCases) {
     };
   }
 
-  const wrapped = `${code}\nmodule.exports = typeof solve === 'function' ? solve : null;`;
+  // Handle both flat functions and classes
+  const wrapped = `${code}\n
+let _fn = null;
+if (typeof ${wrapperFn} === 'function') {
+  _fn = ${wrapperFn};
+} else if (typeof solve === 'function') {
+  _fn = solve;
+} else if (typeof Solution !== 'undefined' && typeof Solution.prototype.${wrapperFn} === 'function') {
+  _fn = new Solution().${wrapperFn}.bind(new Solution());
+}
+module.exports = _fn;`;
 
   let fn;
   try {
@@ -74,7 +84,7 @@ function evaluateJSCode(code, testCases) {
   if (typeof fn !== 'function') {
     return {
       passed: 0, total, allPassed: false,
-      errors: [{ message: 'Your code must define a function named `solve`.' }],
+      errors: [{ message: `Your code must define a function named \`${wrapperFn}\` or \`solve\`.` }],
       executionTimeMs: Date.now() - startTime,
     };
   }

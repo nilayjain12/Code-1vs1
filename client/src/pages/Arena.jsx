@@ -38,7 +38,7 @@ export default function Arena() {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, token, updateUser } = useAuthStore();
-  const { currentMatch, setSubmissionResult, submissionResult, setMatchResult, matchResult, clearMatch, updateMatchLanguage, setCurrentMatch } = useGameStore();
+  const { currentMatch, setSubmissionResult, submissionResult, setMatchResult, matchResult, clearMatch, updateMatchLanguage, setMatch } = useGameStore();
   const [code, setCode] = useState('');
   const [timeLeft, setTimeLeft] = useState(0);
   const [submitting, setSubmitting] = useState(false);
@@ -87,7 +87,7 @@ export default function Arena() {
     }
 
     socket.on('match-found', (matchData) => {
-      setCurrentMatch(matchData);
+      setMatch(matchData);
     });
 
     socket.on('submission-result', (result) => {
@@ -129,7 +129,7 @@ export default function Arena() {
       socket.off('language-changed');
       socket.off('error-msg');
     };
-  }, [token, setSubmissionResult, setMatchResult, updateUser, updateMatchLanguage, isTestMode, testId, currentMatch, setCurrentMatch, navigate]);
+  }, [token, setSubmissionResult, setMatchResult, updateUser, updateMatchLanguage, isTestMode, testId, currentMatch, setMatch, navigate]);
 
   // Timer countdown
   useEffect(() => {

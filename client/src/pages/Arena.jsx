@@ -5,6 +5,7 @@ import { useAuthStore } from '../store/authStore';
 import { useGameStore } from '../store/gameStore';
 import { getSocket, connectSocket } from '../lib/socket';
 import { reportTabSwitch, reportCopyAttempt } from '../lib/api';
+import ConfirmModal from '../components/ConfirmModal';
 
 const LANG_TO_MONACO = {
   javascript: 'javascript',
@@ -28,6 +29,11 @@ const LANGUAGES = [
   { value: 'rust', label: '🦀 Rust' },
 ];
 
+const SPLITTER_KEY = 'code1vs1_splitter_pct';
+const DEFAULT_SPLIT = 40; // percent for problem panel
+const MIN_SPLIT = 25;
+const MAX_SPLIT = 60;
+
 export default function Arena() {
   const navigate = useNavigate();
   const { user, token, updateUser } = useAuthStore();
@@ -39,6 +45,19 @@ export default function Arena() {
   const [tabCountdown, setTabCountdown] = useState(5);
   const tabTimerRef = useRef(null);
   const editorRef = useRef(null);
+
+  // ─── Forfeit confirmation modal ────────────
+  const [showForfeitModal, setShowForfeitModal] = useState(false);
+
+  // ─── Draggable splitter state ──────────────
+  const [splitPct, setSplitPct] = useState(() => {
+    const saved = localStorage.getItem(SPLITTER_KEY);
+    const parsed = saved ? parseFloat(saved) : NaN;
+    return (!isNaN(parsed) && parsed >= MIN_SPLIT && parsed <= MAX_SPLIT) ? parsed : DEFAULT_SPLIT;
+  });
+  const isDraggingRef = useRef(false);
+  const panelsRef = useRef(null);
+  const splitterRef = useRef(null);
 
   // Initialize code from starter ONLY on first match load
   useEffect(() => {
@@ -186,6 +205,51 @@ export default function Arena() {
     };
   }, [currentMatch]);
 
+  // ─── SPLITTER DRAG LOGIC ───────────────────
+  const handleSplitterPointerDown = useCallback((e) => {
+    e.preventDefault();
+    isDraggingRef.current = true;
+    splitterRef.current?.classList.add('dragging');
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+  }, []);
+
+  useEffect(() => {
+    const handlePointerMove = (e) => {
+      if (!isDraggingRef.current || !panelsRef.current) return;
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const rect = panelsRef.current.getBoundingClientRect();
+      let pct = ((clientX - rect.left) / rect.width) * 100;
+      pct = Math.max(MIN_SPLIT, Math.min(MAX_SPLIT, pct));
+      setSplitPct(pct);
+    };
+
+    const handlePointerUp = () => {
+      if (!isDraggingRef.current) return;
+      isDraggingRef.current = false;
+      splitterRef.current?.classList.remove('dragging');
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+      // Persist to localStorage
+      setSplitPct((prev) => {
+        localStorage.setItem(SPLITTER_KEY, String(prev));
+        return prev;
+      });
+    };
+
+    document.addEventListener('mousemove', handlePointerMove);
+    document.addEventListener('mouseup', handlePointerUp);
+    document.addEventListener('touchmove', handlePointerMove, { passive: false });
+    document.addEventListener('touchend', handlePointerUp);
+
+    return () => {
+      document.removeEventListener('mousemove', handlePointerMove);
+      document.removeEventListener('mouseup', handlePointerUp);
+      document.removeEventListener('touchmove', handlePointerMove);
+      document.removeEventListener('touchend', handlePointerUp);
+    };
+  }, []);
+
   // Submit code
   const handleSubmit = () => {
     if (submitting || !currentMatch) return;
@@ -200,8 +264,13 @@ export default function Arena() {
     }
   };
 
-  // Forfeit
-  const handleForfeit = () => {
+  // Forfeit (now goes through modal)
+  const handleForfeitClick = () => {
+    setShowForfeitModal(true);
+  };
+
+  const handleForfeitConfirm = () => {
+    setShowForfeitModal(false);
     if (!currentMatch) return;
     const socket = getSocket();
     if (socket) {
@@ -232,6 +301,19 @@ export default function Arena() {
 
   return (
     <div className="arena">
+      {/* Forfeit Confirmation Modal */}
+      {showForfeitModal && (
+        <ConfirmModal
+          title="Forfeit Match"
+          message="This action cannot be undone. Your opponent will win immediately. Forfeit anyway?"
+          confirmText="Forfeit"
+          cancelText="Cancel"
+          danger
+          onConfirm={handleForfeitConfirm}
+          onClose={() => setShowForfeitModal(false)}
+        />
+      )}
+
       {/* Anti-Cheat Warning Overlay */}
       {tabWarning && (
         <div className="anticheat-warning">
@@ -283,10 +365,10 @@ export default function Arena() {
         </div>
       </div>
 
-      {/* Panels */}
-      <div className="arena__panels">
+      {/* Panels with Splitter */}
+      <div className="arena__panels" ref={panelsRef}>
         {/* Problem Panel */}
-        <div className="arena__problem">
+        <div className="arena__problem" style={{ width: `${splitPct}%`, flexShrink: 0 }}>
           <h2 style={{ marginBottom: '0.5rem', fontSize: '1.5rem' }}>{question.title}</h2>
           <span className={`badge badge--${diffBadge}`} style={{ marginBottom: '1rem', display: 'inline-flex' }}>
             {question.difficulty}
@@ -336,8 +418,16 @@ export default function Arena() {
           </p>
         </div>
 
+        {/* Draggable Splitter */}
+        <div
+          className="arena-splitter"
+          ref={splitterRef}
+          onMouseDown={handleSplitterPointerDown}
+          onTouchStart={handleSplitterPointerDown}
+        />
+
         {/* Editor Panel */}
-        <div className="arena__editor-panel">
+        <div className="arena__editor-panel" style={{ width: `${100 - splitPct}%`, flexShrink: 0 }}>
           <div className="arena__editor-header">
             <span style={{ color: '#ccc', fontFamily: 'var(--font-heading)', fontSize: '1rem' }}>
               📝 Your Code
@@ -418,7 +508,7 @@ export default function Arena() {
           <div className="arena__actions">
             <button
               className="retro-btn retro-btn--danger"
-              onClick={handleForfeit}
+              onClick={handleForfeitClick}
               style={{ fontSize: '0.9rem', padding: '0.5rem 1rem' }}
             >
               🏳️ Forfeit

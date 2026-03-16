@@ -1,0 +1,954 @@
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567801",
+    "slug": "medium-encode-and-decode-strings",
+    "title": "Encode and Decode Strings",
+    "category": "string",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Design an algorithm to encode a list of strings to a string. The encoded string is then sent over the network and is decoded back to the original list of strings.",
+    "prompt": "Implement functions encode(strs) and decode(s) to encode a list of strings and decode them back.",
+    "languages": {
+      "python": {
+        "wrapperFn": "Solution",
+        "starterCode": "class Solution:\n    def encode(self, strs):\n        # your code here\n        pass\n    \n    def decode(self, s):\n        # your code here\n        pass"
+      },
+      "javascript": {
+        "wrapperFn": "Solution",
+        "starterCode": "class Solution {\n  encode(strs) {\n    // your code here\n  }\n  \n  decode(s) {\n    // your code here\n  }\n}"
+      },
+      "typescript": {
+        "wrapperFn": "Solution",
+        "starterCode": "class Solution {\n  encode(strs: string[]): string {\n    // your code here\n  }\n  \n  decode(s: string): string[] {\n    // your code here\n  }\n}"
+      },
+      "java": {
+        "wrapperFn": "Solution",
+        "starterCode": "class Solution {\n  public String encode(List<String> strs) {\n    // your code here\n    return \"\";\n  }\n  \n  public List<String> decode(String s) {\n    // your code here\n    return new ArrayList<>();\n  }\n}"
+      },
+      "cpp": {
+        "wrapperFn": "Solution",
+        "starterCode": "class Solution {\npublic:\n  string encode(vector<string>& strs) {\n    // your code here\n    return \"\";\n  }\n  \n  vector<string> decode(string s) {\n    // your code here\n    return {};\n  }\n};"
+      },
+      "csharp": {
+        "wrapperFn": "Solution",
+        "starterCode": "public class Solution {\n  public string Encode(List<string> strs) {\n    // your code here\n    return \"\";\n  }\n  \n  public List<string> Decode(string s) {\n    // your code here\n    return new List<string>();\n  }\n}"
+      },
+      "go": {
+        "wrapperFn": "Solution",
+        "starterCode": "type Solution struct{}\n\nfunc (this *Solution) Encode(strs []string) string {\n  // your code here\n  return \"\"\n}\n\nfunc (this *Solution) Decode(s string) []string {\n  // your code here\n  return []string{}\n}"
+      },
+      "rust": {
+        "wrapperFn": "Solution",
+        "starterCode": "impl Solution {\n  pub fn encode(strs: Vec<String>) -> String {\n    // your code here\n    String::new()\n  }\n  \n  pub fn decode(s: String) -> Vec<String> {\n    // your code here\n    vec![]\n  }\n}"
+      }
+    },
+    "testCases": [
+      {
+        "input": [["Hello", "World"]],
+        "expected": ["Hello", "World"],
+        "visible": true,
+        "description": "Encode and decode a simple list of strings"
+      },
+      {
+        "input": [["We", "say", ":"]],
+        "expected": ["We", "say", ":"],
+        "visible": true,
+        "description": "Handle special characters in strings"
+      },
+      {
+        "input": [[""]],
+        "expected": [""],
+        "visible": false,
+        "description": "Handle empty strings"
+      }
+    ],
+    "topics": ["string", "design"],
+    "isActive": true,
+    "createdAt": "2026-03-15 10:00:00.000",
+    "updatedAt": "2026-03-15 10:00:00.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567802",
+    "slug": "medium-longest-consecutive-sequence",
+    "title": "Longest Consecutive Sequence",
+    "category": "array",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given an unsorted array of integers, find the length of the longest consecutive sequence of elements without sorting.",
+    "prompt": "Implement function longestConsecutive(nums) returning the length of the longest consecutive sequence.",
+    "languages": {
+      "python": {
+        "wrapperFn": "longestConsecutive",
+        "starterCode": "def longestConsecutive(nums):\n    # your code here\n    pass"
+      },
+      "javascript": {
+        "wrapperFn": "longestConsecutive",
+        "starterCode": "function longestConsecutive(nums) {\n  // your code here\n}"
+      },
+      "typescript": {
+        "wrapperFn": "longestConsecutive",
+        "starterCode": "function longestConsecutive(nums: number[]): number {\n  // your code here\n}"
+      },
+      "java": {
+        "wrapperFn": "Solution.longestConsecutive",
+        "starterCode": "class Solution {\n  public int longestConsecutive(int[] nums) {\n    // your code here\n    return 0;\n  }\n}"
+      },
+      "cpp": {
+        "wrapperFn": "longestConsecutive",
+        "starterCode": "class Solution {\npublic:\n  int longestConsecutive(vector<int>& nums) {\n    // your code here\n    return 0;\n  }\n};"
+      },
+      "csharp": {
+        "wrapperFn": "Solution.LongestConsecutive",
+        "starterCode": "public class Solution {\n  public int LongestConsecutive(int[] nums) {\n    // your code here\n    return 0;\n  }\n}"
+      },
+      "go": {
+        "wrapperFn": "longestConsecutive",
+        "starterCode": "func longestConsecutive(nums []int) int {\n  // your code here\n  return 0\n}"
+      },
+      "rust": {
+        "wrapperFn": "longest_consecutive",
+        "starterCode": "impl Solution {\n  pub fn longest_consecutive(nums: Vec<i32>) -> i32 {\n    // your code here\n    0\n  }\n}"
+      }
+    },
+    "testCases": [
+      {
+        "input": [[100, 4, 200, 1, 3, 2]],
+        "expected": 4,
+        "visible": true,
+        "description": "The longest consecutive sequence is [1, 2, 3, 4] with length 4"
+      },
+      {
+        "input": [[0, 3, 7, 2, 5, 8, 4, 6, 0, 1]],
+        "expected": 9,
+        "visible": true,
+        "description": "The longest consecutive sequence is [0, 1, 2, 3, 4, 5, 6, 7, 8] with length 9"
+      },
+      {
+        "input": [[]],
+        "expected": 0,
+        "visible": false,
+        "description": "Empty array returns 0"
+      }
+    ],
+    "topics": ["array", "hash-table"],
+    "isActive": true,
+    "createdAt": "2026-03-15 10:00:00.000",
+    "updatedAt": "2026-03-15 10:00:00.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567803",
+    "slug": "easy-valid-palindrome",
+    "title": "Valid Palindrome",
+    "category": "string",
+    "difficulty": "Easy",
+    "timeLimitSeconds": 1800,
+    "description": "Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.",
+    "prompt": "Implement function isPalindrome(s) returning true if the string is a valid palindrome.",
+    "languages": {
+      "python": {
+        "wrapperFn": "isPalindrome",
+        "starterCode": "def isPalindrome(s):\n    # your code here\n    pass"
+      },
+      "javascript": {
+        "wrapperFn": "isPalindrome",
+        "starterCode": "function isPalindrome(s) {\n  // your code here\n}"
+      },
+      "typescript": {
+        "wrapperFn": "isPalindrome",
+        "starterCode": "function isPalindrome(s: string): boolean {\n  // your code here\n}"
+      },
+      "java": {
+        "wrapperFn": "Solution.isPalindrome",
+        "starterCode": "class Solution {\n  public boolean isPalindrome(String s) {\n    // your code here\n    return false;\n  }\n}"
+      },
+      "cpp": {
+        "wrapperFn": "isPalindrome",
+        "starterCode": "class Solution {\npublic:\n  bool isPalindrome(string s) {\n    // your code here\n    return false;\n  }\n};"
+      },
+      "csharp": {
+        "wrapperFn": "Solution.IsPalindrome",
+        "starterCode": "public class Solution {\n  public bool IsPalindrome(string s) {\n    // your code here\n    return false;\n  }\n}"
+      },
+      "go": {
+        "wrapperFn": "isPalindrome",
+        "starterCode": "func isPalindrome(s string) bool {\n  // your code here\n  return false\n}"
+      },
+      "rust": {
+        "wrapperFn": "is_palindrome",
+        "starterCode": "impl Solution {\n  pub fn is_palindrome(s: String) -> bool {\n    // your code here\n    false\n  }\n}"
+      }
+    },
+    "testCases": [
+      {
+        "input": ["A man, a plan, a canal: Panama"],
+        "expected": true,
+        "visible": true,
+        "description": "After removing non-alphanumeric characters: 'amanaplanacanalpanama' is a palindrome"
+      },
+      {
+        "input": ["race a car"],
+        "expected": false,
+        "visible": true,
+        "description": "After cleanup: 'raceacar' is not a palindrome"
+      },
+      {
+        "input": ["0P"],
+        "expected": false,
+        "visible": false,
+        "description": "After cleanup: '0p' is not a palindrome"
+      }
+    ],
+    "topics": ["string", "two-pointers"],
+    "isActive": true,
+    "createdAt": "2026-03-15 10:00:00.000",
+    "updatedAt": "2026-03-15 10:00:00.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567804",
+    "slug": "medium-container-with-most-water",
+    "title": "Container With Most Water",
+    "category": "array",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]). Find two lines that together with the x-axis form a container such that the container holds the most water.",
+    "prompt": "Implement function maxArea(height) returning the maximum area of water that can be contained.",
+    "languages": {
+      "python": {
+        "wrapperFn": "maxArea",
+        "starterCode": "def maxArea(height):\n    # your code here\n    pass"
+      },
+      "javascript": {
+        "wrapperFn": "maxArea",
+        "starterCode": "function maxArea(height) {\n  // your code here\n}"
+      },
+      "typescript": {
+        "wrapperFn": "maxArea",
+        "starterCode": "function maxArea(height: number[]): number {\n  // your code here\n}"
+      },
+      "java": {
+        "wrapperFn": "Solution.maxArea",
+        "starterCode": "class Solution {\n  public int maxArea(int[] height) {\n    // your code here\n    return 0;\n  }\n}"
+      },
+      "cpp": {
+        "wrapperFn": "maxArea",
+        "starterCode": "class Solution {\npublic:\n  int maxArea(vector<int>& height) {\n    // your code here\n    return 0;\n  }\n};"
+      },
+      "csharp": {
+        "wrapperFn": "Solution.MaxArea",
+        "starterCode": "public class Solution {\n  public int MaxArea(int[] height) {\n    // your code here\n    return 0;\n  }\n}"
+      },
+      "go": {
+        "wrapperFn": "maxArea",
+        "starterCode": "func maxArea(height []int) int {\n  // your code here\n  return 0\n}"
+      },
+      "rust": {
+        "wrapperFn": "max_area",
+        "starterCode": "impl Solution {\n  pub fn max_area(height: Vec<i32>) -> i32 {\n    // your code here\n    0\n  }\n}"
+      }
+    },
+    "testCases": [
+      {
+        "input": [[1, 8, 6, 2, 5, 4, 8, 3, 7]],
+        "expected": 49,
+        "visible": true,
+        "description": "Maximum area between index 1 and 8: min(8,7) * 7 = 49"
+      },
+      {
+        "input": [[1, 1]],
+        "expected": 1,
+        "visible": true,
+        "description": "Maximum area between two lines with height 1"
+      },
+      {
+        "input": [[2, 3, 4, 5, 18, 2, 6]],
+        "expected": 17,
+        "visible": false,
+        "description": "Maximum area calculation"
+      }
+    ],
+    "topics": ["array", "two-pointers"],
+    "isActive": true,
+    "createdAt": "2026-03-15 10:00:00.000",
+    "updatedAt": "2026-03-15 10:00:00.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567805",
+    "slug": "hard-trapping-rain-water",
+    "title": "Trapping Rain Water",
+    "category": "array",
+    "difficulty": "Hard",
+    "timeLimitSeconds": 1800,
+    "description": "Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.",
+    "prompt": "Implement function trap(height) returning the total amount of water trapped.",
+    "languages": {
+      "python": {
+        "wrapperFn": "trap",
+        "starterCode": "def trap(height):\n    # your code here\n    pass"
+      },
+      "javascript": {
+        "wrapperFn": "trap",
+        "starterCode": "function trap(height) {\n  // your code here\n}"
+      },
+      "typescript": {
+        "wrapperFn": "trap",
+        "starterCode": "function trap(height: number[]): number {\n  // your code here\n}"
+      },
+      "java": {
+        "wrapperFn": "Solution.trap",
+        "starterCode": "class Solution {\n  public int trap(int[] height) {\n    // your code here\n    return 0;\n  }\n}"
+      },
+      "cpp": {
+        "wrapperFn": "trap",
+        "starterCode": "class Solution {\npublic:\n  int trap(vector<int>& height) {\n    // your code here\n    return 0;\n  }\n};"
+      },
+      "csharp": {
+        "wrapperFn": "Solution.Trap",
+        "starterCode": "public class Solution {\n  public int Trap(int[] height) {\n    // your code here\n    return 0;\n  }\n}"
+      },
+      "go": {
+        "wrapperFn": "trap",
+        "starterCode": "func trap(height []int) int {\n  // your code here\n  return 0\n}"
+      },
+      "rust": {
+        "wrapperFn": "trap",
+        "starterCode": "impl Solution {\n  pub fn trap(height: Vec<i32>) -> i32 {\n    // your code here\n    0\n  }\n}"
+      }
+    },
+    "testCases": [
+      {
+        "input": [[0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]],
+        "expected": 6,
+        "visible": true,
+        "description": "Water trapped in the valleys = 6 units"
+      },
+      {
+        "input": [[4, 2, 0, 3, 2, 5]],
+        "expected": 9,
+        "visible": true,
+        "description": "Water trapped between elevation heights"
+      },
+      {
+        "input": [[0, 1, 2, 1, 0]],
+        "expected": 0,
+        "visible": false,
+        "description": "Descending heights trap no water"
+      }
+    ],
+    "topics": ["array", "dynamic-programming", "stack"],
+    "isActive": true,
+    "createdAt": "2026-03-15 10:00:00.000",
+    "updatedAt": "2026-03-15 10:00:00.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567806",
+    "slug": "hard-minimum-window-substring",
+    "title": "Minimum Window Substring",
+    "category": "string",
+    "difficulty": "Hard",
+    "timeLimitSeconds": 1800,
+    "description": "Given two strings s and t, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such window, return an empty string.",
+    "prompt": "Implement function minWindow(s, t) returning the minimum window substring.",
+    "languages": {
+      "python": {
+        "wrapperFn": "minWindow",
+        "starterCode": "def minWindow(s, t):\n    # your code here\n    pass"
+      },
+      "javascript": {
+        "wrapperFn": "minWindow",
+        "starterCode": "function minWindow(s, t) {\n  // your code here\n}"
+      },
+      "typescript": {
+        "wrapperFn": "minWindow",
+        "starterCode": "function minWindow(s: string, t: string): string {\n  // your code here\n}"
+      },
+      "java": {
+        "wrapperFn": "Solution.minWindow",
+        "starterCode": "class Solution {\n  public String minWindow(String s, String t) {\n    // your code here\n    return \"\";\n  }\n}"
+      },
+      "cpp": {
+        "wrapperFn": "minWindow",
+        "starterCode": "class Solution {\npublic:\n  string minWindow(string s, string t) {\n    // your code here\n    return \"\";\n  }\n};"
+      },
+      "csharp": {
+        "wrapperFn": "Solution.MinWindow",
+        "starterCode": "public class Solution {\n  public string MinWindow(string s, string t) {\n    // your code here\n    return \"\";\n  }\n}"
+      },
+      "go": {
+        "wrapperFn": "minWindow",
+        "starterCode": "func minWindow(s string, t string) string {\n  // your code here\n  return \"\"\n}"
+      },
+      "rust": {
+        "wrapperFn": "min_window",
+        "starterCode": "impl Solution {\n  pub fn min_window(s: String, t: String) -> String {\n    // your code here\n    String::new()\n  }\n}"
+      }
+    },
+    "testCases": [
+      {
+        "input": ["ADOBECODEBANC", "ABC"],
+        "expected": "BANC",
+        "visible": true,
+        "description": "The minimum window substring is 'BANC'"
+      },
+      {
+        "input": ["a", "a"],
+        "expected": "a",
+        "visible": true,
+        "description": "The window is the entire string"
+      },
+      {
+        "input": ["a", "aa"],
+        "expected": "",
+        "visible": false,
+        "description": "No window contains two 'a's"
+      }
+    ],
+    "topics": ["string", "sliding-window", "hash-table"],
+    "isActive": true,
+    "createdAt": "2026-03-15 10:00:00.000",
+    "updatedAt": "2026-03-15 10:00:00.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567807",
+    "slug": "medium-permutation-in-string",
+    "title": "Permutation in String",
+    "category": "string",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise.",
+    "prompt": "Implement function checkInclusion(s1, s2) returning true if s2 contains a permutation of s1.",
+    "languages": {
+      "python": {
+        "wrapperFn": "checkInclusion",
+        "starterCode": "def checkInclusion(s1, s2):\n    # your code here\n    pass"
+      },
+      "javascript": {
+        "wrapperFn": "checkInclusion",
+        "starterCode": "function checkInclusion(s1, s2) {\n  // your code here\n}"
+      },
+      "typescript": {
+        "wrapperFn": "checkInclusion",
+        "starterCode": "function checkInclusion(s1: string, s2: string): boolean {\n  // your code here\n}"
+      },
+      "java": {
+        "wrapperFn": "Solution.checkInclusion",
+        "starterCode": "class Solution {\n  public boolean checkInclusion(String s1, String s2) {\n    // your code here\n    return false;\n  }\n}"
+      },
+      "cpp": {
+        "wrapperFn": "checkInclusion",
+        "starterCode": "class Solution {\npublic:\n  bool checkInclusion(string s1, string s2) {\n    // your code here\n    return false;\n  }\n};"
+      },
+      "csharp": {
+        "wrapperFn": "Solution.CheckInclusion",
+        "starterCode": "public class Solution {\n  public bool CheckInclusion(string s1, string s2) {\n    // your code here\n    return false;\n  }\n}"
+      },
+      "go": {
+        "wrapperFn": "checkInclusion",
+        "starterCode": "func checkInclusion(s1 string, s2 string) bool {\n  // your code here\n  return false\n}"
+      },
+      "rust": {
+        "wrapperFn": "check_inclusion",
+        "starterCode": "impl Solution {\n  pub fn check_inclusion(s1: String, s2: String) -> bool {\n    // your code here\n    false\n  }\n}"
+      }
+    },
+    "testCases": [
+      {
+        "input": ["ab", "eidbaooo"],
+        "expected": true,
+        "visible": true,
+        "description": "s2 contains the permutation 'ba' at index 1"
+      },
+      {
+        "input": ["ab", "eidboaoo"],
+        "expected": false,
+        "visible": true,
+        "description": "s2 does not contain any permutation of 'ab'"
+      },
+      {
+        "input": ["a", "ab"],
+        "expected": true,
+        "visible": false,
+        "description": "Single character permutation"
+      }
+    ],
+    "topics": ["string", "sliding-window", "hash-table"],
+    "isActive": true,
+    "createdAt": "2026-03-15 10:00:00.000",
+    "updatedAt": "2026-03-15 10:00:00.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567808",
+    "slug": "medium-longest-repeating-character-replacement",
+    "title": "Longest Repeating Character Replacement",
+    "category": "string",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "You are given a string s and an integer k. You can choose any character of the string and change it to any other uppercase English character. You can perform this operation at most k times. Return the length of the longest substring containing the same letter you can get after performing the above operations.",
+    "prompt": "Implement function characterReplacement(s, k) returning the length of the longest valid substring.",
+    "languages": {
+      "python": {
+        "wrapperFn": "characterReplacement",
+        "starterCode": "def characterReplacement(s, k):\n    # your code here\n    pass"
+      },
+      "javascript": {
+        "wrapperFn": "characterReplacement",
+        "starterCode": "function characterReplacement(s, k) {\n  // your code here\n}"
+      },
+      "typescript": {
+        "wrapperFn": "characterReplacement",
+        "starterCode": "function characterReplacement(s: string, k: number): number {\n  // your code here\n}"
+      },
+      "java": {
+        "wrapperFn": "Solution.characterReplacement",
+        "starterCode": "class Solution {\n  public int characterReplacement(String s, int k) {\n    // your code here\n    return 0;\n  }\n}"
+      },
+      "cpp": {
+        "wrapperFn": "characterReplacement",
+        "starterCode": "class Solution {\npublic:\n  int characterReplacement(string s, int k) {\n    // your code here\n    return 0;\n  }\n};"
+      },
+      "csharp": {
+        "wrapperFn": "Solution.CharacterReplacement",
+        "starterCode": "public class Solution {\n  public int CharacterReplacement(string s, int k) {\n    // your code here\n    return 0;\n  }\n}"
+      },
+      "go": {
+        "wrapperFn": "characterReplacement",
+        "starterCode": "func characterReplacement(s string, k int) int {\n  // your code here\n  return 0\n}"
+      },
+      "rust": {
+        "wrapperFn": "character_replacement",
+        "starterCode": "impl Solution {\n  pub fn character_replacement(s: String, k: i32) -> i32 {\n    // your code here\n    0\n  }\n}"
+      }
+    },
+    "testCases": [
+      {
+        "input": ["ABAB", 2],
+        "expected": 4,
+        "visible": true,
+        "description": "Replace two 'A's with 'B's to get 'BBBB' with length 4"
+      },
+      {
+        "input": ["AABABBA", 1],
+        "expected": 4,
+        "visible": true,
+        "description": "Replace one 'A' to get a substring of length 4"
+      },
+      {
+        "input": ["ABBB", 2],
+        "expected": 4,
+        "visible": false,
+        "description": "Already has valid substring"
+      }
+    ],
+    "topics": ["string", "sliding-window"],
+    "isActive": true,
+    "createdAt": "2026-03-15 10:00:00.000",
+    "updatedAt": "2026-03-15 10:00:00.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567809",
+    "slug": "easy-maximum-vowels-substring",
+    "title": "Maximum Number of Vowels in a Substring of Given Length",
+    "category": "string",
+    "difficulty": "Easy",
+    "timeLimitSeconds": 1800,
+    "description": "Given a string s and a positive integer k, return the maximum number of vowel letters in any substring of s with length k.",
+    "prompt": "Implement function maxVowels(s, k) returning the maximum number of vowels in a substring of length k.",
+    "languages": {
+      "python": {
+        "wrapperFn": "maxVowels",
+        "starterCode": "def maxVowels(s, k):\n    # your code here\n    pass"
+      },
+      "javascript": {
+        "wrapperFn": "maxVowels",
+        "starterCode": "function maxVowels(s, k) {\n  // your code here\n}"
+      },
+      "typescript": {
+        "wrapperFn": "maxVowels",
+        "starterCode": "function maxVowels(s: string, k: number): number {\n  // your code here\n}"
+      },
+      "java": {
+        "wrapperFn": "Solution.maxVowels",
+        "starterCode": "class Solution {\n  public int maxVowels(String s, int k) {\n    // your code here\n    return 0;\n  }\n}"
+      },
+      "cpp": {
+        "wrapperFn": "maxVowels",
+        "starterCode": "class Solution {\npublic:\n  int maxVowels(string s, int k) {\n    // your code here\n    return 0;\n  }\n};"
+      },
+      "csharp": {
+        "wrapperFn": "Solution.MaxVowels",
+        "starterCode": "public class Solution {\n  public int MaxVowels(string s, int k) {\n    // your code here\n    return 0;\n  }\n}"
+      },
+      "go": {
+        "wrapperFn": "maxVowels",
+        "starterCode": "func maxVowels(s string, k int) int {\n  // your code here\n  return 0\n}"
+      },
+      "rust": {
+        "wrapperFn": "max_vowels",
+        "starterCode": "impl Solution {\n  pub fn max_vowels(s: String, k: i32) -> i32 {\n    // your code here\n    0\n  }\n}"
+      }
+    },
+    "testCases": [
+      {
+        "input": ["abciiidef", 3],
+        "expected": 3,
+        "visible": true,
+        "description": "The substring 'iii' has 3 vowels"
+      },
+      {
+        "input": ["aeiou", 2],
+        "expected": 2,
+        "visible": true,
+        "description": "Any substring of length 2 has 2 vowels"
+      },
+      {
+        "input": ["leetcode", 3],
+        "expected": 2,
+        "visible": false,
+        "description": "Maximum vowels in length 3 substring"
+      }
+    ],
+    "topics": ["string", "sliding-window"],
+    "isActive": true,
+    "createdAt": "2026-03-15 10:00:00.000",
+    "updatedAt": "2026-03-15 10:00:00.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567810",
+    "slug": "medium-subarray-sum-equals-k",
+    "title": "Subarray Sum Equals K",
+    "category": "array",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given an array of integers nums and an integer k, return the total number of subarrays whose sum equals k. A subarray is a contiguous part of an array.",
+    "prompt": "Implement function subarraySum(nums, k) returning the count of subarrays with sum equal to k.",
+    "languages": {
+      "python": {
+        "wrapperFn": "subarraySum",
+        "starterCode": "def subarraySum(nums, k):\n    # your code here\n    pass"
+      },
+      "javascript": {
+        "wrapperFn": "subarraySum",
+        "starterCode": "function subarraySum(nums, k) {\n  // your code here\n}"
+      },
+      "typescript": {
+        "wrapperFn": "subarraySum",
+        "starterCode": "function subarraySum(nums: number[], k: number): number {\n  // your code here\n}"
+      },
+      "java": {
+        "wrapperFn": "Solution.subarraySum",
+        "starterCode": "class Solution {\n  public int subarraySum(int[] nums, int k) {\n    // your code here\n    return 0;\n  }\n}"
+      },
+      "cpp": {
+        "wrapperFn": "subarraySum",
+        "starterCode": "class Solution {\npublic:\n  int subarraySum(vector<int>& nums, int k) {\n    // your code here\n    return 0;\n  }\n};"
+      },
+      "csharp": {
+        "wrapperFn": "Solution.SubarraySum",
+        "starterCode": "public class Solution {\n  public int SubarraySum(int[] nums, int k) {\n    // your code here\n    return 0;\n  }\n}"
+      },
+      "go": {
+        "wrapperFn": "subarraySum",
+        "starterCode": "func subarraySum(nums []int, k int) int {\n  // your code here\n  return 0\n}"
+      },
+      "rust": {
+        "wrapperFn": "subarray_sum",
+        "starterCode": "impl Solution {\n  pub fn subarray_sum(nums: Vec<i32>, k: i32) -> i32 {\n    // your code here\n    0\n  }\n}"
+      }
+    },
+    "testCases": [
+      {
+        "input": [[1, 1, 1], 2],
+        "expected": 2,
+        "visible": true,
+        "description": "Subarrays [1,1] at indices 0-1 and 1-2 sum to 2"
+      },
+      {
+        "input": [[1, 2, 3], 3],
+        "expected": 2,
+        "visible": true,
+        "description": "Subarrays [1,2] and [3] sum to 3"
+      },
+      {
+        "input": [[1], 1],
+        "expected": 1,
+        "visible": false,
+        "description": "Single element subarray"
+      }
+    ],
+    "topics": ["array", "hash-table", "prefix-sum"],
+    "isActive": true,
+    "createdAt": "2026-03-15 10:00:00.000",
+    "updatedAt": "2026-03-15 10:00:00.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567811",
+    "slug": "easy-valid-parentheses",
+    "title": "Valid Parentheses",
+    "category": "stack",
+    "difficulty": "Easy",
+    "timeLimitSeconds": 1800,
+    "description": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.",
+    "prompt": "Implement function isValid(s) returning true if parentheses are properly matched and closed.",
+    "languages": {
+      "python": {
+        "wrapperFn": "isValid",
+        "starterCode": "def isValid(s):\n    # your code here\n    pass"
+      },
+      "javascript": {
+        "wrapperFn": "isValid",
+        "starterCode": "function isValid(s) {\n  // your code here\n}"
+      },
+      "typescript": {
+        "wrapperFn": "isValid",
+        "starterCode": "function isValid(s: string): boolean {\n  // your code here\n}"
+      },
+      "java": {
+        "wrapperFn": "Solution.isValid",
+        "starterCode": "class Solution {\n  public boolean isValid(String s) {\n    // your code here\n    return false;\n  }\n}"
+      },
+      "cpp": {
+        "wrapperFn": "isValid",
+        "starterCode": "class Solution {\npublic:\n  bool isValid(string s) {\n    // your code here\n    return false;\n  }\n};"
+      },
+      "csharp": {
+        "wrapperFn": "Solution.IsValid",
+        "starterCode": "public class Solution {\n  public bool IsValid(string s) {\n    // your code here\n    return false;\n  }\n}"
+      },
+      "go": {
+        "wrapperFn": "isValid",
+        "starterCode": "func isValid(s string) bool {\n  // your code here\n  return false\n}"
+      },
+      "rust": {
+        "wrapperFn": "is_valid",
+        "starterCode": "impl Solution {\n  pub fn is_valid(s: String) -> bool {\n    // your code here\n    false\n  }\n}"
+      }
+    },
+    "testCases": [
+      {
+        "input": ["()"],
+        "expected": true,
+        "visible": true,
+        "description": "Valid pair of parentheses"
+      },
+      {
+        "input": ["()[]{}"	],
+        "expected": true,
+        "visible": true,
+        "description": "All brackets are properly matched"
+      },
+      {
+        "input": ["(]"],
+        "expected": false,
+        "visible": false,
+        "description": "Mismatched brackets"
+      },
+      {
+        "input": ["([)]"],
+        "expected": false,
+        "visible": false,
+        "description": "Incorrect closing order"
+      }
+    ],
+    "topics": ["string", "stack"],
+    "isActive": true,
+    "createdAt": "2026-03-15 10:00:00.000",
+    "updatedAt": "2026-03-15 10:00:00.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567812",
+    "slug": "medium-min-stack",
+    "title": "Min Stack",
+    "category": "stack",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.",
+    "prompt": "Implement the MinStack class with push(), pop(), top(), and getMin() methods.",
+    "languages": {
+      "python": {
+        "wrapperFn": "MinStack",
+        "starterCode": "class MinStack:\n    def __init__(self):\n        # your code here\n        pass\n    \n    def push(self, val):\n        # your code here\n        pass\n    \n    def pop(self):\n        # your code here\n        pass\n    \n    def top(self):\n        # your code here\n        pass\n    \n    def getMin(self):\n        # your code here\n        pass"
+      },
+      "javascript": {
+        "wrapperFn": "MinStack",
+        "starterCode": "class MinStack {\n  constructor() {\n    // your code here\n  }\n  \n  push(val) {\n    // your code here\n  }\n  \n  pop() {\n    // your code here\n  }\n  \n  top() {\n    // your code here\n  }\n  \n  getMin() {\n    // your code here\n  }\n}"
+      },
+      "typescript": {
+        "wrapperFn": "MinStack",
+        "starterCode": "class MinStack {\n  constructor() {\n    // your code here\n  }\n  \n  push(val: number): void {\n    // your code here\n  }\n  \n  pop(): void {\n    // your code here\n  }\n  \n  top(): number {\n    // your code here\n    return 0;\n  }\n  \n  getMin(): number {\n    // your code here\n    return 0;\n  }\n}"
+      },
+      "java": {
+        "wrapperFn": "MinStack",
+        "starterCode": "class MinStack {\n  public MinStack() {\n    // your code here\n  }\n  \n  public void push(int val) {\n    // your code here\n  }\n  \n  public void pop() {\n    // your code here\n  }\n  \n  public int top() {\n    // your code here\n    return 0;\n  }\n  \n  public int getMin() {\n    // your code here\n    return 0;\n  }\n}"
+      },
+      "cpp": {
+        "wrapperFn": "MinStack",
+        "starterCode": "class MinStack {\npublic:\n  MinStack() {\n    // your code here\n  }\n  \n  void push(int val) {\n    // your code here\n  }\n  \n  void pop() {\n    // your code here\n  }\n  \n  int top() {\n    // your code here\n    return 0;\n  }\n  \n  int getMin() {\n    // your code here\n    return 0;\n  }\n};"
+      },
+      "csharp": {
+        "wrapperFn": "MinStack",
+        "starterCode": "public class MinStack {\n  public MinStack() {\n    // your code here\n  }\n  \n  public void Push(int val) {\n    // your code here\n  }\n  \n  public void Pop() {\n    // your code here\n  }\n  \n  public int Top() {\n    // your code here\n    return 0;\n  }\n  \n  public int GetMin() {\n    // your code here\n    return 0;\n  }\n}"
+      },
+      "go": {
+        "wrapperFn": "MinStack",
+        "starterCode": "type MinStack struct {\n}\n\nfunc Constructor() MinStack {\n  // your code here\n  return MinStack{}\n}\n\nfunc (this *MinStack) Push(val int) {\n  // your code here\n}\n\nfunc (this *MinStack) Pop() {\n  // your code here\n}\n\nfunc (this *MinStack) Top() int {\n  // your code here\n  return 0\n}\n\nfunc (this *MinStack) GetMin() int {\n  // your code here\n  return 0\n}"
+      },
+      "rust": {
+        "wrapperFn": "MinStack",
+        "starterCode": "struct MinStack {\n}\n\nimpl MinStack {\n  fn new() -> Self {\n    // your code here\n    MinStack {}\n  }\n  \n  fn push(&mut self, val: i32) {\n    // your code here\n  }\n  \n  fn pop(&mut self) {\n    // your code here\n  }\n  \n  fn top(&self) -> i32 {\n    // your code here\n    0\n  }\n  \n  fn get_min(&self) -> i32 {\n    // your code here\n    0\n  }\n}"
+      }
+    },
+    "testCases": [
+      {
+        "input": [["MinStack", "push", "push", "push", "getMin", "pop", "top", "getMin"], [null, -2, 0, -3, null, null, null, null]],
+        "expected": [null, null, null, null, -3, null, 0, -2],
+        "visible": true,
+        "description": "Operations on MinStack returning correct min values"
+      },
+      {
+        "input": [["MinStack", "push", "getMin"], [null, 5, null]],
+        "expected": [null, null, 5],
+        "visible": false,
+        "description": "Single push and getMin"
+      }
+    ],
+    "topics": ["stack", "design"],
+    "isActive": true,
+    "createdAt": "2026-03-15 10:00:00.000",
+    "updatedAt": "2026-03-15 10:00:00.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567813",
+    "slug": "medium-evaluate-rpn",
+    "title": "Evaluate Reverse Polish Notation",
+    "category": "stack",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Evaluate the value of an arithmetic expression in Reverse Polish Notation. Valid operators are '+', '-', '*', and '/'. Division truncates toward zero.",
+    "prompt": "Implement function evalRPN(tokens) returning the evaluated result of the RPN expression.",
+    "languages": {
+      "python": {
+        "wrapperFn": "evalRPN",
+        "starterCode": "def evalRPN(tokens):\n    # your code here\n    pass"
+      },
+      "javascript": {
+        "wrapperFn": "evalRPN",
+        "starterCode": "function evalRPN(tokens) {\n  // your code here\n}"
+      },
+      "typescript": {
+        "wrapperFn": "evalRPN",
+        "starterCode": "function evalRPN(tokens: string[]): number {\n  // your code here\n}"
+      },
+      "java": {
+        "wrapperFn": "Solution.evalRPN",
+        "starterCode": "class Solution {\n  public int evalRPN(String[] tokens) {\n    // your code here\n    return 0;\n  }\n}"
+      },
+      "cpp": {
+        "wrapperFn": "evalRPN",
+        "starterCode": "class Solution {\npublic:\n  int evalRPN(vector<string>& tokens) {\n    // your code here\n    return 0;\n  }\n};"
+      },
+      "csharp": {
+        "wrapperFn": "Solution.EvalRPN",
+        "starterCode": "public class Solution {\n  public int EvalRPN(string[] tokens) {\n    // your code here\n    return 0;\n  }\n}"
+      },
+      "go": {
+        "wrapperFn": "evalRPN",
+        "starterCode": "func evalRPN(tokens []string) int {\n  // your code here\n  return 0\n}"
+      },
+      "rust": {
+        "wrapperFn": "eval_rpn",
+        "starterCode": "impl Solution {\n  pub fn eval_rpn(tokens: Vec<String>) -> i32 {\n    // your code here\n    0\n  }\n}"
+      }
+    },
+    "testCases": [
+      {
+        "input": [["2", "1", "+", "3", "*"]],
+        "expected": 9,
+        "visible": true,
+        "description": "((2 + 1) * 3) = 9"
+      },
+      {
+        "input": [["4", "13", "5", "/", "+"]],
+        "expected": 6,
+        "visible": true,
+        "description": "(4 + (13 / 5)) = 6"
+      },
+      {
+        "input": [["15", "7", "1", "1", "-", "-", "/", "10", "*", "2", "*", "1", "+"]],
+        "expected": 5,
+        "visible": false,
+        "description": "Complex RPN expression"
+      }
+    ],
+    "topics": ["math", "stack"],
+    "isActive": true,
+    "createdAt": "2026-03-15 10:00:00.000",
+    "updatedAt": "2026-03-15 10:00:00.000"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567814",
+    "slug": "medium-generate-parentheses",
+    "title": "Generate Parentheses",
+    "category": "backtracking",
+    "difficulty": "Medium",
+    "timeLimitSeconds": 1800,
+    "description": "Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.",
+    "prompt": "Implement function generateParenthesis(n) returning all valid combinations of n pairs of parentheses.",
+    "languages": {
+      "python": {
+        "wrapperFn": "generateParenthesis",
+        "starterCode": "def generateParenthesis(n):\n    # your code here\n    pass"
+      },
+      "javascript": {
+        "wrapperFn": "generateParenthesis",
+        "starterCode": "function generateParenthesis(n) {\n  // your code here\n}"
+      },
+      "typescript": {
+        "wrapperFn": "generateParenthesis",
+        "starterCode": "function generateParenthesis(n: number): string[] {\n  // your code here\n}"
+      },
+      "java": {
+        "wrapperFn": "Solution.generateParenthesis",
+        "starterCode": "class Solution {\n  public List<String> generateParenthesis(int n) {\n    // your code here\n    return new ArrayList<>();\n  }\n}"
+      },
+      "cpp": {
+        "wrapperFn": "generateParenthesis",
+        "starterCode": "class Solution {\npublic:\n  vector<string> generateParenthesis(int n) {\n    // your code here\n    return {};\n  }\n};"
+      },
+      "csharp": {
+        "wrapperFn": "Solution.GenerateParenthesis",
+        "starterCode": "public class Solution {\n  public IList<string> GenerateParenthesis(int n) {\n    // your code here\n    return new List<string>();\n  }\n}"
+      },
+      "go": {
+        "wrapperFn": "generateParenthesis",
+        "starterCode": "func generateParenthesis(n int) []string {\n  // your code here\n  return []string{}\n}"
+      },
+      "rust": {
+        "wrapperFn": "generate_parenthesis",
+        "starterCode": "impl Solution {\n  pub fn generate_parenthesis(n: i32) -> Vec<String> {\n    // your code here\n    vec![]\n  }\n}"
+      }
+    },
+    "testCases": [
+      {
+        "input": [3],
+        "expected": ["((()))", "(()())", "(())()", "()(())", "()()()"],
+        "visible": true,
+        "description": "All valid combinations of 3 pairs of parentheses"
+      },
+      {
+        "input": [1],
+        "expected": ["()"],
+        "visible": true,
+        "description": "Only one valid combination for 1 pair"
+      },
+      {
+        "input": [2],
+        "expected": ["(())", "()()"],
+        "visible": false,
+        "description": "Two valid combinations for 2 pairs"
+      }
+    ],
+    "topics": ["string", "backtracking"],
+    "isActive": true,
+    "createdAt": "2026-03-15 10:00:00.000",
+    "updatedAt": "2026-03-15 10:00:00.000"
+  }
+]

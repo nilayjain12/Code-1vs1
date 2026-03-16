@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { fetchAPI } from '../lib/api';
 
 const CATEGORIES = ['math', 'array', 'string', 'tree', 'graph', 'dp', 'linked-list', 'sql', 'hash-table', 'binary-search', 'sorting', 'recursion', 'stack', 'queue', 'greedy', 'backtracking', 'divide-and-conquer', 'two-pointers', 'sliding-window', 'general'];
@@ -35,6 +36,7 @@ const generateSlug = (title) => {
 };
 
 export default function AdminQuestions() {
+  const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(null); // null = list view, 'new' = create, id = edit, 'import' = json bulk

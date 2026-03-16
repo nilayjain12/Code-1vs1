@@ -370,39 +370,52 @@ export default function Arena() {
         {/* Problem Panel */}
         <div className="arena__problem" style={{ width: `${splitPct}%`, flexShrink: 0 }}>
           <h2 style={{ marginBottom: '0.5rem', fontSize: '1.5rem' }}>{question.title}</h2>
-          <span className={`badge badge--${diffBadge}`} style={{ marginBottom: '1rem', display: 'inline-flex' }}>
-            {question.difficulty}
-          </span>
-          <p style={{
-            fontFamily: 'var(--font-body)',
-            fontSize: '1rem',
-            lineHeight: '1.7',
-            marginTop: '1rem',
-            marginBottom: '1.5rem',
-          }}>
-            {question.prompt}
-          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1rem' }}>
+            <span className={`badge badge--${diffBadge}`} style={{ display: 'inline-flex' }}>
+              {question.difficulty}
+            </span>
+            {question.topics && question.topics.length > 0 && question.topics.map((topic, i) => (
+              <span key={i} className="badge badge--topic">{topic}</span>
+            ))}
+          </div>
 
-          {/* Example Test Cases */}
+          {/* Full Description */}
+          <div className="arena__description">
+            {(question.description || question.prompt || '').split('\n').map((line, i) => (
+              <p key={i} style={{ margin: line.trim() ? '0 0 0.5rem 0' : '0', minHeight: line.trim() ? 'auto' : '0.5rem' }}>
+                {line}
+              </p>
+            ))}
+          </div>
+
+          {/* Constraints */}
+          {question.constraints && question.constraints.length > 0 && (
+            <div className="arena__constraints">
+              <h4>📏 Constraints</h4>
+              <ul>
+                {question.constraints.map((c, i) => (
+                  <li key={i}><code>{c}</code></li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Example Test Cases (formatted like LeetCode) */}
           {question.testCases && question.testCases.length > 0 && (
-            <div>
-              <h4 style={{ marginBottom: '0.75rem' }}>📝 Examples</h4>
+            <div className="arena__examples">
+              <h4>📝 Examples</h4>
               {question.testCases.map((tc, i) => (
-                <div key={i} style={{
-                  background: 'var(--cream-dark)',
-                  border: '2px solid var(--ink)',
-                  borderRadius: 'var(--radius-sm)',
-                  padding: '0.75rem',
-                  marginBottom: '0.5rem',
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '0.9rem',
-                  overflowWrap: 'break-word',
-                  wordBreak: 'break-all',
-                  overflow: 'hidden',
-                }}>
-                  <div><strong>Input:</strong> {JSON.stringify(tc.input)}</div>
-                  <div><strong>Expected:</strong> {JSON.stringify(tc.expected)}</div>
-                  {tc.description && <div style={{ marginTop: '0.25rem' }}><strong>Note:</strong> {tc.description}</div>}
+                <div key={i} className="arena__example-card">
+                  <div className="arena__example-header">Example {tc.exampleNum || i + 1}:</div>
+                  <div className="arena__example-body">
+                    <div><strong>Input:</strong> <code>{JSON.stringify(tc.input)}</code></div>
+                    <div><strong>Output:</strong> <code>{JSON.stringify(tc.expected)}</code></div>
+                    {tc.description && (
+                      <div className="arena__example-explanation">
+                        <strong>Explanation:</strong> {tc.description}
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>

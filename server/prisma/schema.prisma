@@ -93,12 +93,33 @@ model Question {
   description       String
   prompt            String
   languages         Json     // { javascript: { starterCode, wrapperFn }, python: { ... }, ... }
-  testCases         Json     // [{ input: [...], expected: ..., visible: true/false }]
+  testCases         Json     @default("[]") // Legacy: kept for backward compat, prefer TestCase table
+  constraints       Json     @default("[]") // ["2 <= nums.length <= 10^4", ...]
+  hints             Json     @default("[]") // ["Hint 1", "Hint 2", ...]
   topics            Json     @default("[]")
   isActive          Boolean  @default(true)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
+  testCaseRows      TestCase[]
+
   @@index([category])
   @@index([difficulty])
+}
+
+model TestCase {
+  id          String   @id @default(uuid())
+  questionId  String
+  input       Json     // e.g. [[2,7,11,15], 9]
+  expected    Json     // e.g. [0,1]
+  visible     Boolean  @default(false)
+  description String   @default("")
+  exampleNum  Int?
+  orderIndex  Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([questionId])
+  @@index([questionId, visible])
 }

@@ -230,6 +230,7 @@ a:hover {
 .badge--hard { background: var(--neon-pink); color: white; }
 .badge--lang { background: var(--neon-blue); color: var(--ink); }
 .badge--streak { background: var(--neon-yellow); color: var(--ink); }
+.badge--topic { background: #444; color: #e0e0e0; font-weight: 500; }
 
 /* ─── INPUT ─────────────────────────────────────────────────── */
 .retro-input {
@@ -606,6 +607,79 @@ a:hover {
 }
 .arena__feedback--fail {
   color: var(--neon-pink);
+}
+
+/* ─── ARENA: ENHANCED PROBLEM DISPLAY ─────────────────────── */
+.arena__description {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+  color: var(--ink);
+}
+.arena__constraints {
+  margin-bottom: 1.25rem;
+}
+.arena__constraints h4 {
+  margin-bottom: 0.5rem;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+}
+.arena__constraints ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin: 0;
+}
+.arena__constraints li {
+  margin-bottom: 0.3rem;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+}
+.arena__constraints code {
+  background: var(--cream-dark, #e8e4d8);
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+}
+.arena__examples h4 {
+  margin-bottom: 0.6rem;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+}
+.arena__example-card {
+  background: var(--cream-dark, #e8e4d8);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.6rem;
+  overflow: hidden;
+}
+.arena__example-header {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 0.4rem 0.75rem;
+  background: rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.arena__example-body {
+  padding: 0.6rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+.arena__example-body code {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+}
+.arena__example-explanation {
+  margin-top: 0.3rem;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: #555;
 }
 
 /* ─── ANTI-CHEAT WARNING ────────────────────────────────────── */

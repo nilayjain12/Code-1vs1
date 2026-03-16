@@ -50,6 +50,7 @@ router.get('/questions/:id', async (req, res) => {
   try {
     const question = await prisma.question.findUnique({
       where: { id: req.params.id },
+      include: { testCaseRows: { orderBy: { orderIndex: 'asc' } } },
     });
     if (!question) return res.status(404).json({ error: 'Question not found' });
     res.json({ question });
@@ -65,6 +66,7 @@ router.post('/questions', async (req, res) => {
     const {
       slug, title, category, difficulty, timeLimitSeconds,
       description, prompt, languages, testCases, topics,
+      constraints, hints,
     } = req.body;
 
     if (!slug || !title || !category || !difficulty || !description || !prompt) {
@@ -84,9 +86,23 @@ router.post('/questions', async (req, res) => {
         description,
         prompt,
         languages,
-        testCases,
+        testCases, // legacy JSON column
+        constraints: constraints || [],
+        hints: hints || [],
         topics: topics || [],
+        // Also insert into TestCase table
+        testCaseRows: {
+          create: (Array.isArray(testCases) ? testCases : []).map((tc, i) => ({
+            input: tc.input ?? [],
+            expected: tc.expected ?? '',
+            visible: tc.visible !== undefined ? tc.visible : true,
+            description: tc.description || '',
+            exampleNum: tc.exampleNum || null,
+            orderIndex: i,
+          })),
+        },
       },
+      include: { testCaseRows: true },
     });
 
     res.status(201).json({ question });
@@ -105,7 +121,26 @@ router.put('/questions/:id', async (req, res) => {
     const {
       slug, title, category, difficulty, timeLimitSeconds,
       description, prompt, languages, testCases, topics, isActive,
+      constraints, hints,
     } = req.body;
+
+    // If testCases provided, replace TestCase rows
+    if (testCases !== undefined && Array.isArray(testCases)) {
+      await prisma.testCase.deleteMany({ where: { questionId: req.params.id } });
+      if (testCases.length > 0) {
+        await prisma.testCase.createMany({
+          data: testCases.map((tc, i) => ({
+            questionId: req.params.id,
+            input: tc.input ?? [],
+            expected: tc.expected ?? '',
+            visible: tc.visible !== undefined ? tc.visible : true,
+            description: tc.description || '',
+            exampleNum: tc.exampleNum || null,
+            orderIndex: i,
+          })),
+        });
+      }
+    }
 
     const question = await prisma.question.update({
       where: { id: req.params.id },
@@ -121,7 +156,10 @@ router.put('/questions/:id', async (req, res) => {
         ...(testCases !== undefined && { testCases }),
         ...(topics !== undefined && { topics }),
         ...(isActive !== undefined && { isActive }),
+        ...(constraints !== undefined && { constraints }),
+        ...(hints !== undefined && { hints }),
       },
+      include: { testCaseRows: { orderBy: { orderIndex: 'asc' } } },
     });
 
     res.json({ question });
@@ -181,8 +219,21 @@ router.post('/questions/bulk-import', async (req, res) => {
             prompt: q.prompt,
             languages: q.languages,
             testCases: q.testCases,
+            constraints: q.constraints || [],
+            hints: q.hints || [],
             topics: q.topics || [],
             isActive: q.isActive !== undefined ? q.isActive : true,
+            // Insert test cases into TestCase table
+            testCaseRows: {
+              create: (Array.isArray(q.testCases) ? q.testCases : []).map((tc, idx) => ({
+                input: tc.input ?? [],
+                expected: tc.expected ?? '',
+                visible: tc.visible !== undefined ? tc.visible : true,
+                description: tc.description || '',
+                exampleNum: tc.exampleNum || null,
+                orderIndex: idx,
+              })),
+            },
           },
         });
         successCount++;

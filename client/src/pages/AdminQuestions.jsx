@@ -24,6 +24,8 @@ const emptyForm = () => ({
   timeLimitSeconds: 1800, description: '', prompt: '',
   languages: Object.fromEntries(LANGUAGES.map(l => [l, { starterCode: '', wrapperFn: 'solve' }])),
   testCases: [{ input: [], expected: '', visible: true }],
+  constraints: [],
+  hints: [],
   topics: [],
   isActive: true,
 });
@@ -80,6 +82,8 @@ export default function AdminQuestions() {
         ...q,
         languages: langs,
         testCases: Array.isArray(q.testCases) ? q.testCases : [],
+        constraints: Array.isArray(q.constraints) ? q.constraints : [],
+        hints: Array.isArray(q.hints) ? q.hints : [],
         topics: Array.isArray(q.topics) ? q.topics : [],
       });
       setEditing(id);
@@ -159,6 +163,8 @@ export default function AdminQuestions() {
           prompt: q.prompt || `Write a function to solve: ${q.title}`,
           languages,
           testCases,
+          constraints: Array.isArray(q.constraints) ? q.constraints : [],
+          hints: Array.isArray(q.hints) ? q.hints : [],
           topics: Array.isArray(q.topics) ? q.topics : [],
           isActive: q.isActive !== undefined ? q.isActive : true,
         };
@@ -249,55 +255,162 @@ export default function AdminQuestions() {
     reader.onload = async (event) => {
       try {
         const json = JSON.parse(event.target.result);
-        if (!Array.isArray(json)) throw new Error("JSON must be an array of questions.");
         
-        const mappedQuestions = json.map(q => {
-          // ── Build languages object ──
-          const languages = {};
-          const LANG_ALT = { 'cpp': 'c++', 'csharp': 'c#' };
-          
-          if (q.languages && typeof q.languages === 'object') {
-            for (const [rawKey, val] of Object.entries(q.languages)) {
-              const normKey = normalizeLangKey(rawKey);
-              if (LANGUAGES.includes(normKey) && val) {
-                const code = val.starterCode || val.code || '';
-                const fn = val.entrypoint || val.wrapperFn || 'solve';
-                
-                if (code.trim()) {
-                  languages[normKey] = { starterCode: code, wrapperFn: fn };
-                  if (LANG_ALT[normKey]) {
-                    languages[LANG_ALT[normKey]] = { starterCode: code, wrapperFn: fn };
+        // ── Format Detection ──
+        if (!Array.isArray(json) && (!json.questions || !Array.isArray(json.questions))) {
+          throw new Error("Unknown JSON format. Expected an array of questions or an object with a 'questions' array.");
+        }
+
+        let mappedQuestions = [];
+
+        if (json.questions && Array.isArray(json.questions)) {
+          // ═══ NEW FORMAT (merged_problems.json) ═══
+          mappedQuestions = json.questions.map((q) => {
+            // ── Transform code_snippets → languages ──
+            const languages = {};
+            const ALLOWED_LANGS = ['python', 'javascript', 'typescript', 'java', 'cpp', 'csharp', 'go', 'rust'];
+            const LANG_ALT = { 'cpp': 'c++', 'csharp': 'c#' };
+            // Map LeetCode keys to our keys
+            const LANG_KEY_REMAP = { 'python3': 'python', 'golang': 'go' };
+
+            if (q.code_snippets && typeof q.code_snippets === 'object') {
+              for (const [rawKey, code] of Object.entries(q.code_snippets)) {
+                const langKey = LANG_KEY_REMAP[rawKey] || rawKey;
+                if (!ALLOWED_LANGS.includes(langKey) || !code) continue;
+                // Don't override if already set (e.g. python3 → python, but python already exists)
+                if (languages[langKey]) continue;
+
+                // Extract function name from code
+                let fn = 'solve';
+                if (langKey === 'python') {
+                  const m = code.match(/def\s+([a-zA-Z0-9_]+)\s*\(/);
+                  if (m) fn = m[1];
+                } else if (langKey === 'java' || langKey === 'csharp' || langKey === 'cpp') {
+                  const m = code.match(/(?:(?:public|private|protected|static|virtual|override)\s+)*(?:[\w<>\[\]:]+\s+)+([a-zA-Z0-9_]+)\s*\(/);
+                  if (m) fn = m[1];
+                } else if (langKey === 'javascript' || langKey === 'typescript') {
+                  let m = code.match(/(?:var|let|const|function)\s+([a-zA-Z0-9_]+)\s*(?:=|\()/);
+                  if (m) fn = m[1];
+                } else if (langKey === 'go') {
+                  const m = code.match(/func\s+([a-zA-Z0-9_]+)\s*\(/);
+                  if (m) fn = m[1];
+                } else if (langKey === 'rust') {
+                  const m = code.match(/fn\s+([a-zA-Z0-9_]+)\s*\(/);
+                  if (m) fn = m[1];
+                }
+
+                languages[langKey] = { starterCode: code, wrapperFn: fn };
+                if (LANG_ALT[langKey]) languages[LANG_ALT[langKey]] = { starterCode: code, wrapperFn: fn };
+              }
+            }
+
+            // ── Transform examples → testCases ──
+            let testCases = [];
+            if (Array.isArray(q.examples)) {
+              testCases = q.examples.map((ex, idx) => {
+                const text = ex.example_text || '';
+                const inputMatch = text.match(/Input:\s*(.*?)(?=\nOutput:|$)/is);
+                const outputMatch = text.match(/Output:\s*(.*?)(?=\nExplanation:|$)/is);
+                const explanationMatch = text.match(/Explanation:\s*(.*)/is);
+
+                let inputArr = [];
+                if (inputMatch) {
+                  const inputStr = inputMatch[1].trim();
+                  const eqMatches = [...inputStr.matchAll(/=\s*(\[.*?\]|"[^"]*"|'[^']*'|-?\d+\.?\d*|true|false)/g)];
+                  if (eqMatches.length > 0) {
+                    inputArr = eqMatches.map(m => {
+                      try { return JSON.parse(m[1].replace(/'/g, '"')); } catch { return m[1]; }
+                    });
+                  } else {
+                    try { inputArr = JSON.parse('[' + inputStr + ']'); } catch { inputArr = [inputStr]; }
+                  }
+                }
+
+                let expectedOut = '';
+                if (outputMatch) {
+                  const outStr = outputMatch[1].trim();
+                  try { expectedOut = JSON.parse(outStr.replace(/'/g, '"')); } catch { expectedOut = outStr; }
+                }
+
+                const description = explanationMatch ? explanationMatch[1].trim() : '';
+
+                return {
+                  input: inputArr,
+                  expected: expectedOut,
+                  description,
+                  visible: idx < 2,
+                  exampleNum: ex.example_num || idx + 1,
+                };
+              });
+            }
+            if (testCases.length === 0) testCases.push({ input: [], expected: '', description: '', visible: true });
+
+            const cat = (q.topics && q.topics[0] ? q.topics[0] : 'math').toLowerCase();
+
+            return {
+              slug: q.problem_slug || generateSlug(q.title || `q-${q.problem_id}`),
+              title: q.title || `Question ${q.problem_id}`,
+              category: CATEGORIES.includes(cat) ? cat : 'general',
+              difficulty: q.difficulty || 'Easy',
+              timeLimitSeconds: 1800,
+              description: q.description || '',
+              prompt: `Implement solution for ${q.title || 'this problem'}`,
+              languages,
+              testCases,
+              constraints: Array.isArray(q.constraints) ? q.constraints : [],
+              hints: Array.isArray(q.hints) ? q.hints : [],
+              topics: Array.isArray(q.topics) ? q.topics : [],
+              isActive: true,
+            };
+          });
+        } else {
+          // ═══ OLD FORMAT (two_sum.json — plain array) ═══
+          mappedQuestions = json.map(q => {
+            const languages = {};
+            const LANG_ALT = { 'cpp': 'c++', 'csharp': 'c#' };
+            if (q.languages && typeof q.languages === 'object') {
+              for (const [rawKey, val] of Object.entries(q.languages)) {
+                const normKey = normalizeLangKey(rawKey);
+                if (LANGUAGES.includes(normKey) && val) {
+                  const code = val.starterCode || val.code || '';
+                  const fn = val.entrypoint || val.wrapperFn || 'solve';
+                  if (code.trim()) {
+                    languages[normKey] = { starterCode: code, wrapperFn: fn };
+                    if (LANG_ALT[normKey]) {
+                      languages[LANG_ALT[normKey]] = { starterCode: code, wrapperFn: fn };
+                    }
                   }
                 }
               }
             }
-          }
 
-          // ── Build test cases ──
-          let testCases = [];
-          if (Array.isArray(q.testCases) && q.testCases.length > 0) {
-            testCases = q.testCases.map((tc) => {
-              const vis = tc.visibleToPlayer !== undefined ? tc.visibleToPlayer : (tc.visible !== undefined ? tc.visible : true);
-              return { input: tc.input ?? [], expected: tc.expected ?? '', description: tc.description || '', visible: vis };
-            });
-          }
+            let testCases = [];
+            if (Array.isArray(q.testCases) && q.testCases.length > 0) {
+              testCases = q.testCases.map((tc) => {
+                const vis = tc.visibleToPlayer !== undefined ? tc.visibleToPlayer : (tc.visible !== undefined ? tc.visible : true);
+                return { input: tc.input ?? [], expected: tc.expected ?? '', description: tc.description || '', visible: vis };
+              });
+            }
 
-          const cat = (q.category || (q.topics && q.topics[0]) || 'math').toLowerCase();
+            const cat = (q.category || (q.topics && q.topics[0]) || 'math').toLowerCase();
 
-          return {
-             slug: q.slug || generateSlug(q.title || `q-${q.problemId}`),
-             title: q.title || `Question ${q.problemId}`,
-             category: CATEGORIES.includes(cat) ? cat : 'general',
-             difficulty: q.difficulty || 'Easy',
-             timeLimitSeconds: q.timeLimitSeconds || 1800,
-             description: q.description || '',
-             prompt: q.prompt || `Write a function to solve: ${q.title || 'the problem'}`,
-             languages,
-             testCases,
-             topics: Array.isArray(q.topics) ? q.topics : [],
-             isActive: q.isActive !== undefined ? q.isActive : true
-          };
-        });
+            return {
+              slug: q.slug || generateSlug(q.title || `q-${q.problemId}`),
+              title: q.title || `Question ${q.problemId}`,
+              category: CATEGORIES.includes(cat) ? cat : 'general',
+              difficulty: q.difficulty || 'Easy',
+              timeLimitSeconds: q.timeLimitSeconds || 1800,
+              description: q.description || '',
+              prompt: q.prompt || `Write a function to solve: ${q.title || 'the problem'}`,
+              languages,
+              testCases,
+              constraints: Array.isArray(q.constraints) ? q.constraints : [],
+              hints: Array.isArray(q.hints) ? q.hints : [],
+              topics: Array.isArray(q.topics) ? q.topics : [],
+              isActive: q.isActive !== undefined ? q.isActive : true,
+            };
+          });
+        }
         
         setImportData(mappedQuestions);
       } catch (err) {
@@ -516,6 +629,22 @@ export default function AdminQuestions() {
               <label>TOPICS <span style={{ color: 'var(--ink-muted)' }}>(comma-separated)</span></label>
               <input className="retro-input" value={Array.isArray(form.topics) ? form.topics.join(', ') : ''} 
                 onChange={e => setForm(f => ({ ...f, topics: e.target.value.split(',').map(t => t.trim()).filter(Boolean) }))} placeholder="math, linked-list, tricky" />
+            </div>
+
+            <div className="form-group">
+              <label>CONSTRAINTS <span style={{ color: 'var(--ink-muted)' }}>(one per line)</span></label>
+              <textarea className="retro-input" style={{ minHeight: '80px', resize: 'vertical' }} 
+                value={Array.isArray(form.constraints) ? form.constraints.join('\n') : ''} 
+                onChange={e => setForm(f => ({ ...f, constraints: e.target.value.split('\n').filter(Boolean) }))} 
+                placeholder={"2 <= nums.length <= 10^4\n-10^9 <= nums[i] <= 10^9"} />
+            </div>
+
+            <div className="form-group">
+              <label>HINTS <span style={{ color: 'var(--ink-muted)' }}>(one per line)</span></label>
+              <textarea className="retro-input" style={{ minHeight: '60px', resize: 'vertical' }} 
+                value={Array.isArray(form.hints) ? form.hints.join('\n') : ''} 
+                onChange={e => setForm(f => ({ ...f, hints: e.target.value.split('\n').filter(Boolean) }))} 
+                placeholder="Try a brute force approach first..." />
             </div>
 
             <div className="form-group" style={{ flexDirection: 'row', alignItems: 'center', gap: '1rem', marginTop: '1rem' }}>

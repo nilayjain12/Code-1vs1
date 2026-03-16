@@ -36,7 +36,7 @@ const activeRooms = new Map(); // roomId -> room object
 const socketToUser = new Map(); // socketId -> { userId, username, avatar }
 
 async function pickQuestion() {
-  // Fetch a random active question from the database
+  // Fetch a random active question from the database, including TestCase rows
   const count = await prisma.question.count({ where: { isActive: true } });
   if (count === 0) {
     // Fallback: return a minimal default question
@@ -45,10 +45,24 @@ async function pickQuestion() {
       description: 'Return the sum of two integers.', prompt: 'Implement solve(a, b).',
       languages: { javascript: { starterCode: 'function solve(a, b) {\n  // your code here\n}', wrapperFn: 'solve' } },
       testCases: [{ input: [1, 2], expected: 3, visible: true }],
+      testCaseRows: [{ input: [1, 2], expected: 3, visible: true, description: '' }],
+      constraints: [],
+      topics: [],
     };
   }
   const skip = Math.floor(Math.random() * count);
-  const [question] = await prisma.question.findMany({ where: { isActive: true }, skip, take: 1 });
+  const [question] = await prisma.question.findMany({
+    where: { isActive: true },
+    include: { testCaseRows: { orderBy: { orderIndex: 'asc' } } },
+    skip,
+    take: 1,
+  });
+  // Ensure testCaseRows fallback to legacy testCases if table is empty
+  if (!question.testCaseRows || question.testCaseRows.length === 0) {
+    question.testCaseRows = (question.testCases || []).map((tc, i) => ({
+      input: tc.input, expected: tc.expected, visible: tc.visible ?? true, description: tc.description || '', exampleNum: null, orderIndex: i,
+    }));
+  }
   return question;
 }
 
@@ -166,11 +180,15 @@ function setupMatchmaker(io) {
       }
 
       try {
+        // Use testCaseRows (TestCase table) for evaluation; fallback to legacy testCases
+        const allTestCases = (room.question.testCaseRows && room.question.testCaseRows.length > 0)
+          ? room.question.testCaseRows
+          : room.question.testCases;
         let result;
         if (language === 'javascript' || language === 'typescript') {
-          result = evaluateJSCode(code, room.question.testCases);
+          result = evaluateJSCode(code, allTestCases);
         } else {
-          result = await executeJudge0(code, language, room.question.testCases);
+          result = await executeJudge0(code, language, allTestCases);
         }
 
         player.code = code;
@@ -190,9 +208,12 @@ function setupMatchmaker(io) {
         }
         // If not all passed, player can resubmit (submitted stays false)
       } catch (err) {
+        const fallbackTests = (room.question.testCaseRows && room.question.testCaseRows.length > 0)
+          ? room.question.testCaseRows
+          : room.question.testCases;
         socket.emit('submission-result', {
           passed: 0,
-          total: room.question.testCases.length,
+          total: fallbackTests.length,
           allPassed: false,
           errors: [{ message: err.message }],
         });
@@ -343,16 +364,27 @@ async function createHumanMatch(io, playerA, playerB) {
     || findLangData(question.languages, 'javascript')?.starterCode
     || 'function solve() {\n  // your code here\n}';
 
+  // Build visible test cases from TestCase table (fallback to legacy JSON)
+  const allTests = (question.testCaseRows && question.testCaseRows.length > 0)
+    ? question.testCaseRows
+    : question.testCases;
+  const visibleTests = allTests.filter(t => t.visible || t.visibleToPlayer).map(t => ({
+    input: t.input, expected: t.expected, description: t.description || '', exampleNum: t.exampleNum,
+  }));
+
   // Notify both players
   const matchData = {
     roomId,
     question: {
       title: question.title,
       difficulty: question.difficulty,
+      description: question.description || '',
       prompt: question.prompt || question.description,
       starterCode,
       timeLimitSeconds: question.timeLimitSeconds,
-      testCases: question.testCases.filter(t => t.visible || t.visibleToPlayer).map(t => ({ input: t.input, expected: t.expected, description: t.description })),
+      constraints: question.constraints || [],
+      topics: question.topics || [],
+      testCases: visibleTests,
     },
     endsAt: room.endsAt,
     language: lang,
@@ -423,7 +455,10 @@ async function createBotMatch(io, socket, player) {
     const botPlayer = room.players.find(p => p.isBot);
     if (!botPlayer) return;
 
-    const total = question.testCases.length;
+    const allBotTests = (question.testCaseRows && question.testCaseRows.length > 0)
+      ? question.testCaseRows
+      : question.testCases;
+    const total = allBotTests.length;
     const passed = Math.random() > 0.35 ? total : Math.max(1, total - 1);
     botPlayer.submitted = true;
     botPlayer.submittedAt = Date.now();
@@ -447,15 +482,26 @@ async function createBotMatch(io, socket, player) {
     || 'function solve() {\n  // your code here\n}';
 
   socket.join(roomId);
+  // Build visible test cases from TestCase table (fallback to legacy JSON)
+  const allBotTests2 = (question.testCaseRows && question.testCaseRows.length > 0)
+    ? question.testCaseRows
+    : question.testCases;
+  const visibleBotTests = allBotTests2.filter(t => t.visible || t.visibleToPlayer).map(t => ({
+    input: t.input, expected: t.expected, description: t.description || '', exampleNum: t.exampleNum,
+  }));
+
   socket.emit('match-found', {
     roomId,
     question: {
       title: question.title,
       difficulty: question.difficulty,
+      description: question.description || '',
       prompt: question.prompt || question.description,
       starterCode,
       timeLimitSeconds: question.timeLimitSeconds,
-      testCases: question.testCases.filter(t => t.visible || t.visibleToPlayer).map(t => ({ input: t.input, expected: t.expected, description: t.description })),
+      constraints: question.constraints || [],
+      topics: question.topics || [],
+      testCases: visibleBotTests,
     },
     endsAt: room.endsAt,
     opponentName: `${bot.emoji} ${bot.name}`,

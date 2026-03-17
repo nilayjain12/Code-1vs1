@@ -256,6 +256,15 @@ function setupMatchmaker(io) {
       }
     });
 
+    socket.on('close-test', ({ roomId }) => {
+      const room = activeRooms.get(roomId);
+      if (room && room.isTest) {
+        if (room.timeoutHandle) clearTimeout(room.timeoutHandle);
+        activeRooms.delete(roomId);
+        socket.leave(roomId);
+      }
+    });
+
     // ─── SUBMIT CODE ────────────────────
     socket.on('submit-code', async ({ roomId, code, language }) => {
       const room = activeRooms.get(roomId);

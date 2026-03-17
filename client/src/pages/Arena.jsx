@@ -300,6 +300,12 @@ export default function Arena() {
   };
 
   const handleGoHome = () => {
+    if (isTestMode && currentMatch) {
+      const socket = getSocket();
+      if (socket) {
+        socket.emit('close-test', { roomId: currentMatch.roomId });
+      }
+    }
     clearMatch();
     if (isTestMode) {
       navigate('/admin/questions');
@@ -554,7 +560,7 @@ export default function Arena() {
             ) : (
               <button
                 className="retro-btn"
-                onClick={() => navigate('/admin/questions')}
+                onClick={handleGoHome}
                 style={{ fontSize: '0.9rem', padding: '0.5rem 1rem', background: '#555', color: 'white' }}
               >
                 ✖️ Close Test

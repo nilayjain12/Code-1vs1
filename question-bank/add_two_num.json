@@ -1,0 +1,89 @@
+[
+  {
+    "id": "f5a6b7c8-d9e0-1f2a-3b4c-5d6e7f8a9b0c",
+    "slug": "easy-add-two-integers",
+    "title": "Add Two Integers",
+    "category": "math",
+    "difficulty": "Easy",
+    "timeLimitSeconds": 1800,
+    "description": "Given two integers `num1` and `num2`, return the sum of the two integers.",
+    "prompt": "Implement a function to calculate the sum of two integers.",
+    "constraints": [
+      "-100 <= num1 <= 100",
+      "-100 <= num2 <= 100"
+    ],
+    "hints": [
+      "Use the standard addition operator (+) provided by your programming language to add the two numbers together."
+    ],
+    "follow_ups": [
+      "Can you solve this problem without using the '+' or '-' operators? (Hint: Look into bit manipulation using XOR and AND)."
+    ],
+    "languages": {
+      "python": {
+        "wrapperFn": "sum",
+        "starterCode": "class Solution(object):\n    def sum(self, num1, num2):\n        \"\"\"\n        :type num1: int\n        :type num2: int\n        :rtype: int\n        \"\"\"\n        # Your implementation here\n        pass"
+      },
+      "javascript": {
+        "wrapperFn": "sum",
+        "starterCode": "/**\n * @param {number} num1\n * @param {number} num2\n * @return {number}\n */\nvar sum = function(num1, num2) {\n    // Your implementation here\n};"
+      },
+      "typescript": {
+        "wrapperFn": "sum",
+        "starterCode": "function sum(num1: number, num2: number): number {\n    // Your implementation here\n}"
+      },
+      "java": {
+        "wrapperFn": "sum",
+        "starterCode": "class Solution {\n    public int sum(int num1, int num2) {\n        // Your implementation here\n        return 0;\n    }\n}"
+      },
+      "cpp": {
+        "wrapperFn": "sum",
+        "starterCode": "class Solution {\npublic:\n    int sum(int num1, int num2) {\n        // Your implementation here\n        return 0;\n    }\n};"
+      },
+      "csharp": {
+        "wrapperFn": "Sum",
+        "starterCode": "public class Solution {\n    public int Sum(int num1, int num2) {\n        // Your implementation here\n        return 0;\n    }\n}"
+      },
+      "go": {
+        "wrapperFn": "sum",
+        "starterCode": "func sum(num1 int, num2 int) int {\n    // Your implementation here\n    return 0\n}"
+      },
+      "rust": {
+        "wrapperFn": "sum",
+        "starterCode": "impl Solution {\n    pub fn sum(num1: i32, num2: i32) -> i32 {\n        // Your implementation here\n        0\n    }\n}"
+      }
+    },
+    "testCases": [
+      {
+        "input": [12, 5],
+        "expected": 17,
+        "visible": true,
+        "description": "num1 is 12, num2 is 5, and their sum is 12 + 5 = 17."
+      },
+      {
+        "input": [-10, 4],
+        "expected": -6,
+        "visible": true,
+        "description": "num1 is -10, num2 is 4, and their sum is -10 + 4 = -6."
+      },
+      {
+        "input": [0, 0],
+        "expected": 0,
+        "visible": false,
+        "description": "Both numbers are 0, so the sum is 0."
+      },
+      {
+        "input": [100, -100],
+        "expected": 0,
+        "visible": false,
+        "description": "Adding a number to its negative counterpart results in 0."
+      }
+    ],
+    "topics": [
+      "math",
+      "bit-manipulation"
+    ],
+    "isActive": true,
+    "createdAt": "2026-03-16 20:29:14.000",
+    "updatedAt": "2026-03-16 20:29:14.000"
+  }
+]

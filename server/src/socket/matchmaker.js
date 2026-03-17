@@ -287,6 +287,12 @@ function setupMatchmaker(io) {
         socket.emit('submission-result', result);
 
         if (result.allPassed) {
+          // In test mode, do NOT conclude the room — just show the result inline
+          if (room.isTest) {
+            // Don't lock submission so they can re-run tests freely
+            return;
+          }
+
           // Lock submission only when all tests pass
           player.submitted = true;
           player.submissionResult = result;

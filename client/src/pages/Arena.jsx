@@ -96,14 +96,13 @@ export default function Arena() {
     });
 
     socket.on('match-result', (result) => {
+      // In test mode, ignore match-result events — we just show inline test results
+      if (isTestMode) return;
       setMatchResult(result);
-      // Update the user's latest stats in store (skip in test mode since it shouldn't affect stats)
-      if (!isTestMode) {
-        if (result.userStats) {
-          updateUser(result.userStats);
-        } else if (result.streak !== undefined) {
-          updateUser({ currentStreak: result.streak });
-        }
+      if (result.userStats) {
+        updateUser(result.userStats);
+      } else if (result.streak !== undefined) {
+        updateUser({ currentStreak: result.streak });
       }
     });
 
@@ -300,10 +299,13 @@ export default function Arena() {
     }
   };
 
-  // Go home after result
   const handleGoHome = () => {
     clearMatch();
-    navigate('/dashboard');
+    if (isTestMode) {
+      navigate('/admin/questions');
+    } else {
+      navigate('/dashboard');
+    }
   };
 
   // Format timer
@@ -345,8 +347,8 @@ export default function Arena() {
         </div>
       )}
 
-      {/* Match Result Overlay */}
-      {matchResult && (
+      {/* Match Result Overlay - hidden in test mode */}
+      {matchResult && !isTestMode && (
         <div className="result-overlay">
           <div className="result-emoji">
             {matchResult.result === 'win' ? '🏆' : matchResult.result === 'loss' ? '💥' : '🤝'}

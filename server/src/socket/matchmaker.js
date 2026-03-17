@@ -638,7 +638,7 @@ async function concludeRoom(io, room, winner, loser, reason) {
   clearTimeout(room.timeoutHandle);
   if (room.botTimerHandle) clearTimeout(room.botTimerHandle);
 
-  const isMockMatch = winner.isBot || loser.isBot;
+  const isMockMatch = winner?.isBot || loser?.isBot || false;
   const isTest = room.isTest;
 
   // For Admin Tests, immediately return winner/loser results to UI and skip DB fully
@@ -648,7 +648,7 @@ async function concludeRoom(io, room, winner, loser, reason) {
         winnerSocket.emit('match-result', {
           result: 'win',
           reason,
-          opponentName: loser.username,
+          opponentName: 'Test Match', // Fake opponent for UI
           streak: 0,
           submissionResult: winner.submissionResult,
         });
@@ -659,7 +659,7 @@ async function concludeRoom(io, room, winner, loser, reason) {
 
   // Update streaks in database for human players
   try {
-    if (!winner.isBot) {
+    if (winner && !winner.isBot) {
       const winnerUser = await prisma.user.findUnique({ where: { id: winner.userId } });
       if (winnerUser) {
         const newStreak = winnerUser.currentStreak + 1;
@@ -679,7 +679,7 @@ async function concludeRoom(io, room, winner, loser, reason) {
           winnerSocket.emit('match-result', {
             result: 'win',
             reason,
-            opponentName: loser.username,
+            opponentName: loser?.username || 'Opponent',
             streak: newStreak,
             submissionResult: winner.submissionResult,
             userStats: {
@@ -694,7 +694,7 @@ async function concludeRoom(io, room, winner, loser, reason) {
       }
     }
 
-    if (!loser.isBot) {
+    if (loser && !loser.isBot) {
       const updatedLoser = await prisma.user.update({
         where: { id: loser.userId },
         data: {
@@ -759,49 +759,74 @@ async function concludeDraw(io, room, reason) {
   clearTimeout(room.timeoutHandle);
   if (room.botTimerHandle) clearTimeout(room.botTimerHandle);
 
+  const isTest = room.isTest;
+  if (isTest) {
+    const player = room.players[0];
+    const s = io.sockets.sockets.get(player.socketId);
+    if (s) {
+      s.emit('match-result', {
+        result: 'draw',
+        reason,
+        opponentName: 'Test Match',
+        streak: 0,
+      });
+    }
+    setTimeout(() => activeRooms.delete(room.id), 5000);
+    return;
+  }
+
   try {
     for (const player of room.players) {
-      if (player.isBot) continue;
-      await prisma.user.update({
-        where: { id: player.userId },
-        data: {
-          currentStreak: 0,
-          totalDraws: { increment: 1 },
-          lastActive: new Date(),
-        },
-      });
-
-      const s = io.sockets.sockets.get(player.socketId);
-      if (s) {
-        const opponent = room.players.find(p => p.socketId !== player.socketId);
-        s.emit('match-result', {
-          result: 'draw',
-          reason,
-          opponentName: opponent?.username || 'Opponent',
-          streak: 0,
+      if (player && !player.isBot) {
+        await prisma.user.update({
+          where: { id: player.userId },
+          data: {
+            currentStreak: 0,
+            totalDraws: { increment: 1 },
+            lastActive: new Date(),
+          },
         });
+
+        const s = io.sockets.sockets.get(player.socketId);
+        if (s) {
+          const opponent = room.players.find(p => p !== player);
+          s.emit('match-result', {
+            result: 'draw',
+            reason,
+            opponentName: opponent?.username || 'Opponent',
+            streak: 0,
+          });
+        }
       }
     }
 
     // Save match
     const p1 = room.players[0];
     const p2 = room.players[1];
-    await prisma.match.create({
-      data: {
-        roomId: room.id,
-        player1Id: p1.isBot ? p2.userId : p1.userId,
-        player2Id: p2.isBot ? p1.userId : p2.userId,
-        result: 'draw',
-        reason,
-        questionTitle: room.question.title,
-        questionDiff: room.question.difficulty,
-        questionCat: room.question.category || 'general',
-        language: room.language,
-        durationSeconds: Math.floor((Date.now() - room.createdAt) / 1000),
-        totalTests: room.question.testCases.length,
-        isMockMatch: p1.isBot || p2.isBot,
-      },
-    });
+    
+    // Safety check just in case p2 is undefined in some scenario
+    const p1Id = p1?.isBot ? p2?.userId : p1?.userId;
+    const p2Id = p2?.isBot ? p1?.userId : p2?.userId;
+    const isMockMatch = p1?.isBot || p2?.isBot || false;
+
+    if (p1Id && p2Id) {
+      await prisma.match.create({
+        data: {
+          roomId: room.id,
+          player1Id: p1Id,
+          player2Id: p2Id,
+          result: 'draw',
+          reason,
+          questionTitle: room.question.title,
+          questionDiff: room.question.difficulty,
+          questionCat: room.question.category || 'general',
+          language: room.language,
+          durationSeconds: Math.floor((Date.now() - room.createdAt) / 1000),
+          totalTests: room.question.testCases.length,
+          isMockMatch,
+        },
+      });
+    }
   } catch (err) {
     console.error('Error concluding draw:', err);
   }
